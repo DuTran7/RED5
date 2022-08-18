@@ -1,0 +1,69 @@
+.android h1 {
+  padding: 30px 0 0 0;
+}
+.android h2 {
+  padding-top: 10px;
+}
+.android h3 {
+  padding-top: 5px;
+}
+.android h4 {
+  padding-top: 5px;
+}
+.android .healing-for {
+  line-height: 1;
+  padding-top: 10px;
+}
+.android .ios-first-letter::first-letter {
+  padding: 17px 7px 2px 7px !important;
+}
+.android .healing-hide {
+  padding-top: 20px;
+}
+.android .healing-healing {
+  padding-top: 16px;
+  transform: translateY(30px);
+}
+.android .healing-bottom {
+  margin-top: 15px;
+}
+.android .healing-bottom .MuiBox-root {
+  padding-top: 20px;
+}
+@media (min-width: 0px) {
+  .android .section-healing-hide-for {
+    padding-top: 0px;
+  }
+}
+
+@media (min-width: 400px) {
+  .android .section-healing-hide-for {
+    padding-top: 0px;
+  }
+}
+@media (min-width: 800px) {
+  .android .section-healing-hide-for {
+    padding-top: 16px;
+  }
+}
+@media (min-width: 1024px) {
+  .android h1 {
+    padding-top: 41px;
+  }
+  .android .section-healing-hide-for {
+    padding-top: 40px;
+  }
+
+  .android .healing-healing {
+    padding-top: 40px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .android .section-healing-hide-for {
+    padding-top: 41px;
+  }
+  .android .healing-healing {
+    padding-top: 40px;
+  }
+}
