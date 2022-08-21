@@ -43,8 +43,14 @@ export const SRC_IMG = {
   BNB: '/icons/bnb.svg',
 };
 
+export const HEADER_KEY = {
+  HOME: 'home',
+  ABOUT: 'about',
+  PROJECTS: 'projects',
+};
+
 export const ROUTER = {
-  PRODUCTS_SEARCH: '/product/search',
+  ABOUT: 'about',
   SHOP: '/shop',
   PRODUCT_DETAIL: '/product/' + KEY_ROUTER,
   LOCATION: '/location/',

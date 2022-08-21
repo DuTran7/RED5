@@ -1,15 +1,14 @@
-@import 'antd/dist/antd.css';
 @import 'custom-mac.css';
 @import 'custom-android.css';
 body {
   /* background-image: url('~/public/imgs/background.svg'); */
-  overflow-y: overlay;
+  overflow-x: hidden;
   padding: 0;
   margin: 0;
-  min-height: calc(100vh - 43px);
+  /* min-height: calc(100vh - 43px); */
   display: flex;
   flex-direction: column;
-  font-family: 'SVN-Univers Regular', 'Palatino Linotype', 'Palatino LT STD',
+  font-family: 'Red5 Helvetica', 'Palatino Linotype', 'Palatino LT STD',
     'Book Antiqua', Georgia, serif;
 }
 
@@ -192,20 +191,25 @@ a {
   display: none;
 }
 @font-face {
-  font-family: 'Okkio Display';
-  src: url('~/public/fonts/Okkio/OkkioDisplayRegular.ttf');
+  font-family: 'Red5 Helvetica';
+  src: url('~/public/fonts/OTF/Red5-Helvetica Regular.otf');
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'SVN-Univers Bold';
-  src: url('~/public/fonts/SVN/SVN-Univers Bold.otf');
+  font-family: 'Red5 Helvetica Bold';
+  src: url('~/public/fonts/OTF/Red5-Helvetica Bold.otf');
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'SVN-Univers Regular';
-  src: url('~/public/fonts/SVN/SVN-Univers Regular.otf');
+  font-family: 'Red5 Helvetica Heavy';
+  src: url('~/public/fonts/OTF/Red5-Helvetica Heavy.otf');
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Red5 Helvetica Light';
+  src: url('~/public/fonts/OTF/Red5-Helvetica Light.otf');
   font-style: normal;
 }
 
@@ -231,7 +235,7 @@ a {
 ::-webkit-scrollbar-thumb:hover {
   background-color: #c5c5c5;
 }
-/* release 1 */
+/* ios >> 15 */
 @media not all and (min-resolution: 0.001dpcm) {
   _:-webkit-full-screen-ancestor,
   :root .ios-first-letter::first-letter {
@@ -242,75 +246,5 @@ a {
     padding: 17px 7px 2px 7px !important;
   }
   @supports (-webkit-appearance: none) and (display: flow-root) {
-    h1 {
-      padding: 30px 0 0 0;
-    }
-    h2 {
-      padding-top: 10px;
-    }
-    h3 {
-      padding-top: 5px;
-    }
-    .healing-for {
-      line-height: 1;
-      padding-top: 10px;
-    }
-    .ios-first-letter::first-letter {
-      padding: 17px 7px 2px 7px !important;
-    }
-    .healing-hide {
-      padding-top: 20px;
-    }
-
-    .healing-healing {
-      padding-top: 16px;
-      transform: translateY(30px);
-    }
-
-    .healing-bottom {
-      margin-top: 15px;
-    }
-
-    .healing-bottom .MuiBox-root {
-      padding-top: 20px;
-    }
-
-    @media (min-width: 0px) {
-      .section-healing-hide-for {
-        padding-top: 0px;
-      }
-    }
-
-    @media (min-width: 400px) {
-      .section-healing-hide-for {
-        padding-top: 0px;
-      }
-    }
-    @media (min-width: 800px) {
-      .section-healing-hide-for {
-        padding-top: 16px;
-      }
-    }
-    @media (min-width: 1024px) {
-      h1 {
-        padding-top: 40px;
-      }
-      .section-healing-hide-for {
-        padding-top: 40px;
-      }
-
-      .healing-healing {
-        padding-top: 40px;
-      }
-    }
-
-    @media (min-width: 1200px) {
-      .section-healing-hide-for {
-        padding-top: 40px;
-      }
-      .healing-healing {
-        padding-top: 40px;
-      }
-    }
   }
 }

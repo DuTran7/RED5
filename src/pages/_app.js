@@ -10,6 +10,8 @@ import { useEffect, useState } from 'react';
 import { theme } from 'theme';
 import { PAYPAL_CLIENT_ID } from 'utils/constants';
 import '../../styles/globals.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const [clientType, setClientType] = useState(null);
@@ -42,13 +44,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
               horizontal: 'right',
             }}
           >
-            <div
-              className={
-                classCommon + ' ' + clientType + ' ' + (isAndroid && 'android')
-              }
-            >
-              <Component {...pageProps} />
-            </div>
+            <Component {...pageProps} />
           </SnackbarProvider>
         </PayPalScriptProvider>
       </ThemeProvider>

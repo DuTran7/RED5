@@ -1,5 +1,5 @@
 import { Stack } from '@mui/material';
-import { Carousel } from 'antd';
+import Slider from 'react-slick';
 import { theme } from 'theme';
 import ProductCard from './ProductCard';
 
@@ -42,7 +42,7 @@ const CarouselProduct = ({ data, width, height, sizeArrow }) => {
     infinite: false,
   };
   return (
-    <Carousel className="carousel-product" {...setting}>
+    <Slider className="carousel-product" {...setting}>
       {data &&
         data?.map((item, i) => (
           <Stack
@@ -61,7 +61,7 @@ const CarouselProduct = ({ data, width, height, sizeArrow }) => {
             <ProductCard key={i} item={item} />
           </Stack>
         ))}
-    </Carousel>
+    </Slider>
   );
 };
 

@@ -1,5 +1,5 @@
 import { Stack } from '@mui/material';
-import { Carousel } from 'antd';
+import Slider from "react-slick";
 import Image from 'next/image';
 import { theme } from 'theme';
 
@@ -42,7 +42,7 @@ const CarouselImg = ({ data, width, height, sizeArrow, fullWidth }) => {
     infinite: false,
   };
   return (
-    <Carousel className="carousel-product" {...setting}>
+    <Slider className="carousel-product" {...setting}>
       {data &&
         data?.map((item, i) => (
           <Stack
@@ -70,7 +70,7 @@ const CarouselImg = ({ data, width, height, sizeArrow, fullWidth }) => {
             {fullWidth && <img key={i} src={item} width={'64vw'} />}
           </Stack>
         ))}
-    </Carousel>
+    </Slider>
   );
 };
 
