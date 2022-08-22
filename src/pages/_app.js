@@ -1,7 +1,6 @@
 import { ThemeProvider } from '@mui/material/styles';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { Provider as NextAuthProvider } from 'next-auth/client';
-import { useRouter } from 'next/router';
 import { SnackbarProvider } from 'notistack';
 import { isMobile, isAndroid, isChrome } from 'react-device-detect';
 // import 'semantic-ui-css/semantic.min.css';
@@ -16,11 +15,8 @@ import 'slick-carousel/slick/slick-theme.css';
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const [clientType, setClientType] = useState(null);
   const [classCommon, setClassCommon] = useState(null);
-  const router = useRouter();
 
   useEffect(() => {
-    console.log('Macintosh', window.navigator.userAgent.match(/Macintosh/));
-    console.log('Chrome', window.navigator.userAgent.match(/Chrome/));
     if (window.navigator.userAgent.match(/Macintosh/)) {
       setClassCommon('mac-os');
     } else {
@@ -35,18 +31,16 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     <NextAuthProvider session={session}>
       <StyledGlobalStyles />
       <ThemeProvider theme={theme}>
-        <PayPalScriptProvider options={{ 'client-id': PAYPAL_CLIENT_ID }}>
-          <SnackbarProvider
-            maxSnack={3}
-            autoHideDuration={1500}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-          >
-            <Component {...pageProps} />
-          </SnackbarProvider>
-        </PayPalScriptProvider>
+        <SnackbarProvider
+          maxSnack={3}
+          autoHideDuration={1500}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+        >
+          <Component {...pageProps} />
+        </SnackbarProvider>
       </ThemeProvider>
     </NextAuthProvider>
   );

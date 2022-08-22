@@ -26,6 +26,7 @@ export const theme = responsiveFontSizes(
       text: {
         primary: '#FFFFFF',
         secondary: '#999CA0',
+
       },
       divider: '#292929',
       link: {
@@ -36,7 +37,7 @@ export const theme = responsiveFontSizes(
     typography: {
       fontFamily: 'Red5 Helvetica',
       h1: {
-        fontFamily: 'Red5 Helvetica',
+        fontFamily: 'Red5 Helvetica Light',
         fontWeight: 300,
         fontSize: '96px',
         lineHeight: 1,
@@ -56,6 +57,13 @@ export const theme = responsiveFontSizes(
         lineHeight: 1.5,
         fontStyle: 'normal',
       },
+      h4: {
+        fontFamily: 'Red5 Helvetica Light',
+        fontWeight: 300,
+        fontSize: '24px',
+        lineHeight: 1,
+        fontStyle: 'normal',
+      },
       caption: {
         fontFamily: 'Red5 Helvetica',
         fontWeight: 400,
@@ -63,6 +71,7 @@ export const theme = responsiveFontSizes(
         lineHeight: 1.55,
       },
       body1: {
+        fontFamily: 'Red5 Helvetica Light',
         fontSize: '14px',
         fontWeight: 400,
         lineHeight: 1.7,
@@ -74,6 +83,7 @@ export const theme = responsiveFontSizes(
         lineHeight: 1.42,
       },
       subtitle1: {
+        fontFamily: 'Red5 Helvetica Light',
         fontSize: '8px',
         fontWeight: 300,
         lineHeight: 2,

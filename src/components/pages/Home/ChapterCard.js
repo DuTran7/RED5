@@ -1,15 +1,13 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { theme } from 'theme';
 
-export default function ChapterCard({ chapNo, name, image }) {
+export default function ChapterCard({ chapNo, name, image, onClick, data }) {
   return (
     <Stack
-      // width={'200px'}
       height={'calc(100vh - 84px)'}
       sx={{
         background: theme.palette.common.black,
         '&:hover': {
-          cursor: 'pointer',
           backgroundImage: image ? `url(${image})` : 'none',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
@@ -36,8 +34,13 @@ export default function ChapterCard({ chapNo, name, image }) {
             left: '50%',
             transformOrigin: '-2% 68%',
             transform: 'rotate(90deg)',
+            '&:hover': {
+              cursor: 'pointer',
+              color: theme.palette.primary.main,
+            },
           }}
           width={'max-content'}
+          onClick={() => onClick(data)}
         >
           {name}
         </Typography>

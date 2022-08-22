@@ -7,7 +7,13 @@ const DefaultLayout = ({ children, showFooter = true }) => {
     <Box>
       <Head></Head>
       <Header />
-      <Box>{children}</Box>
+      <Box
+        sx={{
+          overflowX: 'hidden',
+        }}
+      >
+        {children}
+      </Box>
       {/* {showFooter && <Footer />} */}
     </Box>
   );

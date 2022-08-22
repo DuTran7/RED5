@@ -1,73 +1,144 @@
 import DefaultLayout from 'components/layouts/DefaultLayput';
 import HomePage from 'components/pages/Home/HomePage';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+  const imgs = [
+    {
+      image: '/imgs/okkio.png',
+      banner: '/imgs/okkio-banner.png',
+      name: 'Okkio Coffee',
+      design: 'Red5 Studio',
+      construction: 'Red5studio + Ben Decor',
+      client: `Libe'`,
+      partner: 'Ben Decor, Jati Tile, Light Art',
+      area: '243m2',
+      location: '114 Nguyen Gia Tri, Binh Thanh District, Ho Chi Minh city',
+      photo: 'Đỗ Sỹ',
+      album: [
+        {
+          src: '/imgs/okkio/image 9.png',
+          description: `The fitting part is a locker - because that's where people store their belongings and transform themselves.`,
+        },
+        {
+          src: '/imgs/okkio/Okio2441 1.png',
+          description: `The fitting part is a locker - because that's where people`,
+        },
+        {
+          src: '/imgs/okkio/Okio4186 1.png',
+          description: `The fitting part is a locker `,
+        },
+        {
+          src: '/imgs/okkio/DSC04411 1.png',
+          description: `The fitting part is a locker `,
+        },
+        {
+          src: '/imgs/okkio/okio(day2)4540 1.png',
+          description: `The fitting part is a locker - because that's where people store their belongings and transform themselves.`,
+        },
+        {
+          src: '/imgs/okkio/okio(day2)4847 1.png',
+          description: `The fitting part is a locker - because that's where people store their belongings and transform themselves.`,
+        },
+        {
+          src: '/imgs/okkio/Okio0538 1.png',
+          description: `The fitting part is a locker - because that's where people store their belongings and transform themselves.`,
+        },
+        {
+          src: '/imgs/okkio/Okio1065 1.png',
+          description: `The fitting part is a locker - because that's where people store their belongings and transform themselves.`,
+        },
+        {
+          src: '/imgs/okkio/Okio3367 1.png',
+          description: `The fitting part is a locker - because that's where people store their belongings and transform themselves.`,
+        },
+        {
+          src: '/imgs/okkio/Okio4186 1.png',
+          description: `The fitting part is a locker - because that's where people store their belongings and transform themselves.`,
+        },
+        {
+          src: '/imgs/okkio/Okio0022 1.png',
+          description: `The fitting part is a locker - because that's where people store their belongings and transform themselves.`,
+        },
+        {
+          src: '/imgs/okkio/Okio0793 1.png',
+          description: `The fitting part is a locker - because that's where people store their belongings and transform themselves.`,
+        },
+      ],
+    },
+    {
+      chapNo: 'chapter 2',
+      name: `Libe' Flagship`,
+      image: '/imgs/anhcoffee.png',
+      banner: '/imgs/libe-flaship-banner.png',
+      design: 'Red5 Studio',
+      construction: 'Red5studio + Ben Decor',
+      client: `Libe'`,
+      partner: 'Ben Decor, Jati Tile, Light Art',
+      area: '243m2',
+      location: '114 Nguyen Gia Tri, Binh Thanh District, Ho Chi Minh city',
+      photo: 'Đỗ Sỹ',
+      album: [
+        {
+          src: '/imgs/red5/ARe5_2915 5.png',
+          description: `The fitting part is a locker - because that's where people store their belongings and transform themselves.`,
+        },
+        {
+          src: '/imgs/red5/DSC06615 1.png',
+          description: `The fitting part is a locker - because that's where people`,
+        },
+        {
+          src: '/imgs/red5/DSC06648 1.png',
+          description: `The fitting part is a locker `,
+        },
+        {
+          src: '/imgs/red5/ARe5_2915 6.png',
+          description: `The fitting part is a locker `,
+        },
+        {
+          src: '/imgs/red5/ERe5_1341 1.png',
+          description: `The fitting part is a locker - because that's where people store their belongings and transform themselves.`,
+        },
+        {
+          src: '/imgs/red5/Re5_1067 1.png',
+          description: `The fitting part is a locker - because that's where people store their belongings and transform themselves.`,
+        },
+        {
+          src: '/imgs/red5/ARe5_2915 4.png',
+          description: `The fitting part is a locker - because that's where people store their belongings and transform themselves.`,
+        },
+        {
+          src: '/imgs/red5/ARe5_2915 3.png',
+          description: `The fitting part is a locker - because that's where people store their belongings and transform themselves.`,
+        },
+        {
+          src: '/imgs/red5/ARe5_2915 2.png',
+          description: `The fitting part is a locker - because that's where people store their belongings and transform themselves.`,
+        },
+        {
+          src: '/imgs/red5/image 2.png',
+          description: `The fitting part is a locker - because that's where people store their belongings and transform themselves.`,
+        },
+        {
+          src: '/imgs/red5/Re5_0010 1.png',
+          description: `The fitting part is a locker - because that's where people store their belongings and transform themselves.`,
+        },
+        {
+          src: '/imgs/red5/Re5_0801 1.png',
+          description: `The fitting part is a locker - because that's where people store their belongings and transform themselves.`,
+        },
+      ],
+    },
+  ];
+  let rs = [];
+  for (let i = 0; i < 18; i++) {
+    rs.push(i % 2 == 0 ? imgs[0] : imgs[1]);
+  }
+  const [chapters, setChapters] = useState(rs);
+
   return (
     <DefaultLayout>
-      <HomePage
-        chapterList={[
-          {
-            chapNo: 'chapter 1',
-            name: 'Okkio Coffee',
-            image: '/imgs/okkio.png',
-          },
-          {
-            chapNo: 'chapter 2',
-            name: `Libe' Flagship`,
-            image: '/imgs/okkio.png',
-          },
-          {
-            chapNo: 'chapter 3',
-            name: 'Anh Coffee Roastery',
-            image: '/imgs/anhcoffee.png',
-          },
-          {
-            chapNo: 'chapter 4',
-            name: 'Showtime Coffee',
-            image: '/imgs/showtimecoffee.png',
-          },
-          {
-            chapNo: 'chapter 5',
-            name: 'Okkio Coffee',
-            image: '/imgs/okkio.png',
-          },
-          {
-            chapNo: 'chapter 6',
-            name: `Libe' Flagship`,
-            image: '/imgs/okkio.png',
-          },
-          {
-            chapNo: 'chapter 7',
-            name: 'Anh Coffee Roastery',
-            image: '/imgs/anhcoffee.png',
-          },
-          {
-            chapNo: 'chapter 8',
-            name: 'Showtime Coffee',
-            image: '/imgs/showtimecoffee.png',
-          },
-          {
-            chapNo: 'chapter 5',
-            name: 'Okkio Coffee',
-            image: '/imgs/okkio.png',
-          },
-          {
-            chapNo: 'chapter 6',
-            name: `Libe' Flagship`,
-            image: '/imgs/okkio.png',
-          },
-          {
-            chapNo: 'chapter 7',
-            name: 'Anh Coffee Roastery',
-            image: '/imgs/anhcoffee.png',
-          },
-          {
-            chapNo: 'chapter 8',
-            name: 'Showtime Coffee',
-            image: '/imgs/showtimecoffee.png',
-          },
-        ]}
-      />
+      <HomePage chapterList={chapters} />
     </DefaultLayout>
   );
 }

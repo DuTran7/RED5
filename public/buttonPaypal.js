@@ -18,11 +18,6 @@ paypal
         .then((response) => response.json())
         .then(async (orderData) => {
           // Successful capture! For dev/demo purposes:
-          console.log(
-            'Capture result',
-            orderData,
-            JSON.stringify(orderData, null, 2)
-          );
           var transaction = orderData.purchase_units[0].payments.captures[0];
           alert(`Transaction ${transaction.status}: ${transaction.id}
 

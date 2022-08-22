@@ -2,7 +2,7 @@
 @import 'custom-android.css';
 body {
   /* background-image: url('~/public/imgs/background.svg'); */
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   padding: 0;
   margin: 0;
   /* min-height: calc(100vh - 43px); */
@@ -192,7 +192,7 @@ a {
 }
 @font-face {
   font-family: 'Red5 Helvetica';
-  src: url('~/public/fonts/OTF/Red5-Helvetica Regular.otf');
+  src: url('~/public/fonts/OTF/Red5-Helvetica Light.otf');
   font-style: normal;
 }
 
@@ -216,6 +216,7 @@ a {
 /* Scroll bar custom */
 ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 
 .SnackbarContainer-root {

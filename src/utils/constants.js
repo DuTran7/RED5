@@ -51,7 +51,7 @@ export const HEADER_KEY = {
 
 export const ROUTER = {
   ABOUT: 'about',
-  SHOP: '/shop',
+  CHAPTER: 'chapter/',
   PRODUCT_DETAIL: '/product/' + KEY_ROUTER,
   LOCATION: '/location/',
   PROFILE: '/profile',

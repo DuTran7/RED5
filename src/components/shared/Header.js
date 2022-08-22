@@ -46,6 +46,18 @@ const Header = (props) => {
     }
   };
 
+  React.useEffect(() => {
+    console.log(router.asPath);
+    switch (router.asPath) {
+      case '/':
+        setItemSelected(HEADER_KEY.HOME);
+        break;
+      case '/' + HEADER_KEY.ABOUT:
+        setItemSelected(HEADER_KEY.ABOUT);
+        break;
+    }
+  }, [router.query]);
+
   return (
     <Paper
       sx={{
