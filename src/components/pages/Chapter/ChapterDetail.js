@@ -9,13 +9,13 @@ import LegendBox from './LegendBox';
 import ShortInfoChapter from './ShortInfoChapter';
 import DescriptionChapter from './DescriptionChapter';
 import PhotosCard from './PhotosCard';
+import Awards from '../About/Awards';
 export default function ChapterDetail() {
   const router = useRouter();
   const [chapter, setChapter] = useState({});
 
   useEffect(() => {
     const name = router.query.chapter;
-    console.log(name);
     if (name) setChapter({ ...chapter, name });
     // if (name) setChapter(...chapter, name);
   }, [router.query]);
@@ -40,6 +40,7 @@ export default function ChapterDetail() {
         width={'80px'}
         flexGrow={0}
         position={'sticky'}
+        zIndex={3}
         borderRight={'1px solid ' + theme.palette.divider}
         left={0}
         top={0}

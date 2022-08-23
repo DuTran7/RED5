@@ -1,5 +1,5 @@
 import { Box, Stack, Typography } from '@mui/material';
-import ChapterCarousel from 'components/ukit/Carousel';
+import { ChapterCarousel } from 'components/ukit/Carousel';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';

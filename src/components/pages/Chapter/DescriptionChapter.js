@@ -62,7 +62,7 @@ export default function DescriptionChapter({ chapter }) {
           src={'/imgs/bottom-img-description.png'}
           height={184}
           width={1322}
-          alt
+          alt={'loading...'}
         />
       </Stack>
     </Box>

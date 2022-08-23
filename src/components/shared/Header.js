@@ -47,7 +47,6 @@ const Header = (props) => {
   };
 
   React.useEffect(() => {
-    console.log(router.asPath);
     switch (router.asPath) {
       case '/':
         setItemSelected(HEADER_KEY.HOME);
@@ -65,7 +64,8 @@ const Header = (props) => {
         bottom: 0,
         left: 0,
         right: 0,
-        background: theme.palette.common.black,
+        background:
+          'linear-gradient(180deg, rgb(0 0 0 / 99%) 0%, #000000 100%)',
         borderRadius: 0,
       }}
       elevation={3}
