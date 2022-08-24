@@ -1,7 +1,9 @@
-import { Box, Stack, Typography } from '@mui/material';
-import { CenterCarousel, ChapterCarousel } from 'components/ukit/Carousel';
+import CloseIcon from '@mui/icons-material/Close';
+import { Backdrop, Box, Button, Stack, Typography } from '@mui/material';
+import { CenterCarousel } from 'components/ukit/Carousel';
 import Image from 'next/image';
 import { useState } from 'react';
+import ImageGallery from 'react-image-gallery';
 import { theme } from 'theme';
 
 const StyledBox = ({ children }) => {
@@ -51,6 +53,7 @@ const StyledBox = ({ children }) => {
 
 export default function Awards() {
   const [slide, setSlide] = useState();
+  const [curIndex, setCurIndex] = useState(0);
   const [awards, setAwards] = useState([
     {
       image: '/imgs/Award.png',
@@ -73,6 +76,13 @@ export default function Awards() {
       project: 'Nguyen Anh Tu',
     },
   ]);
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
   return (
     <StyledBox>
       <Stack
@@ -84,10 +94,48 @@ export default function Awards() {
         rowGap={3}
         sx={{}}
       >
+        <Backdrop
+          sx={{
+            color: '#fff',
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+            background: '#000000',
+          }}
+          open={open}
+          //   onClick={handleClose}
+        >
+          <Button
+            sx={{
+              position: 'absolute',
+              right: '20px',
+              top: '20px',
+            }}
+            onClick={handleClose}
+          >
+            <CloseIcon
+              sx={{
+                fill: '#ffffff',
+                fontSize: '40px',
+                opacity: '0.4',
+              }}
+            />
+          </Button>
+          {/* <Stack onClick={(e) => e.preventDefault()}> */}
+          <ImageGallery
+            showPlayButton={false}
+            showFullscreenButton={false}
+            showNav={false}
+            thumbnailPosition={'bottom'}
+            items={awards.map((e) => ({
+              original: e.image,
+              thumbnail: e.image,
+            }))}
+          />
+          {/* </Stack> */}
+        </Backdrop>
         <Typography variant={'h2'} color={'text.primary'} mb={3}>
           Awards
         </Typography>
-        <CenterCarousel>
+        <CenterCarousel onChange={setCurIndex}>
           {awards &&
             awards?.map((e, i) => (
               <Box
@@ -109,7 +157,9 @@ export default function Awards() {
                   },
                 }}
                 onClick={() => {
-                  //   alert(1);
+                  if (i === curIndex) {
+                    handleToggle();
+                  }
                 }}
                 textAlign={'center'}
               >

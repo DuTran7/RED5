@@ -9,7 +9,7 @@ const DefaultLayout = ({ children, showFooter = true }) => {
       <Header />
       <Box
         sx={{
-          overflowX: 'hidden',
+          overflowX: 'scroll',
         }}
       >
         {children}

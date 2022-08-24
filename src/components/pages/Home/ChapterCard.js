@@ -36,11 +36,11 @@ export default function ChapterCard({ chapNo, name, image, onClick, data }) {
             transform: 'rotate(90deg)',
             '&:hover': {
               cursor: 'pointer',
-              color: theme.palette.primary.main,
+              // color: theme.palette.primary.main,
             },
           }}
           width={'max-content'}
-          onClick={() => onClick(data)}
+          onClick={() => onClick?.(data)}
         >
           {name}
         </Typography>

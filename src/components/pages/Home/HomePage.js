@@ -21,8 +21,17 @@ export default function HomePage(props) {
     setChapters(props?.chapterList);
   }, [props?.chapterList]);
   return (
-    <Stack direction={'row'}>
-      <ChapterCarousel>
+    <Box
+      sx={{
+        display: 'flex',
+        background: theme.palette.common.black,
+        overflowX: 'auto',
+        height: 'calc(100vh - 84px)',
+      }}
+      position={'relative'}
+      minWidth={'100vw'}
+    >
+      {/* <ChapterCarousel>
         {chapters?.map((c, i) => (
           <Box
             key={i}
@@ -40,7 +49,24 @@ export default function HomePage(props) {
             />
           </Box>
         ))}
-      </ChapterCarousel>
-    </Stack>
+      </ChapterCarousel> */}
+      {chapters?.map((c, i) => (
+        <Box
+          key={i}
+          borderRight={'1px solid'}
+          borderColor={theme.palette.divider}
+          overflow={'auto hidden'}
+          minWidth={'200px'}
+          onClick={() => navigateToChapterDetail(c)}
+          sx={{
+            '&:hover': {
+              cursor: 'pointer',
+            },
+          }}
+        >
+          <ChapterCard data={c} chapNo={++i} name={c?.name} image={c?.image} />
+        </Box>
+      ))}
+    </Box>
   );
 }

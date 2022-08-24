@@ -7,7 +7,7 @@ export default function ContactUs() {
     return (
       <Stack rowGap={3} p={'64px 80px 0'}>
         <Typography variant="h2">{title}</Typography>
-        {children}
+        <Stack rowGap={3}>{children}</Stack>
       </Stack>
     );
   };
@@ -50,7 +50,6 @@ export default function ContactUs() {
         overflowY: 'hidden',
         borderLeft: '1px solid ' + theme.palette.divider,
       }}
-      position={'relative'}
       minWidth={'100vw'}
     >
       <Stack width={'100%'}>
@@ -66,32 +65,28 @@ export default function ContactUs() {
                 {`If you have any questions about new project or orther inquires, please contact us. We will get back yo you as soon ass posible.`}
               </Typography>
               <StyledLabelContent title={'Email'}>
-                <a href="mailto:Info@red5studio.vn">
-                  <Typography
-                    variant={'body1'}
-                    color={'primary.main'}
-                    minWidth={'90px'}
-                    sx={{
-                      textDecoration: 'underline',
-                    }}
-                  >
-                    Info@red5studio.vn
-                  </Typography>
-                </a>
+                <Typography
+                  variant={'body1'}
+                  color={'primary.main'}
+                  minWidth={'90px'}
+                  sx={{
+                    textDecoration: 'underline',
+                  }}
+                >
+                  <a href="mailto:Info@red5studio.vn">Info@red5studio.vn</a>
+                </Typography>
               </StyledLabelContent>
               <StyledLabelContent title={'Phone'}>
-                <a href="tel:+84 938 580 182">
-                  <Typography
-                    variant={'body1'}
-                    color={'text.primary'}
-                    minWidth={'90px'}
-                    sx={{
-                      textDecoration: 'underline',
-                    }}
-                  >
-                    +84 938 580 182
-                  </Typography>
-                </a>
+                <Typography
+                  variant={'body1'}
+                  color={'text.primary'}
+                  minWidth={'90px'}
+                  sx={{
+                    textDecoration: 'underline',
+                  }}
+                >
+                  <a href="tel:+84 938 580 182">+84 938 580 182</a>
+                </Typography>
               </StyledLabelContent>
               <StyledLabelContent title={'Location'}>
                 <Typography
@@ -142,21 +137,21 @@ export default function ContactUs() {
                   </Typography>
                 </StyledLi>
               </ul>
-              <Typography variant={'body1'} color={'text.secondary'}>
-                {`Please submit your portfolio to`}
-                <a href="mailto:truc@red5studio.vn">
-                  <Typography
-                    variant={'body1'}
-                    color={'text.primary'}
-                    minWidth={'90px'}
-                    sx={{
-                      textDecoration: 'underline',
-                    }}
-                  >
-                    truc@red5studio.vn
-                  </Typography>
-                </a>
-              </Typography>
+              <Box>
+                <Typography variant={'body1'} color={'text.secondary'}>
+                  {`Please submit your portfolio to`}
+                </Typography>
+                <Typography
+                  variant={'body1'}
+                  color={'text.primary'}
+                  minWidth={'90px'}
+                  sx={{
+                    textDecoration: 'underline',
+                  }}
+                >
+                  <a href="mailto:truc@red5studio.vn">truc@red5studio.vn</a>
+                </Typography>
+              </Box>
             </StyledDiv>
           </Grid>
           <Grid item xs={12} md={4}>
@@ -166,46 +161,46 @@ export default function ContactUs() {
               </Typography>
 
               <StyledLabelContent title={'Facebook'}>
-                <a href="facebook.com/red5studio.vn">
-                  <Typography
-                    variant={'body1'}
-                    color={'text.primary'}
-                    minWidth={'90px'}
-                    sx={{
-                      textDecoration: 'underline',
-                    }}
-                  >
+                <Typography
+                  variant={'body1'}
+                  color={'text.primary'}
+                  minWidth={'90px'}
+                  sx={{
+                    textDecoration: 'underline',
+                  }}
+                >
+                  <a href="https:/facebook.com/red5studio.vn">
                     facebook.com/red5studio.vn
-                  </Typography>
-                </a>
+                  </a>
+                </Typography>
               </StyledLabelContent>
               <StyledLabelContent title={'Instagram'}>
-                <a href="instagram.com/red5studio.vn">
-                  <Typography
-                    variant={'body1'}
-                    color={'text.primary'}
-                    minWidth={'90px'}
-                    sx={{
-                      textDecoration: 'underline',
-                    }}
-                  >
+                <Typography
+                  variant={'body1'}
+                  color={'text.primary'}
+                  minWidth={'90px'}
+                  sx={{
+                    textDecoration: 'underline',
+                  }}
+                >
+                  <a href="https://instagram.com/red5studio.vn">
                     instagram.com/red5studio.vn
-                  </Typography>
-                </a>
+                  </a>
+                </Typography>
               </StyledLabelContent>
               <StyledLabelContent title={'Youtube'}>
-                <a href="youtube.com/c/red5studio.vn">
-                  <Typography
-                    variant={'body1'}
-                    color={'text.primary'}
-                    minWidth={'90px'}
-                    sx={{
-                      textDecoration: 'underline',
-                    }}
-                  >
+                <Typography
+                  variant={'body1'}
+                  color={'text.primary'}
+                  minWidth={'90px'}
+                  sx={{
+                    textDecoration: 'underline',
+                  }}
+                >
+                  <a href="https:/youtube.com/c/red5studio.vn">
                     youtube.com/c/red5studio.vn
-                  </Typography>
-                </a>
+                  </a>
+                </Typography>
               </StyledLabelContent>
             </StyledDiv>
           </Grid>

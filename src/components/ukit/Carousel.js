@@ -103,16 +103,16 @@ export const LogoCarousel = ({ children }) => {
   );
 };
 
-export const CenterCarousel = ({ children }) => {
+export const CenterCarousel = ({ children, onChange }) => {
   const settings = {
     className: 'center',
     centerMode: true,
     infinite: true,
     centerPadding: '0px',
     slidesToShow: 3,
-    // slidesToScroll: 1,
-    // dots: false,
+    focusOnSelect: true,
     arrows: false,
+    afterChange: onChange,
     swipeToSlide: true,
     responsive: [
       {

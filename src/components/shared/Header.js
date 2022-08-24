@@ -83,6 +83,10 @@ const Header = (props) => {
           sx={{
             justifyContent: 'flex-end',
             background: '#00000000',
+            '& .MuiBottomNavigationAction-label.Mui-selected .MuiTypography-root':
+              {
+                color: theme.palette.primary.main,
+              },
           }}
           value={itemSelected}
           onChange={(event, newValue) => {

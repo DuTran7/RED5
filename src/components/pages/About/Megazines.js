@@ -1,6 +1,9 @@
-import { Box, Stack } from '@mui/material';
+import { Backdrop, Box, Button, Stack } from '@mui/material';
 import Image from 'next/image';
 import { theme } from 'theme';
+import ImageGallery from 'react-image-gallery';
+import { useState } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function Megazines() {
   const listImg = [
@@ -16,6 +19,31 @@ export default function Megazines() {
     '/imgs/magazines/Frame-9.png',
     '/imgs/magazines/Frame-10.png',
   ];
+  const images = [
+    {
+      original: 'https://picsum.photos/id/1018/1000/600/',
+      thumbnail: 'https://picsum.photos/id/1018/250/150/',
+    },
+    {
+      original: 'https://picsum.photos/id/1015/1000/600/',
+      thumbnail: 'https://picsum.photos/id/1015/250/150/',
+    },
+    {
+      original: 'https://picsum.photos/id/1019/1000/600/',
+      thumbnail: 'https://picsum.photos/id/1019/250/150/',
+    },
+  ];
+  const a = listImg.map((e) => ({
+    original: e,
+    thumbnail: e,
+  }));
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
   return (
     <Box
       sx={{
@@ -24,7 +52,6 @@ export default function Megazines() {
         height: 'calc(100vh - 84px)',
         overflowX: 'auto',
       }}
-      position={'relative'}
       minWidth={'100vw'}
     >
       <Stack
@@ -42,9 +69,52 @@ export default function Megazines() {
           overflowY: 'hidden',
         }}
       >
+        <Backdrop
+          sx={{
+            color: '#fff',
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+            background: '#000000',
+          }}
+          open={open}
+          //   onClick={handleClose}
+        >
+          <Button
+            sx={{
+              position: 'absolute',
+              right: '20px',
+              top: '20px',
+            }}
+            onClick={handleClose}
+          >
+            <CloseIcon
+              sx={{
+                fill: '#ffffff',
+                fontSize: '40px',
+                opacity: '0.4',
+              }}
+            />
+          </Button>
+          {/* <Stack onClick={(e) => e.preventDefault()}> */}
+          <ImageGallery
+            showPlayButton={false}
+            showFullscreenButton={false}
+            showNav={false}
+            thumbnailPosition={'bottom'}
+            items={a}
+          />
+          {/* </Stack> */}
+        </Backdrop>
+
         {listImg &&
           listImg.map((e, i) => (
-            <Stack flexBasis={'12.2%'} key={i}>
+            <Stack
+              flexBasis={'12.2%'}
+              key={i}
+              onClick={handleToggle}
+              sx={{
+                cursor: 'pointer',
+              }}
+            >
               <img src={e} key={i} width={200} height={250} alt={'loading'} />
             </Stack>
           ))}

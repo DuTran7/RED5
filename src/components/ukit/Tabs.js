@@ -12,11 +12,11 @@ export const AboutTabs = ({ value, onChange, options, ...other }) => {
       indicatorColor="#ffffff00"
       orientation="vertical"
     >
-      <Tab label="culture" />
-      <Tab label="team" />
-      <Tab label="awards" />
-      <Tab label="press" />
-      <Tab label="contact" />
+      <Tab label="culture" value="culture" />
+      <Tab label="team" value="team" />
+      <Tab label="awards" value="awards" />
+      <Tab label="press" value="press" />
+      <Tab label="contact" value="contact" />
     </StyledTabs>
   );
 };

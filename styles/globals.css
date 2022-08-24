@@ -1,5 +1,6 @@
 @import 'custom-mac.css';
 @import 'custom-android.css';
+@import '~react-image-gallery/styles/css/image-gallery.css';
 body {
   /* background-image: url('~/public/imgs/background.svg'); */
   /* overflow-x: hidden; */

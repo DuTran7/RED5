@@ -1,6 +1,8 @@
 import { Box, Stack } from '@mui/material';
 import { AboutTabs } from 'components/ukit/Tabs';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { Element } from 'react-scroll';
 import { theme } from 'theme';
 import Awards from './Awards';
 import ContactUs from './ContactUs';
@@ -10,11 +12,20 @@ import PressAndRecognition from './PressAndRecognition';
 import Teams from './Teams';
 
 export default function AboutPage() {
-  const [value, setValue] = useState(0);
+  const router = useRouter();
+  const [value, setValue] = useState('culture');
 
   const handleChange = (event, newValue) => {
+    console.log(newValue);
     setValue(newValue);
   };
+
+  useEffect(() => {
+    if (value) {
+      const element = document.getElementById(value);
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [value]);
   return (
     <Box
       sx={{
@@ -40,12 +51,20 @@ export default function AboutPage() {
       >
         <AboutTabs value={value} onChange={handleChange} />
       </Stack>
-      <Culture />
+      <div id="culture">
+        <Culture />
+      </div>
       <Teams />
-      <Awards />
-      <PressAndRecognition />
+      <div id="awards">
+        <Awards />
+      </div>
+      <div id="press">
+        <PressAndRecognition />
+      </div>
       <Megazines />
-      <ContactUs />
+      <div id="contact">
+        <ContactUs />
+      </div>
     </Box>
   );
 }
