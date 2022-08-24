@@ -4,6 +4,51 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { theme } from 'theme';
 
+const StyledBox = ({ children }) => {
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        background: theme.palette.common.black,
+        '& .slick-track': {
+          display: 'flex',
+          alignItems: 'flex-end',
+        },
+        '& .slick-active, & .slick-slide': {
+          padding: '0 40px',
+          opacity: '0.25',
+          '.award-item': {
+            // width: '400px !important',
+            '& img': {
+              width: '18vw !important',
+              height: '18vw !important',
+            },
+          },
+          '& .MuiTypography-root': {
+            visibility: 'hidden',
+          },
+        },
+        '& .slick-center': {
+          opacity: '1',
+          '& .MuiTypography-root': {
+            visibility: 'unset',
+          },
+          '.award-item': {
+            // width: '400px !important',
+            '& img': {
+              width: '20vw !important',
+              height: '20vw !important',
+            },
+          },
+        },
+      }}
+      width={'calc(100vw - 80px)'}
+    >
+      {children}
+    </Box>
+  );
+};
+
 export default function Awards() {
   const [slide, setSlide] = useState();
   const [awards, setAwards] = useState([
@@ -29,44 +74,19 @@ export default function Awards() {
     },
   ]);
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        background: theme.palette.common.black,
-        '& .slick-track': {
-          display: 'flex',
-          alignItems: 'flex-end',
-        },
-        '& .slick-active, & .slick-slide': {
-          opacity: '0.25',
-          '.award-item': {
-            // width: '400px !important',
-            '& img': {
-              width: '357px !important',
-              height: '357px !important',
-            },
-          },
-          '& .MuiTypography-root': {
-            visibility: 'hidden',
-          },
-        },
-        '& .slick-center': {
-          opacity: '1',
-          '& .MuiTypography-root': {
-            visibility: 'unset',
-          },
-          '.award-item': {
-            // width: '400px !important',
-            '& img': {
-              width: '400px !important',
-              height: '400px !important',
-            },
-          },
-        },
-      }}
-      minWidth={'calc(100vw - 80px)'}
-    >
-      <Stack width={'100vw'} justifyContent={'center'} p={10} sx={{}}>
+    <StyledBox>
+      <Stack
+        width={'100%'}
+        justifyContent={'flex-start'}
+        alignContent={'center'}
+        alignItems={'center'}
+        p={'64px 80px'}
+        rowGap={3}
+        sx={{}}
+      >
+        <Typography variant={'h2'} color={'text.primary'} mb={3}>
+          Awards
+        </Typography>
         <CenterCarousel>
           {awards &&
             awards?.map((e, i) => (
@@ -75,7 +95,7 @@ export default function Awards() {
                 key={i}
                 sx={{
                   display: 'flex !important',
-                  width: '400px !important',
+                  // width: '400px !important',
                   justifyContent: 'flex-end',
                   flexDirection: 'column',
                   //   padding: '0 40px',
@@ -89,7 +109,7 @@ export default function Awards() {
                   },
                 }}
                 onClick={() => {
-                //   alert(1);
+                  //   alert(1);
                 }}
                 textAlign={'center'}
               >
@@ -111,6 +131,6 @@ export default function Awards() {
             ))}
         </CenterCarousel>
       </Stack>
-    </Box>
+    </StyledBox>
   );
 }

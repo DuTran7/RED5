@@ -3,7 +3,10 @@ import { AboutTabs } from 'components/ukit/Tabs';
 import { useState } from 'react';
 import { theme } from 'theme';
 import Awards from './Awards';
+import ContactUs from './ContactUs';
 import Culture from './Culture';
+import Megazines from './Megazines';
+import PressAndRecognition from './PressAndRecognition';
 import Teams from './Teams';
 
 export default function AboutPage() {
@@ -18,6 +21,7 @@ export default function AboutPage() {
         display: 'flex',
         background: theme.palette.common.black,
         height: 'calc(100vh - 84px)',
+        overflowY: 'hidden',
         overflowX: 'auto',
       }}
       position={'relative'}
@@ -39,6 +43,9 @@ export default function AboutPage() {
       <Culture />
       <Teams />
       <Awards />
+      <PressAndRecognition />
+      <Megazines />
+      <ContactUs />
     </Box>
   );
 }
