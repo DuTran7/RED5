@@ -3,6 +3,23 @@ import HomePage from 'components/pages/Home/HomePage';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
+  const name = [
+    'Showtime Coffee',
+    'The Running Bean',
+    'Dreamcape',
+    'Asanoha',
+    'September Coffee 2',
+    'Bevel House',
+    'Doors Apartment',
+    'Sunday Apartment',
+    'Hybird Bar',
+    `Chi's Apartment`,
+    'PNJ Concept',
+    `Gang’s Apartment`,
+    'September Coffee',
+    '247 Home',
+    'Yakisaki Resutaurant',
+  ];
   const imgs = [
     {
       image: '/imgs/okkio.png',
@@ -130,10 +147,37 @@ export default function Home() {
       ],
     },
   ];
-  let rs = [];
-  for (let i = 0; i < 18; i++) {
-    rs.push(i % 2 == 0 ? imgs[0] : imgs[1]);
+  let rs = [
+    imgs[0],
+    imgs[1],
+    {
+      image: '/imgs/showtimecoffee.png',
+      banner: '/imgs/okkio-banner.png',
+      name: 'Anh Coffee Roastery',
+      design: 'Red5 Studio',
+      construction: 'Red5studio + Ben Decor',
+      client: `Libe'`,
+      partner: 'Ben Decor, Jati Tile, Light Art',
+      area: '243m2',
+      location: '114 Nguyen Gia Tri, Binh Thanh District, Ho Chi Minh city',
+      photo: 'Đỗ Sỹ',
+    },
+  ];
+  for (let i = 0; i < name.length; i++) {
+    rs.push({
+      image: '/imgs/showtimecoffee.png',
+      banner: '/imgs/okkio-banner.png',
+      name: name[i],
+      design: 'Red5 Studio',
+      construction: 'Red5studio + Ben Decor',
+      client: `Libe'`,
+      partner: 'Ben Decor, Jati Tile, Light Art',
+      area: '243m2',
+      location: '114 Nguyen Gia Tri, Binh Thanh District, Ho Chi Minh city',
+      photo: 'Đỗ Sỹ',
+    });
   }
+
   const [chapters, setChapters] = useState(rs);
 
   return (

@@ -39,7 +39,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
             horizontal: 'right',
           }}
         >
-          <Component {...pageProps} />
+          <div className={classCommon + ' ' + clientType}>
+            <Component {...pageProps} />
+          </div>
         </SnackbarProvider>
       </ThemeProvider>
     </NextAuthProvider>
