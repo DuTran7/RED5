@@ -2,7 +2,6 @@ import { Box, Stack } from '@mui/material';
 import { AboutTabs } from 'components/ukit/Tabs';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { Element } from 'react-scroll';
 import { theme } from 'theme';
 import Awards from './Awards';
 import ContactUs from './ContactUs';
