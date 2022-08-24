@@ -44,7 +44,7 @@ export default function Megazines() {
       >
         {listImg &&
           listImg.map((e, i) => (
-            <Stack flexBasis={'12.2%'}>
+            <Stack flexBasis={'12.2%'} key={i}>
               <img src={e} key={i} width={200} height={250} alt={'loading'} />
             </Stack>
           ))}

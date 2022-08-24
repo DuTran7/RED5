@@ -22,16 +22,6 @@ export default function PressAndRecognition() {
     '/icons/blackberry-5.svg',
   ];
 
-  const listLogo2 = [
-    <RetailDesignBlogIcon />,
-    <RetailDesignBlogIcon />,
-    <RetailDesignBlogIcon />,
-    <RetailDesignBlogIcon />,
-    <RetailDesignBlogIcon />,
-    <RetailDesignBlogIcon />,
-    <RetailDesignBlogIcon />,
-    <RetailDesignBlogIcon />,
-  ];
   return (
     <Box
       sx={{
