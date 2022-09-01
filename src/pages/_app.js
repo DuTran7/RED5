@@ -2,7 +2,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { Provider as NextAuthProvider } from 'next-auth/client';
 import { SnackbarProvider } from 'notistack';
-import { isMobile, isAndroid, isChrome } from 'react-device-detect';
+import { isMobile, isAndroid, isChrome, isDesktop } from 'react-device-detect';
 // import 'semantic-ui-css/semantic.min.css';
 import StyledGlobalStyles from 'components/ukit/GlobalStyles';
 import { useEffect, useState } from 'react';
@@ -25,22 +25,25 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       setClassCommon('chrome');
     }
 
+    if (isDesktop) {
+      const scrollContainer =
+        document.getElementsByClassName('scroll-horizontal');
+
+      // scrollContainer.addEventListener('wheel', (evt) => {
+      //   evt.preventDefault();
+      //   scrollContainer.scrollLeft += evt.deltaY;
+      // });
+
+      for (let item of scrollContainer) {
+        item.addEventListener('wheel', (evt) => {
+          evt.preventDefault();
+          item.scrollLeft += evt.deltaY;
+        });
+      }
+    }
+
     if (isMobile) {
       setClientType('mobile');
-    }
-    const scrollContainer =
-      document.getElementsByClassName('scroll-horizontal');
-
-    // scrollContainer.addEventListener('wheel', (evt) => {
-    //   evt.preventDefault();
-    //   scrollContainer.scrollLeft += evt.deltaY;
-    // });
-
-    for (let item of scrollContainer) {
-      item.addEventListener('wheel', (evt) => {
-        evt.preventDefault();
-        item.scrollLeft += evt.deltaY;
-      });
     }
   }, [router.asPath]);
   return (
