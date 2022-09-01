@@ -11,7 +11,7 @@ export default function ScrollContainer({ children, height, ...other }) {
         display: 'flex',
         background: theme.palette.common.black,
         overflowY: 'hidden',
-        overflowX: 'hidden',
+        overflowX: 'scroll',
         height: height || 'calc(100vh - 84px)',
       }}
       position={'relative'}

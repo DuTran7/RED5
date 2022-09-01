@@ -228,6 +228,7 @@ a {
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
+  background-color: 'transparent';
 }
 
 .SnackbarContainer-root {
@@ -239,7 +240,8 @@ a {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #bababa;
+  background-color: 'transparent';
+  /* background-color: #bababa; */
   border-radius: 20px;
   border: 2px solid transparent;
   background-clip: content-box;
