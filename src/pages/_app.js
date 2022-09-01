@@ -11,8 +11,10 @@ import { PAYPAL_CLIENT_ID } from 'utils/constants';
 import '../../styles/globals.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { useRouter } from 'next/router';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+  const router = useRouter();
   const [clientType, setClientType] = useState(null);
   const [classCommon, setClassCommon] = useState(null);
 
@@ -26,7 +28,21 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     if (isMobile) {
       setClientType('mobile');
     }
-  }, []);
+    const scrollContainer =
+      document.getElementsByClassName('scroll-horizontal');
+
+    // scrollContainer.addEventListener('wheel', (evt) => {
+    //   evt.preventDefault();
+    //   scrollContainer.scrollLeft += evt.deltaY;
+    // });
+
+    for (let item of scrollContainer) {
+      item.addEventListener('wheel', (evt) => {
+        evt.preventDefault();
+        item.scrollLeft += evt.deltaY;
+      });
+    }
+  }, [router.asPath]);
   return (
     <NextAuthProvider session={session}>
       <StyledGlobalStyles />

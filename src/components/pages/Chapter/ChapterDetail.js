@@ -10,6 +10,7 @@ import ShortInfoChapter from './ShortInfoChapter';
 import DescriptionChapter from './DescriptionChapter';
 import PhotosCard from './PhotosCard';
 import Awards from '../About/Awards';
+import ScrollContainer from 'components/shared/ScrollContainer';
 export default function ChapterDetail() {
   const router = useRouter();
   const [chapter, setChapter] = useState({});
@@ -26,16 +27,7 @@ export default function ChapterDetail() {
     setChapter({ ...chapter, ...data });
   }, []);
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        background: theme.palette.common.black,
-        overflowX: 'auto',
-        height: '100vh',
-      }}
-      position={'relative'}
-      minWidth={'100vw'}
-    >
+    <ScrollContainer height={'100vh'}>
       <Stack
         width={'80px'}
         flexGrow={0}
@@ -100,6 +92,6 @@ export default function ChapterDetail() {
           <PhotosCard key={i} photos={p} />
         ))}
       </Stack>
-    </Box>
+    </ScrollContainer>
   );
 }

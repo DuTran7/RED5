@@ -1,4 +1,5 @@
 import { Box, Stack, Typography } from '@mui/material';
+import ScrollContainer from 'components/shared/ScrollContainer';
 import { ChapterCarousel } from 'components/ukit/Carousel';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -21,16 +22,7 @@ export default function HomePage(props) {
     setChapters(props?.chapterList);
   }, [props?.chapterList]);
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        background: theme.palette.common.black,
-        overflowX: 'auto',
-        height: 'calc(100vh - 84px)',
-      }}
-      position={'relative'}
-      minWidth={'100vw'}
-    >
+    <ScrollContainer>
       {/* <ChapterCarousel>
         {chapters?.map((c, i) => (
           <Box
@@ -67,6 +59,6 @@ export default function HomePage(props) {
           <ChapterCard data={c} chapNo={++i} name={c?.name} image={c?.image} />
         </Box>
       ))}
-    </Box>
+    </ScrollContainer>
   );
 }

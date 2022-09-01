@@ -1,4 +1,5 @@
 import { Box, Stack } from '@mui/material';
+import ScrollContainer from 'components/shared/ScrollContainer';
 import { AboutTabs } from 'components/ukit/Tabs';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -26,17 +27,7 @@ export default function AboutPage() {
     }
   }, [value]);
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        background: theme.palette.common.black,
-        height: 'calc(100vh - 84px)',
-        overflowY: 'hidden',
-        overflowX: 'auto',
-      }}
-      position={'relative'}
-      minWidth={'100vw'}
-    >
+    <ScrollContainer>
       <Stack
         flexGrow={0}
         position={'sticky'}
@@ -64,6 +55,6 @@ export default function AboutPage() {
       <div id="contact">
         <ContactUs />
       </div>
-    </Box>
+    </ScrollContainer>
   );
 }
