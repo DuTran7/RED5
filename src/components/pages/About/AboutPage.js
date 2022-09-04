@@ -40,6 +40,7 @@ export default function AboutPage() {
         zIndex={3}
         width={'fit-content'}
         sx={{
+          transform: 'translateX(-20px)',
           background:
             'linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0) 104.37%)',
         }}

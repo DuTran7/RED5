@@ -50,7 +50,7 @@ export default function Teams() {
         // minWidth={'calc(100vw - 80px)'}
         p={'120px 200px 0 160px'}
       >
-        <Stack width={'690px'} height={'100%'} rowGap={3}>
+        <Stack width={'50vw'} height={'100%'} rowGap={3}>
           <Typography variant={'h2'} color={'text.primary'}>
             Are you looking for a tame and timid digital studio? Well keep
             looking.

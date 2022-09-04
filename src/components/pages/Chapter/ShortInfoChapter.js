@@ -14,7 +14,7 @@ export default function ShortInfoChapter({ chapter }) {
       }}
       minWidth={'calc(100vw - 80px)'}
     >
-      <Stack flexGrow={1}>
+      <Stack flexGrow={1} maxHeight={'90vh'}>
         <Box
           position={'relative'}
           sx={{

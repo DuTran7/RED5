@@ -103,14 +103,14 @@ export const theme = responsiveFontSizes(
     components: {},
     transitions: {
       duration: {
-        shortest: 150,
-        shorter: 200,
-        short: 250,
-        standard: 300,
-        complex: 375,
-        enteringScreen: 225,
+        shortest: 180,
+        shorter: 230,
+        short: 280,
+        standard: 330,
+        complex: 395,
+        enteringScreen: 255,
         // recommended when something is leaving screen
-        leavingScreen: 195,
+        leavingScreen: 225,
       },
     },
   })

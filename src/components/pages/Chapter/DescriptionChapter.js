@@ -14,7 +14,7 @@ export default function DescriptionChapter({ chapter }) {
         flexDirection: 'column',
         background: theme.palette.common.black,
       }}
-      minWidth={'calc(100vw - 84px)'}
+      minWidth={'calc(100vw - 484px)'}
       p={8}
     >
       <Stack flexGrow={1}>

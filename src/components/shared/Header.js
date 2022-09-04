@@ -83,10 +83,15 @@ const Header = (props) => {
           showLabels
           sx={{
             justifyContent: 'flex-end',
+            '& .MuiBottomNavigationAction-label .MuiTypography-root': {
+              color: theme.palette.common.white,
+              opacity: 0.5,
+            },
             background: '#00000000',
             '& .MuiBottomNavigationAction-label.Mui-selected .MuiTypography-root':
               {
                 color: theme.palette.primary.main,
+                opacity: 1,
               },
           }}
           value={itemSelected}
