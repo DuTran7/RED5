@@ -9,14 +9,23 @@ export default function Culture() {
         background: theme.palette.common.black,
       }}
       minWidth={'calc(100vw)'}
-      height={'calc(100vh - 84px)'}
-      borderRight={'1px solid ' + theme.palette.divider}
+      height={{
+        xs: 'auto',
+        md: 'calc(100vh - 84px)',
+      }}
+      borderRight={{
+        xs: 'none',
+        md: '1px solid ' + theme.palette.divider,
+      }}
     >
       <Stack
         width={'100%'}
         height={'100%'}
         rowGap={3}
-        p={'0 222px 0 232px'}
+        p={{
+          xs: '80px 16px',
+          md: '0 222px 0 232px',
+        }}
         justifyContent={'center'}
       >
         <Typography variant={'subtitle2'} color={'text.primary'}>

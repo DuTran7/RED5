@@ -3,7 +3,7 @@ import { Pagination, Stack, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { theme } from 'theme';
 
-export default function AddressList() {
+export default function AddressList({ isMobile }) {
   const data = [
     'Hybird bar',
     'September Coffee',
@@ -14,6 +14,7 @@ export default function AddressList() {
   ];
   const [listAddress, setListAddress] = useState(data || []);
   const [page, setPage] = useState(1);
+  const [mobile, setMobile] = useState(false);
   const handleChange = (event, value) => {
     setPage(value);
   };
@@ -27,6 +28,9 @@ export default function AddressList() {
       )
     );
   }, [page]);
+  useEffect(() => {
+    setMobile(isMobile);
+  }, [isMobile]);
   return (
     <Stack
       justifyContent={'center'}
@@ -37,7 +41,10 @@ export default function AddressList() {
           <Stack
             direction={'row'}
             key={i}
-            height={'74px'}
+            height={{
+              xs: '52px',
+              md: '74px',
+            }}
             alignItems={'center'}
             justifyContent={'space-between'}
             borderBottom={'1px solid ' + theme.palette.divider}
@@ -49,12 +56,25 @@ export default function AddressList() {
               },
             }}
           >
-            <Typography variant="body1" height={'fit-content'}>
+            <Typography
+              variant="body1"
+              height={'fit-content'}
+              sx={{
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+              }}
+              title={e}
+            >
               {e}
             </Typography>
             <NorthEast
               sx={{
-                fill: theme.palette.text.secondary,
+                fill: {
+                  xs: theme.palette.text.primary,
+                  md: theme.palette.text.secondary,
+                },
+                fontSize: '20px',
               }}
             />
           </Stack>
@@ -62,8 +82,9 @@ export default function AddressList() {
       <Stack py={'29px'}>
         <Pagination
           count={100}
-          siblingCount={3}
+          siblingCount={mobile ? 2 : 3}
           page={page}
+          boundaryCount={mobile ? 0 : 1}
           onChange={handleChange}
           sx={{
             '.MuiPagination-ul': {

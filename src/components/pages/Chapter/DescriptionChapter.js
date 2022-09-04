@@ -15,13 +15,20 @@ export default function DescriptionChapter({ chapter }) {
         background: theme.palette.common.black,
       }}
       minWidth={'calc(100vw - 484px)'}
-      p={8}
+      p={{
+        xs: '80px 16px',
+        md: 8,
+      }}
+      rowGap={5}
     >
       <Stack flexGrow={1}>
         <Box
           width={'100%'}
           sx={{
-            columnCount: 2,
+            columnCount: {
+              xs: 1,
+              md: 2,
+            },
             columnGap: '50px',
             paddingBottom: '10px',
           }}

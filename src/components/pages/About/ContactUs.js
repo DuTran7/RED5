@@ -3,9 +3,19 @@ import Image from 'next/image';
 import { theme } from 'theme';
 
 export default function ContactUs() {
-  const StyledDiv = ({ title, children }) => {
+  const StyledDiv = ({ title, children, showBorder = true }) => {
     return (
-      <Stack rowGap={3} p={'64px 80px 0'}>
+      <Stack
+        rowGap={3}
+        p={{
+          xs: '0 0 32px',
+          md: '64px 80px 0',
+        }}
+        borderBottom={{
+          xs: showBorder && '1px solid ' + theme.palette.divider,
+          md: 'none',
+        }}
+      >
         <Typography variant="h2">{title}</Typography>
         <Stack rowGap={3}>{children}</Stack>
       </Stack>
@@ -43,11 +53,20 @@ export default function ContactUs() {
   return (
     <Box
       sx={{
-        display: 'flex',
+        display: {
+          xs: 'block',
+          md: 'flex',
+        },
         background: theme.palette.common.black,
-        height: 'calc(100vh)',
-        overflowX: 'auto',
-        overflowY: 'hidden',
+        height: {
+          xs: 'auto',
+          md: 'calc(100vh)',
+        },
+        overflowX: {
+          xs: 'unset',
+          md: 'auto',
+        },
+        overflowY: 'overlay',
         borderLeft: '1px solid ' + theme.palette.divider,
       }}
       minWidth={'calc(100vw)'}
@@ -59,6 +78,10 @@ export default function ContactUs() {
             xs={12}
             md={4}
             borderRight={'1px solid ' + theme.palette.divider}
+            p={{
+              xs: '80px 16px 32px',
+              md: 0,
+            }}
           >
             <StyledDiv title={'Contact'}>
               <Typography variant={'body1'} color={'text.secondary'}>
@@ -105,6 +128,10 @@ export default function ContactUs() {
             xs={12}
             md={4}
             borderRight={'1px solid ' + theme.palette.divider}
+            p={{
+              xs: '0 16px 32px',
+              md: 0,
+            }}
           >
             <StyledDiv title={'Join us'}>
               <Typography variant={'body1'} color={'text.secondary'}>
@@ -112,7 +139,7 @@ export default function ContactUs() {
               </Typography>
               <ul
                 style={{
-                  listStyleType: 'circle',
+                  listStyleType: 'square',
                   padding: '0 0 0 16px',
                 }}
               >
@@ -154,8 +181,16 @@ export default function ContactUs() {
               </Box>
             </StyledDiv>
           </Grid>
-          <Grid item xs={12} md={4}>
-            <StyledDiv title={'Follow'}>
+          <Grid
+            item
+            xs={12}
+            md={4}
+            p={{
+              xs: '0 16px 0',
+              md: 0,
+            }}
+          >
+            <StyledDiv title={'Follow'} showBorder={false}>
               <Typography variant={'body1'} color={'text.secondary'}>
                 {`Or follow us via social chanels`}
               </Typography>
@@ -209,12 +244,17 @@ export default function ContactUs() {
           flexGrow={1}
           height={'100%'}
           width={'100%'}
+          minHeight={'356px'}
+          // mt={10}
           sx={{
             backgroundImage:
               'linear-gradient(180deg, rgb(0 0 0 / 99%) 0%, #00000000 100%), url("/imgs/contact-bg.png")',
             // background:
             //   'linear-gradient(180deg, rgb(0 0 0 / 99%) 0%, #000000 100%)',
-            transform: 'translateY(-18%) scaleY(1.4)',
+            transform: {
+              xs: 'translateY(-50%) scaleY(2)',
+              md: 'translateY(-18%) scaleY(1.4)',
+            },
             backgroundPosition: 'bottom',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',

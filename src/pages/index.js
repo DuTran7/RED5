@@ -163,7 +163,7 @@ export default function Home() {
       photo: 'Đỗ Sỹ',
     },
   ];
-  for (let i = 0; i < name.length; i++) {
+  for (let i = 0; i < name?.length; i++) {
     rs.push({
       image: '/imgs/showtimecoffee.png',
       banner: '/imgs/okkio-banner.png',

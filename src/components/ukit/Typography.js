@@ -5,6 +5,9 @@ import { theme } from 'theme';
 const StyledTypography = styled(Typography)(({ theme, color }) => ({
   color: color || theme.palette.text.primary,
   display: 'inline',
+  // whiteSpace: 'nowrap',
+  // textOverflow: 'ellipsis',
+  // overflow: 'hidden',
 }));
 
 export const StyledFirstLetter = styled(Typography)(

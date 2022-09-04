@@ -4,8 +4,9 @@ import Slider from 'react-slick';
 export const ChapterCarousel = ({ children }) => {
   const settings = {
     className: 'center',
-    infinite: false,
+    infinite: true,
     centerPadding: '60px',
+    // defa
     slidesToShow: 7.2,
     swipeToSlide: true,
     responsive: [
@@ -36,7 +37,7 @@ export const ChapterCarousel = ({ children }) => {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 1.5,
         },
       },
     ],
@@ -87,7 +88,7 @@ export const LogoCarousel = ({ children }) => {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 1.7,
         },
       },
     ],
@@ -108,7 +109,7 @@ export const CenterCarousel = ({ children, onChange }) => {
     className: 'center',
     centerMode: true,
     infinite: true,
-    centerPadding: '0px',
+    centerPadding: '0',
     slidesToShow: 3,
     focusOnSelect: true,
     arrows: false,
@@ -136,13 +137,13 @@ export const CenterCarousel = ({ children, onChange }) => {
       {
         breakpoint: 600,
         settings: {
-          // slidesToShow: 5.1,
+          slidesToShow: 1.2,
         },
       },
       {
         breakpoint: 480,
         settings: {
-          // slidesToShow: 3,
+          slidesToShow: 1.2,
         },
       },
     ],

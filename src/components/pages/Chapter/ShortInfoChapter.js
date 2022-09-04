@@ -9,14 +9,18 @@ export default function ShortInfoChapter({ chapter }) {
   return (
     <Box
       sx={{
-        display: 'flex',
+        display: {
+          xs: 'block',
+          md: 'flex',
+        },
         background: theme.palette.common.black,
       }}
       minWidth={'calc(100vw - 80px)'}
     >
-      <Stack flexGrow={1} maxHeight={'90vh'}>
+      <Stack flexGrow={1}>
         <Box
           position={'relative'}
+          mt={10}
           sx={{
             display: 'flex',
             flexGrow: 1,
@@ -27,7 +31,17 @@ export default function ShortInfoChapter({ chapter }) {
             backgroundPosition: 'bottom',
           }}
         >
-          <Stack position={'absolute'} right={'26.67px'} bottom={'36.67px'}>
+          <Stack
+            position={'absolute'}
+            right={'26.67px'}
+            bottom={'36.67px'}
+            sx={{
+              display: {
+                xs: 'none',
+                md: 'flex',
+              },
+            }}
+          >
             <EastIcon
               sx={{
                 color: theme.palette.common.white,
@@ -36,13 +50,27 @@ export default function ShortInfoChapter({ chapter }) {
             />
           </Stack>
         </Box>
-        <Stack p={5} rowGap={3}>
+        <Stack
+          p={{
+            xs: 2,
+            md: 5,
+          }}
+          pt={{
+            xs: 3,
+            md: 5,
+          }}
+          rowGap={3}
+        >
           <Typography variant={'h1'} color={'text.primary'}>
             {chapter.name}
           </Typography>
           <Stack
-            direction={'row'}
+            direction={{
+              xs: 'column',
+              md: 'row',
+            }}
             columnGap={'60px'}
+            rowGap={2}
             width={'100%'}
             justifyContent={'space-between'}
           >

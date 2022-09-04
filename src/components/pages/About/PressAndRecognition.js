@@ -12,7 +12,7 @@ import {
   VietceteraIcon,
 } from '../../shared/icons';
 import AddressList from './AddressList';
-export default function PressAndRecognition() {
+export default function PressAndRecognition({ isMobile }) {
   const [indexSelected, setIndexSelected] = useState(-1);
   const listLogo = [
     <RetailDesignBlogIcon
@@ -125,10 +125,29 @@ export default function PressAndRecognition() {
         display: 'flex',
         background: theme.palette.common.black,
       }}
-      minWidth={'calc(100vw - 80px)'}
+      minWidth={{
+        xs: '100vw',
+        md: 'calc(100vw - 80px)',
+      }}
     >
-      <Stack width={'100vw'} height={'100%'} rowGap={3} p={'64px 120px 0'}>
-        <Typography variant={'h2'} color={'text.primary'} mr={'55px'}>
+      <Stack
+        width={'100vw'}
+        height={'100%'}
+        rowGap={3}
+        p={{
+          xs: '80px 16px',
+          md: '64px 120px 0',
+        }}
+      >
+        <Typography
+          variant={'h2'}
+          fontSize={{
+            xs: '40px',
+            md: '52px',
+          }}
+          color={'text.primary'}
+          mr={'55px'}
+        >
           {`Press & Recognition`}
         </Typography>
         <Stack
@@ -136,6 +155,10 @@ export default function PressAndRecognition() {
             background:
               'linear-gradient(180deg, rgb(0 0 0) 0%, #1c1c1c61 100%)',
             padding: '0 20px',
+            '& .slick-slide': {
+              width: 'fit-content !important',
+              marginRight: 3,
+            },
           }}
         >
           <LogoCarousel>
@@ -151,7 +174,7 @@ export default function PressAndRecognition() {
               ))}
           </LogoCarousel>
         </Stack>
-        <AddressList />
+        <AddressList isMobile={isMobile} />
       </Stack>
     </Box>
   );

@@ -11,6 +11,8 @@ import DescriptionChapter from './DescriptionChapter';
 import PhotosCard from './PhotosCard';
 import Awards from '../About/Awards';
 import ScrollContainer from 'components/shared/ScrollContainer';
+import HardCoverVertical from './HardCoverVertical';
+import HardCoverHorizontal from './HardCoverHorizontal';
 export default function ChapterDetail() {
   const router = useRouter();
   const [chapter, setChapter] = useState({});
@@ -28,66 +30,22 @@ export default function ChapterDetail() {
   }, []);
   return (
     <ScrollContainer height={'100vh'}>
-      <Stack
-        width={'80px'}
-        flexGrow={0}
-        position={'sticky'}
-        zIndex={3}
-        borderRight={'1px solid ' + theme.palette.divider}
-        left={0}
-        top={0}
-        sx={{
-          background: theme.palette.common.black,
-        }}
-      >
-        <Stack
-          width={'100%'}
-          height={'80px'}
-          justifyContent={'center'}
-          alignItems={'center'}
-          borderBottom={'1px solid ' + theme.palette.divider}
-          onClick={() => router.push('/')}
-          sx={{
-            '&:hover': {
-              background: 'rgba(255, 255, 255, 0.1)',
-              cursor: 'pointer',
-            },
-          }}
-        >
-          <CloseIcon
-            sx={{
-              fontSize: '40px',
-              color: theme.palette.common.white,
-            }}
-          />
-        </Stack>
-        <Stack
-          width={'80px'}
-          height={'100%'}
-          position={'relative'}
-          borderRight={'1px solid ' + theme.palette.divider}
-          sx={{
-            background: theme.palette.common.black,
-          }}
-        >
-          <Typography
-            variant={'h4'}
-            color={'text.primary'}
-            sx={{
-              position: 'absolute',
-              left: '50%',
-              transformOrigin: '-2% 68%',
-              transform: 'rotate(90deg)',
-            }}
-            width={'max-content'}
-          >
-            {chapter?.name}
-          </Typography>
-        </Stack>
-      </Stack>
+      <HardCoverVertical chapter={chapter} />
+      <HardCoverHorizontal chapter={chapter} />
       <ShortInfoChapter chapter={chapter} />
       <DescriptionChapter chapter={chapter} />
-      <Stack direction={'row'} columnGap={2}>
+      <Stack
+        direction={{
+          xs: 'column',
+          md: 'row',
+        }}
+        columnGap={2}
+        p={{
+          xs: 2,
+          md: 0,
+        }}
+        rowGap={4}
+      >
         {chapter?.album?.map((p, i) => (
           <PhotosCard key={i} photos={p} />
         ))}

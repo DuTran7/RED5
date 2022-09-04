@@ -204,6 +204,10 @@ a {
 a:hover {
   color: #cf1f25;
 }
+.image-gallery {
+  height: 73vh;
+  width: 40vh;
+}
 @font-face {
   font-family: 'Red5 Helvetica';
   src: url('~/public/fonts/OTF/Red5-Helvetica Light.otf');

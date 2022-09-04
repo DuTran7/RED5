@@ -12,18 +12,32 @@ const StyledBox = ({ children }) => {
       sx={{
         display: 'flex',
         background: theme.palette.common.black,
+        '& .slick-list': {
+          paddingLeft: {
+            xs: '98px !important',
+            md: '0px !important',
+          },
+        },
         '& .slick-track': {
           display: 'flex',
           alignItems: 'flex-end',
         },
         '& .slick-active, & .slick-slide': {
-          padding: '0 40px',
+          padding: {
+            xs: '0 8px',
+            md: '0 40px',
+          },
           opacity: '0.25',
           '.award-item': {
             // width: '400px !important',
             '& img': {
               width: '18vw !important',
-              height: '21vw !important',
+              height: {
+                xs: '74vw !important',
+                md: '21vw !important',
+              },
+              // minHeight: '300px !important',
+              // minWidth: '300px !important',
             },
           },
           '& .MuiTypography-root': {
@@ -39,12 +53,20 @@ const StyledBox = ({ children }) => {
             // width: '400px !important',
             '& img': {
               width: '20vw !important',
-              height: '25vw !important',
+              height: {
+                xs: '79vw !important',
+                md: '23vw !important',
+              },
+              // minHeight: '310px !important',
+              // minWidth: '310px !important',
             },
           },
         },
       }}
-      width={'calc(100vw - 80px)'}
+      width={{
+        xs: '100%',
+        md: 'calc(100vw - 80px)',
+      }}
     >
       {children}
     </Box>
@@ -62,17 +84,17 @@ export default function Awards() {
     },
     {
       image: '/imgs/Award.png',
-      name: 'THE BEST OF RETAIL DESIGN SILVER AWARD 2019',
+      name: 'THE BEST OF RETAIL DESIGN SILVER AWARD 2020',
       project: 'Nguyen Anh Tu',
     },
     {
       image: '/imgs/Award.png',
-      name: 'THE BEST OF RETAIL DESIGN SILVER AWARD 2019',
+      name: 'THE BEST OF RETAIL DESIGN SILVER AWARD 2021',
       project: 'Nguyen Anh Tu',
     },
     {
       image: '/imgs/Award.png',
-      name: 'THE BEST OF RETAIL DESIGN SILVER AWARD 2019',
+      name: 'THE BEST OF RETAIL DESIGN SILVER AWARD 2022',
       project: 'Nguyen Anh Tu',
     },
   ]);
@@ -90,7 +112,10 @@ export default function Awards() {
         justifyContent={'flex-start'}
         alignContent={'center'}
         alignItems={'center'}
-        p={'64px 80px'}
+        p={{
+          xs: '80px 0px',
+          md: '64px 80px',
+        }}
         rowGap={3}
         sx={{}}
       >
@@ -132,7 +157,14 @@ export default function Awards() {
           />
           {/* </Stack> */}
         </Backdrop>
-        <Typography variant={'h2'} color={'text.primary'} mb={3}>
+        <Typography
+          variant={'h2'}
+          color={'text.primary'}
+          mb={{
+            xs: 0,
+            md: 3,
+          }}
+        >
           Awards
         </Typography>
         <CenterCarousel onChange={setCurIndex}>

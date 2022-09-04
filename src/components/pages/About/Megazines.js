@@ -49,14 +49,23 @@ export default function Megazines() {
       sx={{
         display: 'flex',
         background: theme.palette.common.black,
-        height: 'calc(100vh - 84px)',
+        height: {
+          xs: 'auto',
+          md: 'calc(100vh - 84px)',
+        },
         overflowX: 'auto',
       }}
       minWidth={'100vw'}
     >
       <Stack
-        minWidth={'calc(100vw - 80px)'}
-        p={'64px 120px 100px 140px'}
+        minWidth={{
+          xs: '100vw',
+          md: 'calc(100vw - 80px)',
+        }}
+        p={{
+          xs: '80px 16px',
+          md: '64px 120px 100px 140px',
+        }}
         direction={'row'}
         flexWrap={'wrap'}
         alignItems={'center'}
@@ -83,6 +92,7 @@ export default function Megazines() {
               position: 'absolute',
               right: '20px',
               top: '20px',
+              zIndex: 4,
             }}
             onClick={handleClose}
           >
@@ -90,7 +100,7 @@ export default function Megazines() {
               sx={{
                 fill: '#ffffff',
                 fontSize: '40px',
-                opacity: '0.4',
+                opacity: '0.5',
               }}
             />
           </Button>
@@ -108,7 +118,10 @@ export default function Megazines() {
         {listImg &&
           listImg.map((e, i) => (
             <Stack
-              flexBasis={'12.2%'}
+              flexBasis={{
+                xs: '46.5%',
+                md: '12.2%',
+              }}
               key={i}
               onClick={handleToggle}
               sx={{

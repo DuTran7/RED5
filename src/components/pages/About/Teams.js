@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { theme } from 'theme';
 import PersonInfo from './PersonInfo';
 
-export default function Teams() {
+export default function Teams({ isMobile }) {
   const [teams, setTeams] = useState([
     {
       src: '/imgs/NV1.png',
@@ -34,13 +34,23 @@ export default function Teams() {
   return (
     <Box
       sx={{
-        display: 'flex',
+        display: {
+          xs: 'block',
+          md: 'flex',
+        },
         background: theme.palette.common.black,
         overflowY: 'hidden',
-        overflowX: 'scroll',
-        height: 'calc(100vh - 84px)',
+        overflowX: 'overlay',
+        height: {
+          xs: 'auto',
+          md: 'calc(100vh)',
+        },
       }}
-      minWidth={'100vw'}
+      position={'relative'}
+      minWidth={{
+        xs: 'none',
+        md: '100vw',
+      }}
     >
       <Box
         sx={{
@@ -48,9 +58,19 @@ export default function Teams() {
           background: theme.palette.common.black,
         }}
         // minWidth={'calc(100vw - 80px)'}
-        p={'120px 200px 0 160px'}
+        p={{
+          xs: '80px 16px',
+          md: '15vw 200px 0 160px',
+        }}
       >
-        <Stack width={'50vw'} height={'100%'} rowGap={3}>
+        <Stack
+          width={{
+            xs: '100%',
+            md: '50vw',
+          }}
+          height={'100%'}
+          rowGap={3}
+        >
           <Typography variant={'h2'} color={'text.primary'}>
             Are you looking for a tame and timid digital studio? Well keep
             looking.
@@ -66,18 +86,33 @@ export default function Teams() {
       </Box>
       <Box
         sx={{
-          display: 'flex',
+          display: {
+            xs: 'block',
+            md: 'flex',
+          },
           background: theme.palette.common.black,
           columnGap: 15,
+          direction: {
+            xs: 'column',
+            md: 'row',
+          },
         }}
-        pr={'160px'}
-        borderRight={'1px solid ' + theme.palette.divider}
+        pr={{
+          xs: 0,
+          md: '160px',
+        }}
+        borderRight={{
+          xs: 'none',
+          md: '1px solid ' + theme.palette.divider,
+        }}
+
         // minWidth={'calc(100vw - 80px)'}
       >
         {teams &&
           teams?.map((e, i) => (
             <PersonInfo
               key={i}
+              isMobile={isMobile}
               src={e?.src}
               name={e?.name}
               position={e?.position}

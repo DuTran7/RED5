@@ -76,6 +76,10 @@ const Header = (props) => {
         justifyContent={'space-between'}
         height={'84px'}
         p={3}
+        px={{
+          xs: '16px',
+          md: '24px',
+        }}
         alignItems={'center'}
       >
         <Logo onClick={() => setItemSelected(HEADER_KEY.HOME)} />
@@ -83,6 +87,16 @@ const Header = (props) => {
           showLabels
           sx={{
             justifyContent: 'flex-end',
+            '& .MuiButtonBase-root': {
+              paddingX: {
+                xs: '0',
+                md: '12px',
+              },
+              alignItems: {
+                xs: 'flex-end',
+                md: 'center',
+              },
+            },
             '& .MuiBottomNavigationAction-label .MuiTypography-root': {
               color: theme.palette.common.white,
               opacity: 0.5,

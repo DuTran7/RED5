@@ -59,7 +59,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           }}
         >
           <div className={classCommon + ' ' + clientType}>
-            <Component {...pageProps} />
+            <Component {...pageProps} isMobile={isMobile} />
           </div>
         </SnackbarProvider>
       </ThemeProvider>

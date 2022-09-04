@@ -13,52 +13,83 @@ export default function HomePage(props) {
   const { chapterList } = props;
   const [chapters, setChapters] = useState(chapterList);
   const navigateToChapterDetail = (obj) => {
+    console.log(obj);
     const slug = String(obj.name)?.split(' ').join('-');
     localStorage.setItem('CHAPTER', JSON.stringify(obj));
     router.push(ROUTER.CHAPTER + slug);
   };
   useEffect(() => {
-    console.log(chapters);
     setChapters(props?.chapterList);
   }, [props?.chapterList]);
   return (
-    <ScrollContainer>
-      {/* <ChapterCarousel>
-        {chapters?.map((c, i) => (
-          <Box
-            key={i}
-            borderRight={'1px solid'}
-            borderColor={theme.palette.divider}
-            overflow={'none auto'}
-            // minWidth={'200px'}
-          >
-            <ChapterCard
-              data={c}
-              chapNo={++i}
-              name={c?.name}
-              image={c?.image}
-              onClick={navigateToChapterDetail}
-            />
-          </Box>
-        ))}
-      </ChapterCarousel> */}
-      {chapters?.map((c, i) => (
-        <Box
-          key={i}
-          borderRight={'1px solid'}
-          borderColor={theme.palette.divider}
-          overflow={'auto hidden'}
-          minWidth={'241px'}
-          onClick={() => navigateToChapterDetail(c)}
-          sx={{
-            '&:hover': {
-              cursor: 'pointer',
-            },
-          }}
-        >
-          <ChapterCard data={c} chapNo={++i} name={c?.name} image={c?.image} />
-        </Box>
-      ))}
-    </ScrollContainer>
+    <>
+      <Box
+        sx={{
+          display: {
+            xs: 'flex',
+            md: 'none',
+          },
+          background: theme.palette.common.black,
+          overflowY: 'hidden',
+          overflowX: 'scroll',
+          height: 'calc(100vh)',
+        }}
+        position={'relative'}
+        minWidth={'100vw'}
+      >
+        <ChapterCarousel>
+          {chapters?.map((c, i) => (
+            <Box
+              key={i}
+              borderRight={'1px solid'}
+              borderColor={theme.palette.divider}
+              overflow={'none auto'}
+              onClick={() => navigateToChapterDetail(c)}
+              // minWidth={'200px'}
+            >
+              <ChapterCard
+                data={c}
+                chapNo={++i}
+                name={c?.name}
+                image={c?.image}
+              />
+            </Box>
+          ))}
+        </ChapterCarousel>
+      </Box>
+      <Box
+        sx={{
+          display: {
+            xs: 'none',
+            md: 'flex',
+          },
+        }}
+      >
+        <ScrollContainer>
+          {chapters?.map((c, i) => (
+            <Box
+              key={i}
+              borderRight={'1px solid'}
+              borderColor={theme.palette.divider}
+              overflow={'auto hidden'}
+              minWidth={'241px'}
+              onClick={() => navigateToChapterDetail(c)}
+              sx={{
+                '&:hover': {
+                  cursor: 'pointer',
+                },
+              }}
+            >
+              <ChapterCard
+                data={c}
+                chapNo={++i}
+                name={c?.name}
+                image={c?.image}
+              />
+            </Box>
+          ))}
+        </ScrollContainer>
+      </Box>
+    </>
   );
 }
