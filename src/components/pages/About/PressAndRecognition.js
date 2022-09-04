@@ -16,6 +16,7 @@ export default function PressAndRecognition() {
   const [indexSelected, setIndexSelected] = useState(-1);
   const listLogo = [
     <RetailDesignBlogIcon
+      key={'retail'}
       viewBox="0 0 80 80"
       sx={{
         fontSize: '80px',
@@ -28,6 +29,7 @@ export default function PressAndRecognition() {
     />,
 
     <DesignBoomIcon
+      key={'boom'}
       viewBox="0 0 180 80"
       sx={{
         fontSize: '80px',
@@ -35,6 +37,7 @@ export default function PressAndRecognition() {
       }}
     />,
     <VietceteraIcon
+      key={'vietcetera'}
       viewBox="0 0 143 80"
       sx={{
         fontSize: '80px',
@@ -42,6 +45,7 @@ export default function PressAndRecognition() {
       }}
     />,
     <ElleDecorationIcon
+      key={'ElleDecorationIcon'}
       viewBox="0 0 120 80"
       sx={{
         fontSize: '80px',
@@ -49,6 +53,7 @@ export default function PressAndRecognition() {
       }}
     />,
     <OfficeSnapshotsIcon
+      key={'OfficeSnapshotsIcon'}
       viewBox="0 0 125 80"
       sx={{
         fontSize: '80px',
@@ -57,6 +62,7 @@ export default function PressAndRecognition() {
     />,
 
     <Icon6
+      key={'Icon6'}
       viewBox="0 0 80 80"
       sx={{
         fontSize: '80px',
@@ -64,6 +70,7 @@ export default function PressAndRecognition() {
       }}
     />,
     <RetailDesignBlogIcon
+      key={'RetailDesignBlogIcon'}
       viewBox="0 0 80 80"
       sx={{
         fontSize: '80px',
@@ -71,6 +78,7 @@ export default function PressAndRecognition() {
       }}
     />,
     <DesignBoomIcon
+      key={'DesignBoomIcon'}
       viewBox="0 0 180 80"
       sx={{
         fontSize: '80px',
@@ -78,6 +86,7 @@ export default function PressAndRecognition() {
       }}
     />,
     <VietceteraIcon
+      key={'VietceteraIcon'}
       viewBox="0 0 143 80"
       sx={{
         fontSize: '80px',
@@ -133,8 +142,8 @@ export default function PressAndRecognition() {
             {listLogo &&
               listLogo?.map((el, i) => (
                 <StyledIcon
-                  onClick={() => setIndexSelected(i)}
                   key={i}
+                  onClick={() => setIndexSelected(i)}
                   isActive={indexSelected === i}
                 >
                   {el}
