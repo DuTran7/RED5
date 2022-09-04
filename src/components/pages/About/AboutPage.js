@@ -23,20 +23,25 @@ export default function AboutPage() {
   useEffect(() => {
     if (value) {
       const element = document.getElementById(value);
-      element?.scrollIntoView({ behavior: 'smooth' });
+      element?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'start',
+      });
     }
   }, [value]);
   return (
     <ScrollContainer>
       <Stack
         flexGrow={0}
-        position={'sticky'}
+        position={'fixed'}
         left={0}
         top={0}
+        zIndex={3}
         width={'fit-content'}
         sx={{
           background:
-            'linear-gradient(180deg, rgb(0 0 0 / 99%) 0%, #000000 100%)',
+            'linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0) 104.37%)',
         }}
       >
         <AboutTabs value={value} onChange={handleChange} />
@@ -44,7 +49,9 @@ export default function AboutPage() {
       <div id="culture">
         <Culture />
       </div>
-      <Teams />
+      <div id="team">
+        <Teams />
+      </div>
       <div id="awards">
         <Awards />
       </div>

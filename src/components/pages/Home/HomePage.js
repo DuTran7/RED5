@@ -48,7 +48,7 @@ export default function HomePage(props) {
           borderRight={'1px solid'}
           borderColor={theme.palette.divider}
           overflow={'auto hidden'}
-          minWidth={'200px'}
+          minWidth={'241px'}
           onClick={() => navigateToChapterDetail(c)}
           sx={{
             '&:hover': {

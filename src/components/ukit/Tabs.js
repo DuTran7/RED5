@@ -43,7 +43,7 @@ export const StyledTabs = styled(Tabs)(({}) => ({
     transform: 'rotate(90deg)',
     margin: '24px 0 0',
     '&.Mui-selected': {
-      color: theme.palette.text.primary,
+      color: theme.palette.primary.main,
       borderBottomWidth: '2px',
       '&::before': {
         content: '""',

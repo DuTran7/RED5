@@ -12,7 +12,7 @@ export default function ScrollContainer({ children, height, ...other }) {
         background: theme.palette.common.black,
         overflowY: 'hidden',
         overflowX: 'scroll',
-        height: height || 'calc(100vh - 84px)',
+        height: height || 'calc(100vh)',
       }}
       position={'relative'}
       minWidth={'100vw'}

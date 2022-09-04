@@ -201,6 +201,9 @@ a {
 .paypal-button-number-1 {
   display: none;
 }
+a:hover {
+  color: #cf1f25;
+}
 @font-face {
   font-family: 'Red5 Helvetica';
   src: url('~/public/fonts/OTF/Red5-Helvetica Light.otf');

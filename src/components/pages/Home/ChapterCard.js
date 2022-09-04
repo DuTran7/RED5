@@ -27,7 +27,7 @@ export default function ChapterCard({ chapNo, name, image, onClick, data }) {
         position={'relative'}
       >
         <Typography
-          variant={'h3'}
+          variant={'h2'}
           color={'text.primary'}
           sx={{
             position: 'absolute',

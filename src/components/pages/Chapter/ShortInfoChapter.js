@@ -18,9 +18,13 @@ export default function ShortInfoChapter({ chapter }) {
         <Box
           position={'relative'}
           sx={{
+            display: 'flex',
+            flexGrow: 1,
             backgroundImage: `url('${chapter.banner}')`,
             width: '100%',
             height: '476px',
+            backgroundSize: 'cover',
+            backgroundPosition: 'bottom',
           }}
         >
           <Stack position={'absolute'} right={'26.67px'} bottom={'36.67px'}>

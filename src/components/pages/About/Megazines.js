@@ -115,7 +115,13 @@ export default function Megazines() {
                 cursor: 'pointer',
               }}
             >
-              <img src={e} key={i} width={200} height={250} alt={'loading'} />
+              <Image
+                src={e}
+                key={i}
+                width={580}
+                height={1000}
+                alt={'loading'}
+              />
             </Stack>
           ))}
       </Stack>

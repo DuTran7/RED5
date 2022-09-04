@@ -65,8 +65,9 @@ const Header = (props) => {
         left: 0,
         right: 0,
         background:
-          'linear-gradient(180deg, rgb(0 0 0 / 99%) 0%, #000000 100%)',
+          ' linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%)',
         borderRadius: 0,
+        zIndex: 3,
       }}
       elevation={3}
     >

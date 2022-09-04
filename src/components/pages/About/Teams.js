@@ -32,29 +32,37 @@ export default function Teams() {
     },
   ]);
   return (
-    <>
+    <Box
+      sx={{
+        display: 'flex',
+        background: theme.palette.common.black,
+        overflowY: 'hidden',
+        overflowX: 'scroll',
+        height: 'calc(100vh - 84px)',
+      }}
+      minWidth={'100vw'}
+    >
       <Box
         sx={{
           display: 'flex',
           background: theme.palette.common.black,
         }}
-        minWidth={'calc(100vw - 80px)'}
+        // minWidth={'calc(100vw - 80px)'}
+        p={'120px 200px 0 160px'}
       >
-        <div id="team" style={{ width: '100vw' }}>
-          <Stack width={'100vw'} height={'100%'} rowGap={3} p={'120px 142px 0'}>
-            <Typography variant={'h2'} color={'text.primary'}>
-              Are you looking for a tame and timid digital studio? Well keep
-              looking.
-            </Typography>
-            <Typography variant={'h5'} color={'text.secondary'}>
-              Red5studio is an Interior design firm based in Saigon, which
-              specializes in residential, apartment, retail, hospitality, and
-              commercial practices. We provide a full-service that starts from
-              the concept development to the final construction. Red5studio was
-              founded by Interior Designer Lai Chinh Truc
-            </Typography>
-          </Stack>
-        </div>
+        <Stack width={'690px'} height={'100%'} rowGap={3}>
+          <Typography variant={'h2'} color={'text.primary'}>
+            Are you looking for a tame and timid digital studio? Well keep
+            looking.
+          </Typography>
+          <Typography variant={'h5'} color={'text.secondary'}>
+            Red5studio is an Interior design firm based in Saigon, which
+            specializes in residential, apartment, retail, hospitality, and
+            commercial practices. We provide a full-service that starts from the
+            concept development to the final construction. Red5studio was
+            founded by Interior Designer Lai Chinh Truc
+          </Typography>
+        </Stack>
       </Box>
       <Box
         sx={{
@@ -76,6 +84,6 @@ export default function Teams() {
             />
           ))}
       </Box>
-    </>
+    </Box>
   );
 }

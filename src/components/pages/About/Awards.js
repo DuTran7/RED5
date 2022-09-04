@@ -23,7 +23,7 @@ const StyledBox = ({ children }) => {
             // width: '400px !important',
             '& img': {
               width: '18vw !important',
-              height: '18vw !important',
+              height: '21vw !important',
             },
           },
           '& .MuiTypography-root': {
@@ -39,7 +39,7 @@ const StyledBox = ({ children }) => {
             // width: '400px !important',
             '& img': {
               width: '20vw !important',
-              height: '20vw !important',
+              height: '25vw !important',
             },
           },
         },
@@ -165,11 +165,15 @@ export default function Awards() {
               >
                 <Image
                   src={e.image}
-                  width={'400px'}
-                  height={'400px'}
+                  width={'800px'}
+                  height={'800px'}
                   alt={'award'}
                 />
-                <Stack justifyContent={'center'} alignItems={'center'}>
+                <Stack
+                  justifyContent={'center'}
+                  alignItems={'center'}
+                  mt={'18px'}
+                >
                   <Typography variant={'body1'} color={'text.primary'}>
                     {e?.name}
                   </Typography>

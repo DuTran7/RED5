@@ -45,15 +45,15 @@ export default function ContactUs() {
       sx={{
         display: 'flex',
         background: theme.palette.common.black,
-        height: 'calc(100vh - 84px)',
+        height: 'calc(100vh)',
         overflowX: 'auto',
         overflowY: 'hidden',
         borderLeft: '1px solid ' + theme.palette.divider,
       }}
-      minWidth={'100vw'}
+      minWidth={'calc(100vw)'}
     >
       <Stack width={'100%'}>
-        <Grid container>
+        <Grid container zIndex={1}>
           <Grid
             item
             xs={12}
@@ -67,7 +67,7 @@ export default function ContactUs() {
               <StyledLabelContent title={'Email'}>
                 <Typography
                   variant={'body1'}
-                  color={'primary.main'}
+                  color={'text.primary'}
                   minWidth={'90px'}
                   sx={{
                     textDecoration: 'underline',
@@ -207,12 +207,21 @@ export default function ContactUs() {
         </Grid>
         <Stack
           flexGrow={1}
-          height={'89%'}
+          height={'100%'}
           width={'100%'}
           sx={{
-            background: 'url("/imgs/contact-bg.png")',
+            backgroundImage:
+              'linear-gradient(180deg, rgb(0 0 0 / 99%) 0%, #00000000 100%), url("/imgs/contact-bg.png")',
+            // background:
+            //   'linear-gradient(180deg, rgb(0 0 0 / 99%) 0%, #000000 100%)',
+            transform: 'translateY(-18%) scaleY(1.4)',
+            backgroundPosition: 'bottom',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
           }}
-        ></Stack>
+        >
+          {/* <Image src={'/imgs/8b.jpg'} height="500" width="1300" /> */}
+        </Stack>
       </Stack>
     </Box>
   );
