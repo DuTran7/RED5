@@ -6,6 +6,7 @@ export const ChapterCarousel = ({ children }) => {
     className: 'center',
     infinite: true,
     centerPadding: '60px',
+
     // defa
     slidesToShow: 7.2,
     swipeToSlide: true,
@@ -37,7 +38,7 @@ export const ChapterCarousel = ({ children }) => {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1.5,
+          slidesToShow: 1.534,
         },
       },
     ],

@@ -33,6 +33,9 @@ export default function HomePage(props) {
           overflowY: 'hidden',
           overflowX: 'scroll',
           height: 'calc(100vh)',
+          '& .slick-list': {
+            // padding: '0 0 0 134px !important',
+          },
         }}
         position={'relative'}
         minWidth={'100vw'}
