@@ -54,6 +54,7 @@ export default function Megazines() {
           md: 'calc(100vh - 84px)',
         },
         overflowX: 'auto',
+        overflowY: 'hidden',
       }}
       minWidth={'100vw'}
     >
