@@ -35,14 +35,6 @@ export async function request(
     const response = await fetch(process.env.NEXT_PUBLIC_API + url, options);
     const data = await response.json();
     if (response.status === 403) {
-      try {
-        alert('You not have permission. You was loged out', {
-          variant: 'error',
-        });
-        signOut({ callbackUrl: window.location.origin });
-      } catch (e) {
-        console.log(e);
-      }
     }
 
     return data;

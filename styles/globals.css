@@ -269,3 +269,9 @@ a:hover {
   @supports (-webkit-appearance: none) and (display: flow-root) {
   }
 }
+
+.admin-cms .MuiTableCell-root,
+.admin-cms p,
+.admin-cms .MuiInputBase-input {
+  color: black;
+}

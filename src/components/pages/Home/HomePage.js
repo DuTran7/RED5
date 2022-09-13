@@ -13,11 +13,14 @@ export default function HomePage(props) {
   const { chapterList } = props;
   const [chapters, setChapters] = useState(chapterList);
   const navigateToChapterDetail = (obj) => {
-    console.log(obj);
-    const slug = String(obj.name)?.split(' ').join('-');
+    const slug =
+      String(obj?.detailCategory?.id) +
+      '/' +
+      String(obj?.detailCategory?.name)?.split(' ').join('-');
     localStorage.setItem('CHAPTER', JSON.stringify(obj));
     router.push(ROUTER.CHAPTER + slug);
   };
+
   useEffect(() => {
     setChapters(props?.chapterList);
   }, [props?.chapterList]);
@@ -53,8 +56,8 @@ export default function HomePage(props) {
               <ChapterCard
                 data={c}
                 chapNo={++i}
-                name={c?.name}
-                image={c?.image}
+                name={c?.detailCategory?.name}
+                image={c?.detailCategory?.image}
               />
             </Box>
           ))}
@@ -86,8 +89,8 @@ export default function HomePage(props) {
               <ChapterCard
                 data={c}
                 chapNo={++i}
-                name={c?.name}
-                image={c?.image}
+                name={c?.detailCategory?.name}
+                image={c?.detailCategory?.image}
               />
             </Box>
           ))}

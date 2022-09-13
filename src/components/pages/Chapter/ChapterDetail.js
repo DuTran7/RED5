@@ -13,6 +13,7 @@ import Awards from '../About/Awards';
 import ScrollContainer from 'components/shared/ScrollContainer';
 import HardCoverVertical from './HardCoverVertical';
 import HardCoverHorizontal from './HardCoverHorizontal';
+import { getChapterDetail } from 'components/service/ChapterService';
 export default function ChapterDetail() {
   const router = useRouter();
   const [chapter, setChapter] = useState({});
@@ -20,19 +21,34 @@ export default function ChapterDetail() {
   useEffect(() => {
     const name = router.query.chapter;
     if (name) setChapter({ ...chapter, name });
-    // if (name) setChapter(...chapter, name);
   }, [router.query]);
 
   // fetch data
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem('CHAPTER'));
-    setChapter({ ...chapter, ...data });
-  }, []);
+    const params = router.query?.slug || [];
+    const isSameId =
+      String(data?.detailCategory?.name) === params[1]?.split('-').join(' ');
+    if (
+      String(data?.detailCategory?.name) &&
+      params[1]?.split('-').join(' ') &&
+      !isSameId
+    ) {
+      const getChapter = async (id) => {
+        return id ? await getChapterDetail(id) : null;
+      };
+      getChapter(params[0]).then((res) => {
+        setChapter({ ...res?.data });
+      });
+    } else {
+      setChapter({ ...chapter, ...data });
+    }
+  }, [router.query?.slug]);
   return (
     <ScrollContainer height={'100vh'}>
-      <HardCoverVertical chapter={chapter} />
-      <HardCoverHorizontal chapter={chapter} />
-      <ShortInfoChapter chapter={chapter} />
+      <HardCoverVertical name={chapter?.detailCategory?.name} />
+      <HardCoverHorizontal name={chapter?.detailCategory?.name} />
+      <ShortInfoChapter data={chapter?.detailCategory} />
       <DescriptionChapter chapter={chapter} />
       <Stack
         direction={{
@@ -46,7 +62,7 @@ export default function ChapterDetail() {
         }}
         rowGap={4}
       >
-        {chapter?.album?.map((p, i) => (
+        {chapter?.albums?.map((p, i) => (
           <PhotosCard key={i} photos={p} />
         ))}
       </Stack>

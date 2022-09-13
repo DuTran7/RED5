@@ -4,7 +4,8 @@ import { useRouter } from 'next/router';
 import { theme } from 'theme';
 import EastIcon from '@mui/icons-material/East';
 import LegendBox from './LegendBox';
-export default function ShortInfoChapter({ chapter }) {
+import { IMAGE_SOURCE } from 'utils/constants';
+export default function ShortInfoChapter({ data }) {
   const router = useRouter();
   return (
     <Box
@@ -20,11 +21,14 @@ export default function ShortInfoChapter({ chapter }) {
       <Stack flexGrow={1}>
         <Box
           position={'relative'}
-          mt={10}
+          mt={{
+            xs: 10,
+            md: 0,
+          }}
           sx={{
             display: 'flex',
             flexGrow: 1,
-            backgroundImage: `url('${chapter.banner}')`,
+            backgroundImage: `url('${IMAGE_SOURCE + data?.image}')`,
             width: '100%',
             height: '476px',
             backgroundSize: 'cover',
@@ -62,7 +66,7 @@ export default function ShortInfoChapter({ chapter }) {
           rowGap={3}
         >
           <Typography variant={'h1'} color={'text.primary'}>
-            {chapter.name}
+            {data?.name}
           </Typography>
           <Stack
             direction={{
@@ -74,13 +78,13 @@ export default function ShortInfoChapter({ chapter }) {
             width={'100%'}
             justifyContent={'space-between'}
           >
-            <LegendBox label={'design'} name={chapter?.design} />
-            <LegendBox label={'construction'} name={chapter?.construction} />
-            <LegendBox label={'client'} name={chapter?.client} />
-            <LegendBox label={'partner'} name={chapter?.partner} />
-            <LegendBox label={'area'} name={chapter?.area} />
-            <LegendBox label={'location'} name={chapter?.location} />
-            <LegendBox label={'photo'} name={chapter?.photo} />
+            <LegendBox label={'design'} name={data?.design} />
+            <LegendBox label={'construction'} name={data?.designTeam} />
+            <LegendBox label={'client'} name={data?.client} />
+            <LegendBox label={'partner'} name={data?.material} />
+            <LegendBox label={'area'} name={data?.area} />
+            <LegendBox label={'location'} name={data?.location} />
+            <LegendBox label={'photo'} name={data?.photo} />
           </Stack>
         </Stack>
       </Stack>

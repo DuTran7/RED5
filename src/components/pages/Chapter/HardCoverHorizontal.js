@@ -3,7 +3,7 @@ import { Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { theme } from 'theme';
 
-export default function HardCoverHorizontal({ chapter }) {
+export default function HardCoverHorizontal({ name }) {
   const router = useRouter();
   return (
     <Stack
@@ -12,7 +12,7 @@ export default function HardCoverHorizontal({ chapter }) {
       // flexGrow={0}
       position={'fixed'}
       zIndex={3}
-      borderRight={'1px solid ' + theme.palette.divider}
+      borderBottom={'1px solid ' + theme.palette.divider}
       // left={0}
       // top={0}
       sx={{
@@ -72,7 +72,7 @@ export default function HardCoverHorizontal({ chapter }) {
           }
           width={'max-content'}
         >
-          {chapter?.name}
+          {name}
         </Typography>
       </Stack>
     </Stack>

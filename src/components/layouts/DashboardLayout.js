@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { DashboardNavbar } from 'components/pages/Admin/components/DashboardNavbar';
-import { DashboardSidebar } from 'components/pages/Admin/components/DashboardSidebar';
+import { Navbar } from 'components/pages/Admin/Navbar';
+import { Sidebar } from 'components/pages/Admin/Sidebar';
+import { theme } from 'theme';
 
 const DashboardLayoutRoot = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -27,16 +28,14 @@ export const DashboardLayout = (props) => {
             flex: '1 1 auto',
             flexDirection: 'column',
             width: '100%',
+            background: '#fbfbfb',
           }}
         >
           {children}
         </Box>
       </DashboardLayoutRoot>
-      <DashboardNavbar onSidebarOpen={() => setSidebarOpen(true)} />
-      <DashboardSidebar
-        onClose={() => setSidebarOpen(false)}
-        open={isSidebarOpen}
-      />
+      <Navbar onSidebarOpen={() => setSidebarOpen(true)} />
+      <Sidebar onClose={() => setSidebarOpen(false)} open={isSidebarOpen} />
     </>
   );
 };

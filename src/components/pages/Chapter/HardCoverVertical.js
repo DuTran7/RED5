@@ -3,7 +3,7 @@ import { Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { theme } from 'theme';
 
-export default function HardCoverVertical({ chapter }) {
+export default function HardCoverVertical({ name }) {
   const router = useRouter();
   return (
     <Stack
@@ -64,7 +64,7 @@ export default function HardCoverVertical({ chapter }) {
           }}
           width={'max-content'}
         >
-          {chapter?.name}
+          {name}
         </Typography>
       </Stack>
     </Stack>

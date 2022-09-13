@@ -64,14 +64,14 @@ export default function DescriptionChapter({ chapter }) {
           </Typography>
         </Box>
       </Stack>
-      <Stack width={'100%'}>
+      {/* <Stack width={'100%'}>
         <Image
           src={'/imgs/bottom-img-description.png'}
           height={184}
           width={1322}
           alt={'loading...'}
         />
-      </Stack>
+      </Stack> */}
     </Box>
   );
 }

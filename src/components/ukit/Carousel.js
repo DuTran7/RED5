@@ -6,8 +6,6 @@ export const ChapterCarousel = ({ children }) => {
     className: 'center',
     infinite: true,
     centerPadding: '60px',
-
-    // defa
     slidesToShow: 7.2,
     swipeToSlide: true,
     responsive: [

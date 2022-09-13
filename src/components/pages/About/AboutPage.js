@@ -16,7 +16,6 @@ export default function AboutPage({ isMobile }) {
   const [value, setValue] = useState('culture');
 
   const handleChange = (event, newValue) => {
-    console.log(newValue);
     setValue(newValue);
   };
 

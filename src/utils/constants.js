@@ -4,29 +4,17 @@ export const PAYPAL_CLIENT_ID =
   'AcjSv1tmHo9WHQIsgEUhL1bUTzFynjahzhRcaGSG05Gthew_tS5sjlMC3PYCtDO6dYxjemfv5Q4qESM3';
 export const API_URL = process.env.NEXT_PUBLIC_API;
 export const API = {
-  AUTH_PROFILE: '/auth/profile',
-  REFRESH_TOKEN: '/auth/refresh-token',
-  FORGET_PASSWORD: '/auth/forget-password',
-  CATEGORIES_ALL: '/categories/get-all',
-  CATEGORIES_BY_ID: '/product/by-category-id?categoryId=' + KEY_API,
-  UTILS: '/utils',
-  UTILS_BY_TYPE: '/utils/get-by-name?name=' + KEY_API,
-  UTILS_INIT: '/utils/init',
-  SHOPPING_CART: '/shopping-cart',
-  SHOPPING_CART_BY_USER: '/shopping-cart/get-by-user',
-  PROCESS_TO_CHECKOUT: '/order/process-to-checkout',
-  DELETE_CART_ITME: '/shopping-cart',
-  LOCATION: '/location/get-all',
-  CREATE_ORDER: '/order/checkout',
-  UPDATE_ORDER: '/order/checkout-process',
-  PAYPAL: {
-    CREATE_ORDER: 'https://api-m.sandbox.paypal.com/v2/checkout/orders',
+  CATEGORY: {
+    ALL: '/detail-category/get-all',
+    BY_ID: '/detail-category/get-by-id?idCategory=',
   },
-  CONTACT: '/contact',
-  CONTACT_BY_ID: '/contact/get-by-id?id' + KEY_API,
-  LOCATION: '/location/get-all',
-  LOCATION_BY_ID: '/location/get-by-id?id=',
+  AWARD: {
+    ALL: '/award/get-all',
+    BY_ID: '/award/get-by-id',
+  },
 };
+
+export const IMAGE_SOURCE = process.env.NEXT_PUBLIC_IMAGE_SOURCE || '';
 
 export const PROVIDER_SIGNIN = {
   CREDENTIAL: 'Credentials',
