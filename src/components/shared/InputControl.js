@@ -36,7 +36,7 @@ export default function InputControl({
                 <Typography
                   variant={'subtitle1'}
                   color={focused ? theme.palette.primary.main : 'text.primary'}
-                  width={'150px'}
+                  minWidth={'150px'}
                 >
                   {label}
                 </Typography>
@@ -56,9 +56,14 @@ export default function InputControl({
               }}
             />
             {props?.type === 'file' && (
-              <img src={srcImg} width={'max-content'} style={{
-                width: 'max-content'
-              }} height={200} />
+              <img
+                src={srcImg}
+                width={'max-content'}
+                style={{
+                  width: 'max-content',
+                }}
+                height={200}
+              />
             )}
           </>
         );

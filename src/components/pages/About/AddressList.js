@@ -3,16 +3,16 @@ import { Pagination, Stack, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { theme } from 'theme';
 
-export default function AddressList({ isMobile }) {
-  const data = [
-    'Hybird bar',
-    'September Coffee',
-    'English Town by Red5 Studio, Ho Chi Minh City – Vietnam',
-    'Nguyen Hoang Tu flagship store by Red5 Studio, Ho Chi Minh City – Vietnam',
-    'Hybird bar',
-    'Nguyen Hoang Tu flagship store',
-  ];
-  const [listAddress, setListAddress] = useState(data || []);
+export default function AddressList({ isMobile, data }) {
+  // const data = [
+  //   'Hybird bar',
+  //   'September Coffee',
+  //   'English Town by Red5 Studio, Ho Chi Minh City – Vietnam',
+  //   'Nguyen Hoang Tu flagship store by Red5 Studio, Ho Chi Minh City – Vietnam',
+  //   'Hybird bar',
+  //   'Nguyen Hoang Tu flagship store',
+  // ];
+  const [listAddress, setListAddress] = useState(data?.content || []);
   const [page, setPage] = useState(1);
   const [mobile, setMobile] = useState(false);
   const handleChange = (event, value) => {
@@ -22,11 +22,12 @@ export default function AddressList({ isMobile }) {
   useEffect(() => {
     const itemPerPage = 4;
     setListAddress(
-      data.slice(
+      data?.content?.slice(
         itemPerPage * page - itemPerPage,
         itemPerPage * page + 4 - itemPerPage
       )
     );
+    console.log(listAddress);
   }, [page]);
   useEffect(() => {
     setMobile(isMobile);
@@ -64,9 +65,9 @@ export default function AddressList({ isMobile }) {
                 textOverflow: 'ellipsis',
                 overflow: 'hidden',
               }}
-              title={e}
+              title={e?.name}
             >
-              {e}
+              {e?.name}
             </Typography>
             <NorthEast
               sx={{

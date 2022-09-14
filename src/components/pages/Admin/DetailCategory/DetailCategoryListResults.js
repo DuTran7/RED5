@@ -1,12 +1,7 @@
-import { useState } from 'react';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import PropTypes from 'prop-types';
-import { format } from 'date-fns';
 import {
-  Avatar,
   Box,
+  Button,
   Card,
-  Checkbox,
   Table,
   TableBody,
   TableCell,
@@ -15,9 +10,105 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { getInitials } from 'utils/helper';
+import CreateCategoryDetailForm from 'components/form/CreateCategoryDetailForm';
+import {
+  updateAward,
+  updateFile,
+  uploadFile,
+} from 'components/service/AwardService';
+import { updateDetailCategory } from 'components/service/CategoryDetailService';
+import Albums from 'components/shared/Albums';
+import StyledDialog from 'components/shared/Dialog';
+import { useSnackbar } from 'notistack';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import { IMAGE_SOURCE, ITEM_STATUS } from 'utils/constants';
 
-export const DetailCategoryListResults = ({ data, ...rest }) => {
+export const DetailCategoryListResults = ({
+  data,
+  handleChangeList,
+  onClose,
+  categories,
+  ...rest
+}) => {
+  const { enqueueSnackbar } = useSnackbar();
+  const [open, setOpen] = useState(false);
+  const [openAlbum, setOpenAlbum] = useState(false);
+  const [itemSelected, setItemSelected] = useState(null);
+  const [albumsSelected, setAlbumsSelected] = useState([]);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleCloseAlbum = () => {
+    setOpenAlbum(false);
+  };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClickAlbum = () => {
+    setOpenAlbum(true);
+  };
+
+  const handleAddImage = async (fileUrl, file, description) => {
+    const bodyUploadFile = new FormData();
+    bodyUploadFile.append('image', file);
+    bodyUploadFile.append(
+      'jsonAlbum',
+      JSON.stringify({
+        idDetailCategory: itemSelected?.id,
+        description: description || 'detailCategory id ' + itemSelected?.id,
+      })
+    );
+    const res = await uploadFile(bodyUploadFile);
+    if (!res?.status === 200) {
+      enqueueSnackbar('Upload file failed, please try again!', {
+        variant: 'error',
+      });
+      return;
+    }
+    enqueueSnackbar('Upload image success', {
+      variant: 'success',
+    });
+    handleCloseAlbum();
+    handleChangeList();
+  };
+  const onClickDelImg = async (id) => {
+    const res = await updateFile({
+      id,
+      status: ITEM_STATUS.DEACTIVATED,
+    });
+    if (!res?.status === 200) {
+      enqueueSnackbar('Delete file failed, please try again!', {
+        variant: 'error',
+      });
+      return;
+    }
+    enqueueSnackbar('Delete image success', {
+      variant: 'success',
+    });
+    handleCloseAlbum();
+    handleChangeList();
+  };
+  const onClickDelete = async (id) => {
+    const res = await updateDetailCategory({
+      id,
+      status: ITEM_STATUS.DEACTIVATED,
+    });
+    if (!res?.status === 200) {
+      enqueueSnackbar('Delete category detail failed, please try again!', {
+        variant: 'error',
+      });
+      return;
+    } else {
+      enqueueSnackbar('Delete success', {
+        variant: 'success',
+      });
+      handleCloseAlbum();
+      handleChangeList();
+    }
+  };
   const [selectedDetailCategoryIds, setSelectedDetailCategoryIds] = useState(
     []
   );
@@ -72,71 +163,152 @@ export const DetailCategoryListResults = ({ data, ...rest }) => {
   };
 
   return (
-    <Card {...rest}>
+    <Card
+      className="admin-cms"
+      {...rest}
+      sx={{
+        overflowX: 'auto',
+        mb: 4,
+      }}
+    >
       <PerfectScrollbar>
-        <Box sx={{ minWidth: 1050 }}>
+        <Box>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedDetailCategoryIds.length === data.length}
-                    color="primary"
-                    indeterminate={
-                      selectedDetailCategoryIds.length > 0 &&
-                      selectedDetailCategoryIds.length < data.length
-                    }
-                    onChange={handleSelectAll}
-                  />
-                </TableCell>
+                <TableCell>Action</TableCell>
+                <TableCell>ID</TableCell>
                 <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
+                <TableCell
+                  sx={{
+                    minWidth: '300px',
+                  }}
+                >
+                  Description
+                </TableCell>
+                <TableCell>Image</TableCell>
+                <TableCell>Chapter</TableCell>
+                <TableCell>Albums</TableCell>
+                <TableCell>Design</TableCell>
+                <TableCell>Design Team</TableCell>
+                <TableCell>Client</TableCell>
+                <TableCell>Area</TableCell>
+                <TableCell>Material</TableCell>
                 <TableCell>Location</TableCell>
-                <TableCell>Phone</TableCell>
-                <TableCell>Registration date</TableCell>
+                <TableCell>Photo</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.slice(0, limit).map((d) => (
+              {data.slice(0, limit).map(({ albums, detailCategory }) => (
                 <TableRow
                   hover
-                  key={d.id}
-                  selected={selectedDetailCategoryIds.indexOf(d.id) !== -1}
+                  key={detailCategory.id}
+                  selected={
+                    selectedDetailCategoryIds.indexOf(detailCategory.id) !== -1
+                  }
                 >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedDetailCategoryIds.indexOf(d.id) !== -1}
-                      onChange={(event) => handleSelectOne(event, d.id)}
-                      value="true"
+                  <TableCell>
+                    <Button
+                      onClick={() => {
+                        setItemSelected(detailCategory);
+                        setAlbumsSelected(albums);
+                        handleClickOpen();
+                      }}
+                    >
+                      Update
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        onClickDelete(detailCategory.id);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
+                  <TableCell>{detailCategory.id}</TableCell>
+                  <TableCell>{detailCategory.name}</TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      color={'black'}
+                      title={detailCategory?.description}
+                    >
+                      {detailCategory?.description?.slice(0, 150) + '...'}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <img
+                      src={IMAGE_SOURCE + detailCategory.image}
+                      height={80}
+                      width={'max-content'}
                     />
                   </TableCell>
                   <TableCell>
-                    <Box
+                    {
+                      categories?.find(
+                        (item) =>
+                          item?.categories?.id === detailCategory?.idCategory
+                      )?.categories?.description
+                    }
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      onClick={() => {
+                        setItemSelected(detailCategory);
+                        setAlbumsSelected(albums);
+                        handleClickAlbum();
+                      }}
                       sx={{
-                        alignItems: 'center',
-                        display: 'flex',
+                        '&:hover': {
+                          '& .MuiTypography-body1': {
+                            color: 'blue',
+                          },
+                        },
                       }}
                     >
-                      <Avatar src={d.avatarUrl} sx={{ mr: 2 }}>
-                        {getInitials(d.name)}
-                      </Avatar>
-                      <Typography color="textPrimary" variant="body1">
-                        {d.name}
+                      <Typography variant="body1">
+                        {`View Albums (${albums?.length})`}
                       </Typography>
-                    </Box>
+                    </Button>
+                    <StyledDialog
+                      title={'Albums'}
+                      open={openAlbum}
+                      handleClose={handleCloseAlbum}
+                    >
+                      <Albums
+                        data={albumsSelected}
+                        onClickAddImg={handleAddImage}
+                        onClickDelImg={onClickDelImg}
+                      />
+                    </StyledDialog>
                   </TableCell>
-                  <TableCell>{d.email}</TableCell>
-                  <TableCell>
-                    {`${d.address.city}, ${d.address.state}, ${d.address.country}`}
-                  </TableCell>
-                  <TableCell>{d.phone}</TableCell>
-                  <TableCell>{format(d.createdAt, 'dd/MM/yyyy')}</TableCell>
+                  <TableCell>{detailCategory.design}</TableCell>
+                  <TableCell>{detailCategory.designTeam}</TableCell>
+                  <TableCell>{detailCategory.client}</TableCell>
+                  <TableCell>{detailCategory.area}</TableCell>
+                  <TableCell>{detailCategory.material}</TableCell>
+                  <TableCell>{detailCategory.location}</TableCell>
+                  <TableCell>{detailCategory.photo}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </Box>
       </PerfectScrollbar>
+      <StyledDialog
+        title={'Update Detail Category'}
+        open={open}
+        handleClose={handleClose}
+      >
+        <CreateCategoryDetailForm
+          data={itemSelected}
+          categories={categories}
+          onClose={() => {
+            handleClose();
+            handleChangeList();
+          }}
+        />
+      </StyledDialog>
       <TablePagination
         component="div"
         count={data.length}

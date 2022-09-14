@@ -4,10 +4,7 @@ import {
   updateAward,
   uploadFile,
 } from 'components/service/AwardService';
-import {
-  createCategory,
-  updateCategory,
-} from 'components/service/CategoryService';
+import { createTeam, updateTeam } from 'components/service/TeamService';
 import InputControl from 'components/shared/InputControl';
 import SelectBox from 'components/shared/SelectBox';
 import { useRouter } from 'next/router';
@@ -16,12 +13,12 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IMAGE_SOURCE, ITEM_STATUS } from 'utils/constants';
 
-export default function CreateCategoryForm({ onClose, data = null }) {
+export default function CreateTeamForm({ onClose, data = null }) {
   const { enqueueSnackbar } = useSnackbar();
   const [formData, setFormData] = useState({});
   const [file, setFile] = useState(null);
   const [fileUrl, setFileUrl] = useState(
-    data ? IMAGE_SOURCE + data?.albums?.[0]?.name : null
+    data ? IMAGE_SOURCE + data?.name : null
   );
   const [statusForm, setStatusForm] = useState(ITEM_STATUS.ACTIVATED);
   const router = useRouter();
@@ -31,8 +28,8 @@ export default function CreateCategoryForm({ onClose, data = null }) {
   const { handleSubmit, control, getValues } = useForm({
     defaultValues: {
       id: data?.id,
-      name: data?.name,
-      description: data?.description,
+      actorName: data?.actorName,
+      title: data?.title,
       file: data?.file ? IMAGE_SOURCE + data?.file : null,
     },
   });
@@ -48,15 +45,16 @@ export default function CreateCategoryForm({ onClose, data = null }) {
     let body = new FormData();
     body.append('image', file);
     body.append(
-      'jsonCategory',
+      'jsonAlbum',
       JSON.stringify({
-        name: d?.name,
-        description: d?.description,
+        actorName: d?.actorName,
+        albumType: 'TEAM',
+        title: d?.title,
       })
     );
     if (!data) {
-      // create category
-      const createRes = await createCategory(body);
+      // create award
+      const createRes = await createTeam(body);
       if (!createRes?.status === 200) {
         enqueueSnackbar('Create failed, please try again!', {
           variant: 'error',
@@ -65,7 +63,7 @@ export default function CreateCategoryForm({ onClose, data = null }) {
       }
       onSuccess('Create success');
     } else {
-      //update category
+      //update award
       let fileUrlNew = data?.name;
       if (file) {
         const bodyUploadFile = new FormData();
@@ -73,8 +71,8 @@ export default function CreateCategoryForm({ onClose, data = null }) {
         bodyUploadFile.append(
           'jsonAlbum',
           JSON.stringify({
-            idCategory: data?.id,
-            description: 'category id ' + data?.id,
+            idTeam: data?.id,
+            description: 'team id ' + data?.id,
           })
         );
         const res = await uploadFile(bodyUploadFile);
@@ -88,11 +86,12 @@ export default function CreateCategoryForm({ onClose, data = null }) {
       }
       const bodyReq = {
         id: data?.id,
-        description: d?.description,
-        name: d.name,
         status: statusForm,
+        actorName: d?.actorName,
+        name: fileUrlNew,
+        title: d?.title,
       };
-      const updateRes = await updateCategory(bodyReq);
+      const updateRes = await updateTeam(bodyReq);
       if (!updateRes?.status === 200) {
         enqueueSnackbar('Create failed, please try again!', {
           variant: 'error',
@@ -149,21 +148,21 @@ export default function CreateCategoryForm({ onClose, data = null }) {
         <Grid item xs={12} md={12} lg={6}>
           <InputControl
             control={control}
-            id={'name'}
-            name={'name'}
-            label={'Name:'}
-            onChange={(e) => updateFormValues(e[0].target.value, 'name')}
+            id={'actorName'}
+            name={'actorName'}
+            label={'Actor Name:'}
+            onChange={(e) => updateFormValues(e[0].target.value, 'actorName')}
             type={'text'}
           />
         </Grid>
         <Grid item xs={12} md={12} lg={6}>
           <InputControl
             control={control}
-            id={'description'}
-            name={'description'}
-            label={'Description:'}
-            onChange={(e) => updateFormValues(e[0].target.value, 'description')}
+            id={'title'}
             type={'text'}
+            name={'title'}
+            onChange={(e) => updateFormValues(e[0]?.target.value, 'title')}
+            label={'Title:'}
           />
         </Grid>
         <Grid item xs={12} md={12} lg={6}>

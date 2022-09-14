@@ -56,6 +56,7 @@ export const StyledSelectBox = styled(
               onClick={() => !disabled && setOpen(!open)}
               sx={{
                 fontSize: '20px',
+                fill: theme.palette.common.black,
                 '&:hover': {
                   cursor: 'pointer',
                   fill: theme.palette.primary.main,

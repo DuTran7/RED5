@@ -1,6 +1,8 @@
 import { Box, Stack, Typography } from '@mui/material';
-import { useState } from 'react';
+import { getAllTeams } from 'components/service/TeamService';
+import { useEffect, useState } from 'react';
 import { theme } from 'theme';
+import { IMAGE_SOURCE } from 'utils/constants';
 import PersonInfo from './PersonInfo';
 
 export default function Teams({ isMobile }) {
@@ -31,6 +33,15 @@ export default function Teams({ isMobile }) {
       position: 'interior design',
     },
   ]);
+  const updateData = async () => {
+    const res = await getAllTeams();
+    if (res?.status === 200) {
+      setTeams(res.data);
+    }
+  };
+  useEffect(() => {
+    updateData();
+  }, []);
   return (
     <Box
       sx={{
@@ -113,9 +124,11 @@ export default function Teams({ isMobile }) {
             <PersonInfo
               key={i}
               isMobile={isMobile}
-              src={e?.src}
-              name={e?.name}
-              position={e?.position}
+              src={
+                e?.albums?.[0]?.name ? IMAGE_SOURCE + e?.albums?.[0]?.name : ''
+              }
+              name={e?.team?.actorName}
+              position={e?.team?.title}
             />
           ))}
       </Box>

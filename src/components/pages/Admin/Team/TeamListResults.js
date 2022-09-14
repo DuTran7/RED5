@@ -1,23 +1,89 @@
-import { useState } from 'react';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import PropTypes from 'prop-types';
-import { format } from 'date-fns';
 import {
-  Avatar,
   Box,
+  Button,
   Card,
-  Checkbox,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TablePagination,
   TableRow,
-  Typography,
 } from '@mui/material';
-import { getInitials } from 'utils/helper';
+import CreateTeamForm from 'components/form/CreateTeamForm';
+import { uploadFile } from 'components/service/AwardService';
+import { updateTeam } from 'components/service/TeamService';
+import StyledDialog from 'components/shared/Dialog';
+import { useSnackbar } from 'notistack';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import { IMAGE_SOURCE, ITEM_STATUS } from 'utils/constants';
 
-export const TeamListResults = ({ data, ...rest }) => {
+export const TeamListResults = ({
+  data,
+  handleChangeList,
+  onClose,
+  ...rest
+}) => {
+  const { enqueueSnackbar } = useSnackbar();
+  const [open, setOpen] = useState(false);
+  const [openAlbum, setOpenAlbum] = useState(false);
+  const [teamSelected, setTeamSelected] = useState(null);
+  const [albumsSelected, setAlbumsSelected] = useState([]);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleCloseAlbum = () => {
+    setOpenAlbum(false);
+  };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClickAlbum = () => {
+    setOpenAlbum(true);
+  };
+
+  const handleAddImage = async (fileUrl, file) => {
+    const bodyUploadFile = new FormData();
+    bodyUploadFile.append('image', file);
+    bodyUploadFile.append(
+      'jsonAlbum',
+      JSON.stringify({
+        idTeam: teamSelected?.id,
+        description: 'team id ' + teamSelected?.id,
+      })
+    );
+    const res = await uploadFile(bodyUploadFile);
+    if (!res?.status === 200) {
+      enqueueSnackbar('Upload file failed, please try again!', {
+        variant: 'error',
+      });
+      return;
+    }
+    enqueueSnackbar('Upload image success', {
+      variant: 'success',
+    });
+    handleCloseAlbum();
+    handleChangeList();
+  };
+  const onClickDelImg = async (id) => {
+    const res = await updateTeam({
+      id,
+      status: ITEM_STATUS.DEACTIVATED,
+    });
+    if (!res?.status === 200) {
+      enqueueSnackbar('Delete file failed, please try again!', {
+        variant: 'error',
+      });
+      return;
+    }
+    enqueueSnackbar('Delete image success', {
+      variant: 'success',
+    });
+    handleCloseAlbum();
+    handleChangeList();
+  };
   const [selectedTeamIds, setSelectedTeamIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -67,71 +133,69 @@ export const TeamListResults = ({ data, ...rest }) => {
   };
 
   return (
-    <Card {...rest}>
+    <Card className="admin-cms" {...rest}>
       <PerfectScrollbar>
         <Box sx={{ minWidth: 1050 }}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedTeamIds.length === data.length}
-                    color="primary"
-                    indeterminate={
-                      selectedTeamIds.length > 0 &&
-                      selectedTeamIds.length < data.length
-                    }
-                    onChange={handleSelectAll}
-                  />
-                </TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Location</TableCell>
-                <TableCell>Phone</TableCell>
-                <TableCell>Registration date</TableCell>
+                <TableCell>ID</TableCell>
+                <TableCell>Actor Name</TableCell>
+                <TableCell>Title</TableCell>
+                <TableCell>Image</TableCell>
+                <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.slice(0, limit).map((team) => (
+              {data.slice(0, limit).map(({ team, albums }) => (
                 <TableRow
                   hover
                   key={team.id}
                   selected={selectedTeamIds.indexOf(team.id) !== -1}
                 >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedTeamIds.indexOf(team.id) !== -1}
-                      onChange={(event) => handleSelectOne(event, team.id)}
-                      value="true"
+                  <TableCell>{team.id}</TableCell>
+                  <TableCell>{team.actorName}</TableCell>
+                  <TableCell>{team.title}</TableCell>
+                  <TableCell>
+                    <img
+                      src={IMAGE_SOURCE + team.name}
+                      height={50}
+                      width={50}
                     />
                   </TableCell>
                   <TableCell>
-                    <Box
-                      sx={{
-                        alignItems: 'center',
-                        display: 'flex',
+                    <Button
+                      onClick={() => {
+                        setTeamSelected(team);
+                        setAlbumsSelected(albums);
+                        handleClickOpen();
                       }}
                     >
-                      <Avatar src={team.avatarUrl} sx={{ mr: 2 }}>
-                        {getInitials(team.name)}
-                      </Avatar>
-                      <Typography color="textPrimary" variant="body1">
-                        {team.name}
-                      </Typography>
-                    </Box>
+                      Update
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        onClickDelImg(team.id);
+                      }}
+                    >
+                      Delete
+                    </Button>
                   </TableCell>
-                  <TableCell>{team.email}</TableCell>
-                  <TableCell>
-                    {`${team.address.city}, ${team.address.state}, ${team.address.country}`}
-                  </TableCell>
-                  <TableCell>{team.phone}</TableCell>
-                  <TableCell>{format(team.createdAt, 'dd/MM/yyyy')}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </Box>
       </PerfectScrollbar>
+      <StyledDialog title={'Update Team'} open={open} handleClose={handleClose}>
+        <CreateTeamForm
+          data={teamSelected}
+          onClose={() => {
+            handleClose();
+            handleChangeList();
+          }}
+        />
+      </StyledDialog>
       <TablePagination
         component="div"
         count={data.length}

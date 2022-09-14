@@ -1,10 +1,6 @@
-import { useState } from 'react';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import PropTypes from 'prop-types';
-import { format } from 'date-fns';
 import {
-  Avatar,
   Box,
+  Button,
   Card,
   Checkbox,
   Table,
@@ -13,11 +9,61 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography,
 } from '@mui/material';
-import { getInitials } from 'utils/helper';
+import CreateAwardForm from 'components/form/CreateAwardForm';
+import CreateRecognitionForm from 'components/form/CreateRecognitionForm';
+import { uploadFile } from 'components/service/AwardService';
+import { updateCategory } from 'components/service/CategoryService';
+import { updateRecognition } from 'components/service/RecognitionsService';
+import StyledDialog from 'components/shared/Dialog';
+import { useSnackbar } from 'notistack';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import { ITEM_STATUS } from 'utils/constants';
 
-export const RecognitionListResults = ({ data, ...rest }) => {
+export const RecognitionListResults = ({
+  data,
+  handleChangeList,
+  onClose,
+  ...rest
+}) => {
+  const { enqueueSnackbar } = useSnackbar();
+  const [open, setOpen] = useState(false);
+  const [openAlbum, setOpenAlbum] = useState(false);
+  const [itemSelected, setItemSelected] = useState(null);
+  const [albumsSelected, setAlbumsSelected] = useState([]);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleCloseAlbum = () => {
+    setOpenAlbum(false);
+  };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClickAlbum = () => {
+    setOpenAlbum(true);
+  };
+
+  const onClickDelImg = async (id) => {
+    const res = await updateRecognition({
+      id,
+      status: ITEM_STATUS.DEACTIVATED,
+    });
+    if (!res?.status === 200) {
+      enqueueSnackbar('Delete file failed, please try again!', {
+        variant: 'error',
+      });
+      return;
+    }
+    enqueueSnackbar('Delete image success', {
+      variant: 'success',
+    });
+    handleCloseAlbum();
+    handleChangeList();
+  };
   const [selectedRecognitionIds, setSelectedRecognitionIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -26,7 +72,7 @@ export const RecognitionListResults = ({ data, ...rest }) => {
     let newSelectedRecognitionIds;
 
     if (event.target.checked) {
-      newSelectedRecognitionIds = data.map((p) => p.id);
+      newSelectedRecognitionIds = data?.content?.map((p) => p.id);
     } else {
       newSelectedRecognitionIds = [];
     }
@@ -70,74 +116,68 @@ export const RecognitionListResults = ({ data, ...rest }) => {
   };
 
   return (
-    <Card {...rest}>
+    <Card className="admin-cms" {...rest}>
       <PerfectScrollbar>
         <Box sx={{ minWidth: 1050 }}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedRecognitionIds.length === data.length}
-                    color="primary"
-                    indeterminate={
-                      selectedRecognitionIds.length > 0 &&
-                      selectedRecognitionIds.length < data.length
-                    }
-                    onChange={handleSelectAll}
-                  />
-                </TableCell>
+                <TableCell>ID</TableCell>
                 <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Location</TableCell>
-                <TableCell>Phone</TableCell>
-                <TableCell>Registration date</TableCell>
+                <TableCell>Link</TableCell>
+                <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.slice(0, limit).map((rc) => (
+              {data?.content?.slice(0, limit).map((rc) => (
                 <TableRow
                   hover
                   key={rc.id}
                   selected={selectedRecognitionIds.indexOf(rc.id) !== -1}
                 >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedRecognitionIds.indexOf(rc.id) !== -1}
-                      onChange={(event) => handleSelectOne(event, rc.id)}
-                      value="true"
-                    />
-                  </TableCell>
+                  <TableCell>{rc.id}</TableCell>
+                  <TableCell>{rc.name}</TableCell>
+                  <TableCell>{rc.link}</TableCell>
+
                   <TableCell>
-                    <Box
-                      sx={{
-                        alignItems: 'center',
-                        display: 'flex',
+                    <Button
+                      onClick={() => {
+                        setItemSelected(rc);
+                        handleClickOpen();
                       }}
                     >
-                      <Avatar src={rc.avatarUrl} sx={{ mr: 2 }}>
-                        {getInitials(rc.name)}
-                      </Avatar>
-                      <Typography color="textPrimary" variant="body1">
-                        {rc.name}
-                      </Typography>
-                    </Box>
+                      Update
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        onClickDelImg(rc.id);
+                      }}
+                    >
+                      Delete
+                    </Button>
                   </TableCell>
-                  <TableCell>{rc.email}</TableCell>
-                  <TableCell>
-                    {`${rc.address.city}, ${rc.address.state}, ${rc.address.country}`}
-                  </TableCell>
-                  <TableCell>{rc.phone}</TableCell>
-                  <TableCell>{format(rc.createdAt, 'dd/MM/yyyy')}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </Box>
       </PerfectScrollbar>
+      <StyledDialog
+        title={'Update Recognition'}
+        open={open}
+        handleClose={handleClose}
+      >
+        <CreateRecognitionForm
+          data={itemSelected}
+          onClose={() => {
+            handleClose();
+            handleChangeList();
+          }}
+        />
+      </StyledDialog>
       <TablePagination
         component="div"
-        count={data.length}
+        count={data.totalElements}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleLimitChange}
         page={page}

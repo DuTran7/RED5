@@ -12,7 +12,6 @@ const Awards = () => {
     const res = await getAllAwards();
     if (res?.data) {
       setAwards(res?.data);
-      console.log(res);
     }
   };
   useEffect(() => {
@@ -28,7 +27,7 @@ const Awards = () => {
         sx={{
           flexGrow: 1,
           py: 8,
-          height: '80vh',
+          height: '90vh',
         }}
       >
         <Container maxWidth={false}>

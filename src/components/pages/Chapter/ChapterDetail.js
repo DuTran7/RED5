@@ -13,10 +13,10 @@ import Awards from '../About/Awards';
 import ScrollContainer from 'components/shared/ScrollContainer';
 import HardCoverVertical from './HardCoverVertical';
 import HardCoverHorizontal from './HardCoverHorizontal';
-import { getChapterDetail } from 'components/service/ChapterService';
-export default function ChapterDetail() {
+import { getChapterDetail } from 'components/service/CategoryDetailService';
+export default function ChapterDetail({ data }) {
   const router = useRouter();
-  const [chapter, setChapter] = useState({});
+  const [chapter, setChapter] = useState(data);
 
   useEffect(() => {
     const name = router.query.chapter;
@@ -43,7 +43,7 @@ export default function ChapterDetail() {
     } else {
       setChapter({ ...chapter, ...data });
     }
-  }, [router.query?.slug]);
+  }, []);
   return (
     <ScrollContainer height={'100vh'}>
       <HardCoverVertical name={chapter?.detailCategory?.name} />

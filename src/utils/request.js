@@ -27,7 +27,6 @@ export async function request(
         Authorization: `Bearer ${session?.user?.token}` || '',
       };
     }
-    console.log(body);
     if (method === 'POST' || method === 'PUT') {
       Object.assign(options, { body: JSON.stringify(body) });
     }

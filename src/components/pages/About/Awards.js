@@ -1,10 +1,12 @@
 import CloseIcon from '@mui/icons-material/Close';
 import { Backdrop, Box, Button, Stack, Typography } from '@mui/material';
+import { getAllAwards } from 'components/service/AwardService';
 import { CenterCarousel } from 'components/ukit/Carousel';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ImageGallery from 'react-image-gallery';
 import { theme } from 'theme';
+import { IMAGE_SOURCE } from 'utils/constants';
 
 const StyledBox = ({ children }) => {
   return (
@@ -105,6 +107,16 @@ export default function Awards() {
   const handleToggle = () => {
     setOpen(!open);
   };
+
+  const updateData = async () => {
+    const res = await getAllAwards();
+    if (res?.status === 200) {
+      setAwards(res.data);
+    }
+  };
+  useEffect(() => {
+    updateData();
+  }, []);
   return (
     <StyledBox>
       <Stack
@@ -150,9 +162,9 @@ export default function Awards() {
             showFullscreenButton={false}
             showNav={false}
             thumbnailPosition={'bottom'}
-            items={awards.map((e) => ({
-              original: e.image,
-              thumbnail: e.image,
+            items={awards.map(({ award, albums }) => ({
+              original: IMAGE_SOURCE + award?.name,
+              thumbnail: IMAGE_SOURCE + award?.name,
             }))}
           />
           {/* </Stack> */}
@@ -169,7 +181,7 @@ export default function Awards() {
         </Typography>
         <CenterCarousel onChange={setCurIndex}>
           {awards &&
-            awards?.map((e, i) => (
+            awards?.map(({ award, albums }, i) => (
               <Box
                 className={'award-item'}
                 key={i}
@@ -196,7 +208,7 @@ export default function Awards() {
                 textAlign={'center'}
               >
                 <Image
-                  src={e.image}
+                  src={IMAGE_SOURCE + award?.name}
                   width={'800px'}
                   height={'800px'}
                   alt={'award'}
@@ -207,10 +219,10 @@ export default function Awards() {
                   mt={'18px'}
                 >
                   <Typography variant={'body1'} color={'text.primary'}>
-                    {e?.name}
+                    {award?.title}
                   </Typography>
                   <Typography variant={'body1'} color={'text.primary'}>
-                    Project: {e?.project}
+                    Project: {award?.description}
                   </Typography>
                 </Stack>
               </Box>

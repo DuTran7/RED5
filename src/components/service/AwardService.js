@@ -20,6 +20,16 @@ export const uploadFile = (body) => {
     },
   });
 };
+export const updateFile = (body) => {
+  //   return request('/file/upload', 'POST', body, {
+  //     'Content-Type': 'multipart/form-data',
+  //   });
+  return axios.put(process.env.NEXT_PUBLIC_API + '/file/upload', body, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
 
 export const createAward = (body) => {
   //   return request('/award', 'POST', body, {

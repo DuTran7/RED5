@@ -1,28 +1,19 @@
 import { Button, Grid, Stack } from '@mui/material';
 import {
-  createAward,
-  updateAward,
-  uploadFile,
-} from 'components/service/AwardService';
-import {
-  createCategory,
-  updateCategory,
-} from 'components/service/CategoryService';
+  createRecognition,
+  updateRecognition,
+} from 'components/service/RecognitionsService';
 import InputControl from 'components/shared/InputControl';
-import SelectBox from 'components/shared/SelectBox';
 import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { IMAGE_SOURCE, ITEM_STATUS } from 'utils/constants';
+import { ITEM_STATUS } from 'utils/constants';
 
-export default function CreateCategoryForm({ onClose, data = null }) {
+export default function CreateRecognitionForm({ onClose, data = null }) {
   const { enqueueSnackbar } = useSnackbar();
   const [formData, setFormData] = useState({});
-  const [file, setFile] = useState(null);
-  const [fileUrl, setFileUrl] = useState(
-    data ? IMAGE_SOURCE + data?.albums?.[0]?.name : null
-  );
+
   const [statusForm, setStatusForm] = useState(ITEM_STATUS.ACTIVATED);
   const router = useRouter();
 
@@ -31,9 +22,8 @@ export default function CreateCategoryForm({ onClose, data = null }) {
   const { handleSubmit, control, getValues } = useForm({
     defaultValues: {
       id: data?.id,
+      link: data?.link,
       name: data?.name,
-      description: data?.description,
-      file: data?.file ? IMAGE_SOURCE + data?.file : null,
     },
   });
 
@@ -45,18 +35,12 @@ export default function CreateCategoryForm({ onClose, data = null }) {
   };
 
   const onSubmit = async (d) => {
-    let body = new FormData();
-    body.append('image', file);
-    body.append(
-      'jsonCategory',
-      JSON.stringify({
-        name: d?.name,
-        description: d?.description,
-      })
-    );
     if (!data) {
-      // create category
-      const createRes = await createCategory(body);
+      // create press
+      const createRes = await createRecognition({
+        name: d?.name,
+        link: d?.link,
+      });
       if (!createRes?.status === 200) {
         enqueueSnackbar('Create failed, please try again!', {
           variant: 'error',
@@ -65,36 +49,15 @@ export default function CreateCategoryForm({ onClose, data = null }) {
       }
       onSuccess('Create success');
     } else {
-      //update category
-      let fileUrlNew = data?.name;
-      if (file) {
-        const bodyUploadFile = new FormData();
-        bodyUploadFile.append('image', file);
-        bodyUploadFile.append(
-          'jsonAlbum',
-          JSON.stringify({
-            idCategory: data?.id,
-            description: 'category id ' + data?.id,
-          })
-        );
-        const res = await uploadFile(bodyUploadFile);
-        if (!res?.status === 200) {
-          enqueueSnackbar('Create failed, please try again!', {
-            variant: 'error',
-          });
-          return;
-        }
-        fileUrlNew = res.data?.data;
-      }
       const bodyReq = {
         id: data?.id,
-        description: d?.description,
-        name: d.name,
+        name: d?.name,
+        link: d?.link,
         status: statusForm,
       };
-      const updateRes = await updateCategory(bodyReq);
+      const updateRes = await updateRecognition(bodyReq);
       if (!updateRes?.status === 200) {
-        enqueueSnackbar('Create failed, please try again!', {
+        enqueueSnackbar('Update failed, please try again!', {
           variant: 'error',
         });
         return;
@@ -111,10 +74,6 @@ export default function CreateCategoryForm({ onClose, data = null }) {
   const updateFormValues = (data, name) => {
     setFormData({ ...formData, [name]: data });
   };
-
-  useEffect(() => {
-    if (file) setFileUrl(URL.createObjectURL(file));
-  }, [file]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} method="POST">
@@ -159,44 +118,14 @@ export default function CreateCategoryForm({ onClose, data = null }) {
         <Grid item xs={12} md={12} lg={6}>
           <InputControl
             control={control}
-            id={'description'}
-            name={'description'}
-            label={'Description:'}
-            onChange={(e) => updateFormValues(e[0].target.value, 'description')}
+            id={'link'}
+            name={'link'}
+            label={'Link:'}
+            onChange={(e) => updateFormValues(e[0].target.value, 'link')}
             type={'text'}
           />
         </Grid>
-        <Grid item xs={12} md={12} lg={6}>
-          <InputControl
-            control={control}
-            id={'image'}
-            type={'file'}
-            name={'image'}
-            srcImg={fileUrl}
-            onChange={(e) => {
-              updateFormValues(e[0]?.target.value, 'image');
-              setFile(e[0]?.target.files[0]);
-            }}
-            label={'Image:'}
-          />
-        </Grid>
-        <Grid item xs={12} md={12} lg={6}>
-          <SelectBox
-            titleVariant={'subtitle1'}
-            title={'Status:'}
-            defaultValue={statusForm}
-            disabled={!data}
-            handleChange={handleChangeStatus}
-            options={
-              status?.map((el) => ({
-                value: el,
-                name: el,
-              })) || []
-            }
-            textTransform={'capitalize'}
-            value={statusForm}
-          />
-        </Grid>
+
         {/* 
         <Grid item xs={12} md={12} lg={6}>
           <SelectBox

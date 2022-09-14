@@ -1,5 +1,5 @@
 import InfoIcon from '@mui/icons-material/Info';
-import { Button, Stack } from '@mui/material';
+import { Button, Grid, Stack } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -15,6 +15,7 @@ import { theme } from 'theme';
 export default function Albums({ data = [], onClickAddImg, onClickDelImg }) {
   const [file, setFile] = useState(null);
   const [fileUrl, setFileUrl] = useState(null);
+  const [description, setDescription] = useState(null);
 
   const { handleSubmit, control, getValues } = useForm({
     defaultValues: {
@@ -27,7 +28,7 @@ export default function Albums({ data = [], onClickAddImg, onClickDelImg }) {
   }, [file]);
 
   const onClickAddImage = () => {
-    onClickAddImg?.(fileUrl, file);
+    onClickAddImg?.(fileUrl, file, description);
   };
 
   const onClickDeleteImage = (item) => {
@@ -39,6 +40,14 @@ export default function Albums({ data = [], onClickAddImg, onClickDelImg }) {
         alignItems={'center'}
         border={'1px solid ' + theme.palette.primary.main}
       >
+        <InputControl
+          control={control}
+          id={'description'}
+          name={'description'}
+          label={'Description:'}
+          onChange={(e) => setDescription(e[0].target.value)}
+          type={'text'}
+        />
         <InputControl
           control={control}
           id={'image'}
@@ -56,7 +65,7 @@ export default function Albums({ data = [], onClickAddImg, onClickDelImg }) {
             // mt: 4,
             minWidth: '300px',
             width: '100%',
-            background: theme.palette.common.black
+            background: theme.palette.common.black,
           }}
           onClick={onClickAddImage}
         >

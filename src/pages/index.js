@@ -1,6 +1,7 @@
 import DefaultLayout from 'components/layouts/DefaultLayput';
 import HomePage from 'components/pages/Home/HomePage';
-import { getChapters } from 'components/service/ChapterService';
+import { getChapters } from 'components/service/CategoryDetailService';
+import { getAllCategories } from 'components/service/CategoryService';
 import { useEffect, useState } from 'react';
 
 export default function Home({ data }) {
@@ -194,7 +195,7 @@ export async function getStaticProps() {
 
   // By returning { props: { posts } }, the Blog component
   // will receive `posts` as a prop at build time
-  const req = await getChapters();
+  const req = await getAllCategories();
   return {
     props: {
       data: req?.data,

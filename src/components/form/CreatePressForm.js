@@ -8,6 +8,7 @@ import {
   createCategory,
   updateCategory,
 } from 'components/service/CategoryService';
+import { createPress, updatePress } from 'components/service/PressService';
 import InputControl from 'components/shared/InputControl';
 import SelectBox from 'components/shared/SelectBox';
 import { useRouter } from 'next/router';
@@ -16,12 +17,12 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IMAGE_SOURCE, ITEM_STATUS } from 'utils/constants';
 
-export default function CreateCategoryForm({ onClose, data = null }) {
+export default function CreatePressForm({ onClose, data = null }) {
   const { enqueueSnackbar } = useSnackbar();
   const [formData, setFormData] = useState({});
   const [file, setFile] = useState(null);
   const [fileUrl, setFileUrl] = useState(
-    data ? IMAGE_SOURCE + data?.albums?.[0]?.name : null
+    data ? IMAGE_SOURCE + data?.name : null
   );
   const [statusForm, setStatusForm] = useState(ITEM_STATUS.ACTIVATED);
   const router = useRouter();
@@ -31,9 +32,9 @@ export default function CreateCategoryForm({ onClose, data = null }) {
   const { handleSubmit, control, getValues } = useForm({
     defaultValues: {
       id: data?.id,
-      name: data?.name,
+      title: data?.title,
       description: data?.description,
-      file: data?.file ? IMAGE_SOURCE + data?.file : null,
+      file: data?.name ? IMAGE_SOURCE + data?.name : null,
     },
   });
 
@@ -48,15 +49,17 @@ export default function CreateCategoryForm({ onClose, data = null }) {
     let body = new FormData();
     body.append('image', file);
     body.append(
-      'jsonCategory',
+      'jsonAlbum',
       JSON.stringify({
+        title: d?.title,
         name: d?.name,
         description: d?.description,
+        status: statusForm,
       })
     );
     if (!data) {
-      // create category
-      const createRes = await createCategory(body);
+      // create press
+      const createRes = await createPress(body);
       if (!createRes?.status === 200) {
         enqueueSnackbar('Create failed, please try again!', {
           variant: 'error',
@@ -65,7 +68,7 @@ export default function CreateCategoryForm({ onClose, data = null }) {
       }
       onSuccess('Create success');
     } else {
-      //update category
+      //update press
       let fileUrlNew = data?.name;
       if (file) {
         const bodyUploadFile = new FormData();
@@ -73,8 +76,9 @@ export default function CreateCategoryForm({ onClose, data = null }) {
         bodyUploadFile.append(
           'jsonAlbum',
           JSON.stringify({
-            idCategory: data?.id,
-            description: 'category id ' + data?.id,
+            idPress: data?.id,
+            description: 'press id ' + data?.id,
+            status: statusForm,
           })
         );
         const res = await uploadFile(bodyUploadFile);
@@ -89,10 +93,10 @@ export default function CreateCategoryForm({ onClose, data = null }) {
       const bodyReq = {
         id: data?.id,
         description: d?.description,
-        name: d.name,
+        name: d?.name,
         status: statusForm,
       };
-      const updateRes = await updateCategory(bodyReq);
+      const updateRes = await updatePress(bodyReq);
       if (!updateRes?.status === 200) {
         enqueueSnackbar('Create failed, please try again!', {
           variant: 'error',
@@ -149,10 +153,10 @@ export default function CreateCategoryForm({ onClose, data = null }) {
         <Grid item xs={12} md={12} lg={6}>
           <InputControl
             control={control}
-            id={'name'}
-            name={'name'}
-            label={'Name:'}
-            onChange={(e) => updateFormValues(e[0].target.value, 'name')}
+            id={'title'}
+            name={'title'}
+            label={'Title:'}
+            onChange={(e) => updateFormValues(e[0].target.value, 'title')}
             type={'text'}
           />
         </Grid>
@@ -177,7 +181,18 @@ export default function CreateCategoryForm({ onClose, data = null }) {
               updateFormValues(e[0]?.target.value, 'image');
               setFile(e[0]?.target.files[0]);
             }}
-            label={'Image:'}
+            label={
+              <>
+                <p
+                  style={{
+                    color: 'black',
+                    fontStyle: 'italic',
+                  }}
+                >
+                  Image (please use file .svg)
+                </p>
+              </>
+            }
           />
         </Grid>
         <Grid item xs={12} md={12} lg={6}>

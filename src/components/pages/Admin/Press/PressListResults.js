@@ -1,23 +1,89 @@
-import { useState } from 'react';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import PropTypes from 'prop-types';
-import { format } from 'date-fns';
 import {
-  Avatar,
   Box,
+  Button,
   Card,
-  Checkbox,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TablePagination,
   TableRow,
-  Typography,
 } from '@mui/material';
-import { getInitials } from 'utils/helper';
+import CreatePressForm from 'components/form/CreatePressForm';
+import { uploadFile } from 'components/service/AwardService';
+import { updatePress } from 'components/service/PressService';
+import StyledDialog from 'components/shared/Dialog';
+import { useSnackbar } from 'notistack';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import { theme } from 'theme';
+import { IMAGE_SOURCE, ITEM_STATUS } from 'utils/constants';
+export const PressListResults = ({
+  data,
+  handleChangeList,
+  onClose,
+  ...rest
+}) => {
+  const { enqueueSnackbar } = useSnackbar();
+  const [open, setOpen] = useState(false);
+  const [openAlbum, setOpenAlbum] = useState(false);
+  const [itemSelected, setItemSelected] = useState(null);
+  const [albumsSelected, setAlbumsSelected] = useState([]);
 
-export const PressListResults = ({ data, ...rest }) => {
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleCloseAlbum = () => {
+    setOpenAlbum(false);
+  };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClickAlbum = () => {
+    setOpenAlbum(true);
+  };
+
+  const handleAddImage = async (fileUrl, file) => {
+    const bodyUploadFile = new FormData();
+    bodyUploadFile.append('image', file);
+    bodyUploadFile.append(
+      'jsonAlbum',
+      JSON.stringify({
+        idCategory: categorySelected?.id,
+        description: 'press id ' + categorySelected?.id,
+      })
+    );
+    const res = await uploadFile(bodyUploadFile);
+    if (!res?.status === 200) {
+      enqueueSnackbar('Upload file failed, please try again!', {
+        variant: 'error',
+      });
+      return;
+    }
+    enqueueSnackbar('Upload image success', {
+      variant: 'success',
+    });
+    handleCloseAlbum();
+    handleChangeList();
+  };
+  const onClickDelImg = async (id) => {
+    const res = await updatePress({
+      id,
+      status: ITEM_STATUS.DEACTIVATED,
+    });
+    if (!res?.status === 200) {
+      enqueueSnackbar('Delete file failed, please try again!', {
+        variant: 'error',
+      });
+      return;
+    }
+    enqueueSnackbar('Delete image success', {
+      variant: 'success',
+    });
+    handleCloseAlbum();
+    handleChangeList();
+  };
   const [selectedPressIds, setSelectedPressIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -67,28 +133,17 @@ export const PressListResults = ({ data, ...rest }) => {
   };
 
   return (
-    <Card {...rest}>
+    <Card className="admin-cms" {...rest}>
       <PerfectScrollbar>
         <Box sx={{ minWidth: 1050 }}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedPressIds.length === data.length}
-                    color="primary"
-                    indeterminate={
-                      selectedPressIds.length > 0 &&
-                      selectedPressIds.length < data.length
-                    }
-                    onChange={handleSelectAll}
-                  />
-                </TableCell>
+                <TableCell>ID</TableCell>
                 <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Location</TableCell>
-                <TableCell>Phone</TableCell>
-                <TableCell>Registration date</TableCell>
+                <TableCell>Description</TableCell>
+                <TableCell>Image</TableCell>
+                <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -98,40 +153,57 @@ export const PressListResults = ({ data, ...rest }) => {
                   key={press.id}
                   selected={selectedPressIds.indexOf(press.id) !== -1}
                 >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedPressIds.indexOf(press.id) !== -1}
-                      onChange={(event) => handleSelectOne(event, press.id)}
-                      value="true"
-                    />
+                  <TableCell>{press.id}</TableCell>
+                  <TableCell>{press.title}</TableCell>
+                  <TableCell>{press.description}</TableCell>
+                  <TableCell
+                    sx={{
+                      background: theme.palette.common.black,
+                    }}
+                  >
+                    {press?.name ? (
+                      <img src={IMAGE_SOURCE + press?.name} height={50} />
+                    ) : (
+                      'Not have image'
+                    )}
                   </TableCell>
+
                   <TableCell>
-                    <Box
-                      sx={{
-                        alignItems: 'center',
-                        display: 'flex',
+                    <Button
+                      onClick={() => {
+                        setItemSelected(press);
+                        handleClickOpen();
                       }}
                     >
-                      <Avatar src={press.avatarUrl} sx={{ mr: 2 }}>
-                        {getInitials(press.name)}
-                      </Avatar>
-                      <Typography color="textPrimary" variant="body1">
-                        {press.name}
-                      </Typography>
-                    </Box>
+                      Update
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        onClickDelImg(press.id);
+                      }}
+                    >
+                      Delete
+                    </Button>
                   </TableCell>
-                  <TableCell>{press.email}</TableCell>
-                  <TableCell>
-                    {`${press.address.city}, ${press.address.state}, ${press.address.country}`}
-                  </TableCell>
-                  <TableCell>{press.phone}</TableCell>
-                  <TableCell>{format(press.createdAt, 'dd/MM/yyyy')}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </Box>
       </PerfectScrollbar>
+      <StyledDialog
+        title={'Update Press'}
+        open={open}
+        handleClose={handleClose}
+      >
+        <CreatePressForm
+          data={itemSelected}
+          onClose={() => {
+            handleClose();
+            handleChangeList();
+          }}
+        />
+      </StyledDialog>
       <TablePagination
         component="div"
         count={data.length}

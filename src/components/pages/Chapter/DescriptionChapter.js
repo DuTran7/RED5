@@ -7,6 +7,7 @@ import { ROUTER } from 'utils/constants';
 import Image from 'next/image';
 import LegendBox from './LegendBox';
 export default function DescriptionChapter({ chapter }) {
+  const arr = chapter?.detailCategory?.description.split('<cap>');
   return (
     <Box
       sx={{
@@ -33,14 +34,22 @@ export default function DescriptionChapter({ chapter }) {
             paddingBottom: '10px',
           }}
         >
-          <Typography
-            variant={'caption'}
-            color={'text.primary'}
-          >{`Everyone has a few times skipping class. The spaces where "we" often gather - tennis courts, locker rooms, swimming pools, etc... are the construction's design inspiration. `}</Typography>
-          <Typography mt={3} variant={'body1'} color={'text.secondary'}>
-            {`We want to aim at the dynamic and youthful as the 'Libe brand' is giving young people. Combining colors, lines, shapes on a retro color background creates fun in the space and enhances the product's value.`}{' '}
+          <Typography variant={'caption'} color={'text.primary'}>
+            {arr?.[0]}
+            {/* <Typography variant={'caption'} color={'text.primary'}>
+            {`Everyone has a few times skipping class. The spaces where "we" often gather - tennis courts, locker rooms, swimming pools, etc... are the construction's design inspiration. `} */}
           </Typography>
-          <Typography mt={3} variant={'body1'} color={'text.secondary'}>
+          {arr?.[1]?.split('<br>')?.map((el, i) => (
+            <Typography
+              key={i}
+              mt={3}
+              variant={'body1'}
+              color={'text.secondary'}
+            >
+              {el}
+            </Typography>
+          ))}
+          {/* <Typography mt={3} variant={'body1'} color={'text.secondary'}>
             {`Our construction's facade is inspired by retro cubes made of red
         post-shaped steel covered with an effect paint.`}{' '}
           </Typography>
@@ -61,7 +70,7 @@ export default function DescriptionChapter({ chapter }) {
           </Typography>
           <Typography mt={3} variant={'body1'} color={'text.secondary'}>
             {`The fitting part is a locker - because that's where people store their belongings and transform themselves, opening up the dresser a bit is turning into a party girl ...`}
-          </Typography>
+          </Typography> */}
         </Box>
       </Stack>
       {/* <Stack width={'100%'}>

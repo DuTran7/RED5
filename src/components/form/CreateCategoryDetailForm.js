@@ -1,13 +1,13 @@
-import { Button, Grid, Stack } from '@mui/material';
+import { Button, Grid, Stack, TextareaAutosize } from '@mui/material';
 import {
   createAward,
   updateAward,
   uploadFile,
 } from 'components/service/AwardService';
 import {
-  createCategory,
-  updateCategory,
-} from 'components/service/CategoryService';
+  createDetailCategory,
+  updateDetailCategory,
+} from 'components/service/CategoryDetailService';
 import InputControl from 'components/shared/InputControl';
 import SelectBox from 'components/shared/SelectBox';
 import { useRouter } from 'next/router';
@@ -16,14 +16,20 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IMAGE_SOURCE, ITEM_STATUS } from 'utils/constants';
 
-export default function CreateCategoryForm({ onClose, data = null }) {
+export default function CreateCategoryDetailForm({
+  onClose,
+  data = null,
+  categories = [],
+}) {
   const { enqueueSnackbar } = useSnackbar();
   const [formData, setFormData] = useState({});
   const [file, setFile] = useState(null);
   const [fileUrl, setFileUrl] = useState(
-    data ? IMAGE_SOURCE + data?.albums?.[0]?.name : null
+    data ? IMAGE_SOURCE + data?.image : null
   );
   const [statusForm, setStatusForm] = useState(ITEM_STATUS.ACTIVATED);
+  const [category, setCategory] = useState(data?.idCategory || null);
+  const [description, setDescription] = useState(data?.description || null);
   const router = useRouter();
 
   // init status
@@ -33,6 +39,14 @@ export default function CreateCategoryForm({ onClose, data = null }) {
       id: data?.id,
       name: data?.name,
       description: data?.description,
+      design: data?.design,
+      designTeam: data?.designTeam,
+      client: data?.client,
+      area: data?.area,
+      material: data?.material,
+      location: data?.location,
+      photo: data?.photo,
+      idCategory: data?.idCategory,
       file: data?.file ? IMAGE_SOURCE + data?.file : null,
     },
   });
@@ -48,33 +62,23 @@ export default function CreateCategoryForm({ onClose, data = null }) {
     let body = new FormData();
     body.append('image', file);
     body.append(
-      'jsonCategory',
+      'jsonAlbum',
       JSON.stringify({
-        name: d?.name,
+        actorName: d?.actorName,
+        albumType: 'string',
         description: d?.description,
+        title: d?.title,
       })
     );
     if (!data) {
-      // create category
-      const createRes = await createCategory(body);
-      if (!createRes?.status === 200) {
-        enqueueSnackbar('Create failed, please try again!', {
-          variant: 'error',
-        });
-        return;
-      }
-      onSuccess('Create success');
-    } else {
-      //update category
-      let fileUrlNew = data?.name;
+      let imgUrl = '';
       if (file) {
         const bodyUploadFile = new FormData();
         bodyUploadFile.append('image', file);
         bodyUploadFile.append(
           'jsonAlbum',
           JSON.stringify({
-            idCategory: data?.id,
-            description: 'category id ' + data?.id,
+            description: 'category detail id',
           })
         );
         const res = await uploadFile(bodyUploadFile);
@@ -84,17 +88,70 @@ export default function CreateCategoryForm({ onClose, data = null }) {
           });
           return;
         }
+        imgUrl = res.data?.data;
+      }
+      // create award
+      const createRes = await createDetailCategory({
+        name: d?.name,
+        description: description,
+        design: d?.design,
+        designTeam: d?.designTeam,
+        image: imgUrl,
+        client: d?.client,
+        area: d?.area,
+        material: d?.material,
+        location: d?.location,
+        photo: d?.photo,
+        idCategory: category,
+        status: statusForm,
+      });
+      if (!createRes?.status === 200) {
+        enqueueSnackbar('Create failed, please try again!', {
+          variant: 'error',
+        });
+        return;
+      }
+      onSuccess('Create success');
+    } else {
+      //update award
+      let fileUrlNew = data?.image;
+      if (file) {
+        const bodyUploadFile = new FormData();
+        bodyUploadFile.append('image', file);
+        bodyUploadFile.append(
+          'jsonAlbum',
+          JSON.stringify({
+            idAward: data?.id,
+            description: 'award id ' + data?.id,
+          })
+        );
+        const res = await uploadFile(bodyUploadFile);
+        if (!res?.status === 200) {
+          enqueueSnackbar('Upload image failed, please try again!', {
+            variant: 'error',
+          });
+          return;
+        }
         fileUrlNew = res.data?.data;
       }
       const bodyReq = {
         id: data?.id,
-        description: d?.description,
-        name: d.name,
+        name: d?.name,
+        description: description,
+        design: d?.design,
+        designTeam: d?.designTeam,
+        image: fileUrlNew,
+        client: d?.client,
+        area: d?.area,
+        material: d?.material,
+        location: d?.location,
+        photo: d?.photo,
+        idCategory: category,
         status: statusForm,
       };
-      const updateRes = await updateCategory(bodyReq);
+      const updateRes = await updateDetailCategory(bodyReq);
       if (!updateRes?.status === 200) {
-        enqueueSnackbar('Create failed, please try again!', {
+        enqueueSnackbar('Update failed, please try again!', {
           variant: 'error',
         });
         return;
@@ -106,6 +163,10 @@ export default function CreateCategoryForm({ onClose, data = null }) {
   const handleChangeStatus = (e) => {
     // setStatusForm()
     setStatusForm(e.target.value);
+  };
+  const handleChangeCategory = (e) => {
+    // setStatusForm()
+    setCategory(e.target.value);
   };
 
   const updateFormValues = (data, name) => {
@@ -157,13 +218,92 @@ export default function CreateCategoryForm({ onClose, data = null }) {
           />
         </Grid>
         <Grid item xs={12} md={12} lg={6}>
-          <InputControl
+          {/* <InputControl
             control={control}
             id={'description'}
             name={'description'}
             label={'Description:'}
             onChange={(e) => updateFormValues(e[0].target.value, 'description')}
             type={'text'}
+          /> */}
+          <TextareaAutosize
+            aria-label="Category description"
+            placeholder="description"
+            value={description}
+            style={{ width: 500 }}
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} md={12} lg={6}>
+          <InputControl
+            control={control}
+            id={'designTeam'}
+            name={'designTeam'}
+            label={'Design Team:'}
+            onChange={(e) => updateFormValues(e[0].target.value, 'designTeam')}
+            type={'text'}
+          />
+        </Grid>
+        <Grid item xs={12} md={12} lg={6}>
+          <InputControl
+            control={control}
+            id={'client'}
+            name={'client'}
+            label={'Client:'}
+            onChange={(e) => updateFormValues(e[0].target.value, 'client')}
+            type={'text'}
+          />
+        </Grid>
+        <Grid item xs={12} md={12} lg={6}>
+          <InputControl
+            control={control}
+            id={'area'}
+            name={'area'}
+            label={'Area:'}
+            onChange={(e) => updateFormValues(e[0].target.value, 'area')}
+            type={'text'}
+          />
+        </Grid>
+        <Grid item xs={12} md={12} lg={6}>
+          <InputControl
+            control={control}
+            id={'material'}
+            name={'material'}
+            label={'Material:'}
+            onChange={(e) => updateFormValues(e[0].target.value, 'material')}
+            type={'text'}
+          />
+        </Grid>
+        <Grid item xs={12} md={12} lg={6}>
+          <InputControl
+            control={control}
+            id={'location'}
+            name={'location'}
+            label={'Location:'}
+            onChange={(e) => updateFormValues(e[0].target.value, 'location')}
+            type={'text'}
+          />
+        </Grid>
+        <Grid item xs={12} md={12} lg={6}>
+          <InputControl
+            control={control}
+            id={'photo'}
+            name={'photo'}
+            label={'Photo:'}
+            onChange={(e) => updateFormValues(e[0].target.value, 'photo')}
+            type={'text'}
+          />
+        </Grid>
+        <Grid item xs={12} md={12} lg={6}>
+          <InputControl
+            control={control}
+            id={'design'}
+            type={'text'}
+            name={'design'}
+            onChange={(e) => updateFormValues(e[0]?.target.value, 'design')}
+            label={'Titdesignle:'}
           />
         </Grid>
         <Grid item xs={12} md={12} lg={6}>
@@ -184,7 +324,7 @@ export default function CreateCategoryForm({ onClose, data = null }) {
           <SelectBox
             titleVariant={'subtitle1'}
             title={'Status:'}
-            defaultValue={statusForm}
+            defaultValue={category}
             disabled={!data}
             handleChange={handleChangeStatus}
             options={
@@ -195,6 +335,23 @@ export default function CreateCategoryForm({ onClose, data = null }) {
             }
             textTransform={'capitalize'}
             value={statusForm}
+          />
+        </Grid>
+        {JSON.stringify(categories)}
+        <Grid item xs={12} md={12} lg={6}>
+          <SelectBox
+            titleVariant={'subtitle1'}
+            title={'Chapter:'}
+            defaultValue={category}
+            handleChange={handleChangeCategory}
+            options={
+              categories?.map(({ categories }) => ({
+                value: categories.id,
+                name: categories.description,
+              })) || []
+            }
+            textTransform={'capitalize'}
+            value={category}
           />
         </Grid>
         {/* 

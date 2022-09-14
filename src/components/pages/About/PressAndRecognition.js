@@ -1,8 +1,12 @@
+// import { Image } from '@mui/icons-material';
 import { Box, Stack, Typography } from '@mui/material';
+import { getAllPress } from 'components/service/PressService';
+import { getAllRecognitions } from 'components/service/RecognitionsService';
 import { LogoCarousel } from 'components/ukit/Carousel';
 import Image from 'next/image';
-import { cloneElement, useState } from 'react';
+import { cloneElement, useEffect, useState } from 'react';
 import { theme } from 'theme';
+import { IMAGE_SOURCE } from 'utils/constants';
 import {
   DesignBoomIcon,
   ElleDecorationIcon,
@@ -14,6 +18,8 @@ import {
 import AddressList from './AddressList';
 export default function PressAndRecognition({ isMobile }) {
   const [indexSelected, setIndexSelected] = useState(-1);
+  const [pressList, setPressList] = useState([]);
+  const [recognition, setRecognition] = useState([]);
   const listLogo = [
     <RetailDesignBlogIcon
       key={'retail'}
@@ -119,6 +125,20 @@ export default function PressAndRecognition({ isMobile }) {
       </Box>
     );
   };
+
+  const updateData = async () => {
+    const res = await getAllPress();
+    const res1 = await getAllRecognitions();
+    if (res?.status === 200) {
+      setPressList(res.data);
+    }
+    if (res1?.status === 200) {
+      setRecognition(res1.data);
+    }
+  };
+  useEffect(() => {
+    updateData();
+  }, []);
   return (
     <Box
       sx={{
@@ -162,19 +182,26 @@ export default function PressAndRecognition({ isMobile }) {
           }}
         >
           <LogoCarousel>
-            {listLogo &&
-              listLogo?.map((el, i) => (
+            {pressList &&
+              pressList?.map((el, i) => (
                 <StyledIcon
                   key={i}
                   onClick={() => setIndexSelected(i)}
                   isActive={indexSelected === i}
                 >
-                  {el}
+                  <img
+                    src={IMAGE_SOURCE + el?.name}
+                    viewBox="0 0 180 80"
+                    sx={{
+                      fontSize: '80px',
+                      width: 'fit-content !important',
+                    }}
+                  />
                 </StyledIcon>
               ))}
           </LogoCarousel>
         </Stack>
-        <AddressList isMobile={isMobile} />
+        <AddressList isMobile={isMobile} data={recognition} />
       </Stack>
     </Box>
   );

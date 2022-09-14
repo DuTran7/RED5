@@ -2,7 +2,7 @@ import { Button, Grid, Stack } from '@mui/material';
 import {
   createAward,
   updateAward,
-  uploadFile
+  uploadFile,
 } from 'components/service/AwardService';
 import InputControl from 'components/shared/InputControl';
 import SelectBox from 'components/shared/SelectBox';
@@ -56,7 +56,6 @@ export default function CreateAwardForm({ onClose, data = null }) {
     if (!data) {
       // create award
       const createRes = await createAward(body);
-      console.log(createRes);
       if (!createRes?.status === 200) {
         enqueueSnackbar('Create failed, please try again!', {
           variant: 'error',
@@ -66,8 +65,6 @@ export default function CreateAwardForm({ onClose, data = null }) {
       onSuccess('Create success');
     } else {
       //update award
-      console.log(d);
-      console.log(fileUrl);
       let fileUrlNew = data?.name;
       if (file) {
         const bodyUploadFile = new FormData();
@@ -101,7 +98,6 @@ export default function CreateAwardForm({ onClose, data = null }) {
         enqueueSnackbar('Create failed, please try again!', {
           variant: 'error',
         });
-        console.log('updateRessss');
         return;
       }
       onSuccess('Update success');
@@ -110,7 +106,6 @@ export default function CreateAwardForm({ onClose, data = null }) {
 
   const handleChangeStatus = (e) => {
     // setStatusForm()
-    console.log(e);
     setStatusForm(e.target.value);
   };
 
@@ -199,7 +194,7 @@ export default function CreateAwardForm({ onClose, data = null }) {
         <Grid item xs={12} md={12} lg={6}>
           <SelectBox
             titleVariant={'subtitle1'}
-            title={'City/Provine:'}
+            title={'Status:'}
             defaultValue={statusForm}
             disabled={!data}
             handleChange={handleChangeStatus}

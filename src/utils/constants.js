@@ -5,6 +5,10 @@ export const PAYPAL_CLIENT_ID =
 export const API_URL = process.env.NEXT_PUBLIC_API;
 export const API = {
   CATEGORY: {
+    ALL: '/category/get-all',
+    BY_ID: '/category/get-by-id=',
+  },
+  DETAIL_CATEGORY: {
     ALL: '/detail-category/get-all',
     BY_ID: '/detail-category/get-by-id?idCategory=',
   },
