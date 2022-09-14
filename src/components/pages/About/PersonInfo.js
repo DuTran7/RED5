@@ -25,12 +25,7 @@ export default function PersonInfo({ src, name, position, isMobile }) {
         }}
         height={480}
       >
-        <Image
-          src={src}
-          width={mobile ? 343 : 360}
-          height={480}
-          alt={'staff'}
-        />
+        <img src={src} width={mobile ? 343 : 360} height={480} alt={'staff'} />
         <Stack
           position={'absolute'}
           bottom={0}

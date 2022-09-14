@@ -207,7 +207,7 @@ export default function Awards() {
                 }}
                 textAlign={'center'}
               >
-                <Image
+                <img
                   src={IMAGE_SOURCE + award?.name}
                   width={'800px'}
                   height={'800px'}
