@@ -19,8 +19,26 @@ import {
 import { getInitials } from 'utils/helper';
 import Image from 'next/image';
 import { IMAGE_SOURCE } from 'utils/constants';
+import StyledDialog from 'components/shared/Dialog';
+import CreateAwardForm from 'components/form/CreateAwardForm';
 
-export const AwardListResults = ({ awards, ...rest }) => {
+export const AwardListResults = ({ awards, handleChangeList, ...rest }) => {
+  const [open, setOpen] = useState(false);
+  const [openAlbum, setOpenAlbum] = useState(false);
+  const [awardSelected, setAwardSelected] = useState(null);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleCloseAlbum = () => {
+    setOpenAlbum(false);
+  };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClickAlbum = () => {
+    setOpenAlbum(true);
+  };
   const [selectedAwardIds, setSelectedAwardIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -93,6 +111,7 @@ export const AwardListResults = ({ awards, ...rest }) => {
                 <TableCell>Actor Name</TableCell>
                 <TableCell>Status</TableCell>
                 <TableCell>Image</TableCell>
+                <TableCell>Albums</TableCell>
                 <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
@@ -134,7 +153,24 @@ export const AwardListResults = ({ awards, ...rest }) => {
                     />
                   </TableCell>
                   <TableCell>
-                    <Button>Update</Button>
+                    <Button onClick={handleClickAlbum}>Album</Button>
+                    <StyledDialog
+                      title={'Update Award'}
+                      open={openAlbum}
+                      handleClose={handleCloseAlbum}
+                    >
+                      album
+                    </StyledDialog>
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      onClick={() => {
+                        setAwardSelected(award);
+                        handleClickOpen();
+                      }}
+                    >
+                      Update
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -142,6 +178,19 @@ export const AwardListResults = ({ awards, ...rest }) => {
           </Table>
         </Box>
       </PerfectScrollbar>
+      <StyledDialog
+        title={'Update Award'}
+        open={open}
+        handleClose={handleClose}
+      >
+        <CreateAwardForm
+          data={awardSelected}
+          onClose={() => {
+            handleClose();
+            handleChangeList();
+          }}
+        />
+      </StyledDialog>
       <TablePagination
         component="div"
         count={awards.length}

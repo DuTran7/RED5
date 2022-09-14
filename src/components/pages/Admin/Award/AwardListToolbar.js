@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   InputAdornment,
+  Stack,
   SvgIcon,
   TextField,
   Typography,
@@ -16,6 +17,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import CreateAwardForm from 'components/form/CreateAwardForm';
 import * as React from 'react';
 import { Search as SearchIcon } from '../icons/search';
+import CloseIcon from '@mui/icons-material/Close';
 
 export const AwardListToolbar = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -76,10 +78,23 @@ export const AwardListToolbar = (props) => {
             color: 'black',
           },
         }}
+        maxWidth={'lg'}
       >
-        <DialogTitle>Subscribe</DialogTitle>
+        <DialogTitle>
+          <Stack direction={'row'} justifyContent={'space-between'}>
+            Create Award
+            <Button>
+              <CloseIcon onClick={handleClose} />
+            </Button>
+          </Stack>
+        </DialogTitle>
         <DialogContent>
-          <CreateAwardForm />
+          <CreateAwardForm
+            onClose={() => {
+              handleClose();
+              props?.handleChangeList?.();
+            }}
+          />
         </DialogContent>
       </Dialog>
     </Box>

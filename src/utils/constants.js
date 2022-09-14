@@ -47,3 +47,13 @@ export const ROUTER = {
   ORDER_SUCCESS: 'order-success/',
   CONTACT: 'contact',
 };
+
+export const BODY_TYPE_REQUEST = {
+  JSON: 'JSON',
+  FORM_DATA: 'FORM_DATA',
+};
+
+export const ITEM_STATUS = {
+  ACTIVATED: 'ACTIVATED',
+  INACTIVATED: 'DEACTIVATED',
+};

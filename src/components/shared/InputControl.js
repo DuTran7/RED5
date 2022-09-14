@@ -12,6 +12,7 @@ export default function InputControl({
   endAdornment,
   onChange,
   register,
+  srcImg,
   ...props
 }) {
   const [focused, setFocused] = useState(undefined);
@@ -21,38 +22,43 @@ export default function InputControl({
       control={control}
       render={({ field, fieldState, formState }) => {
         return (
-          <StyledInputUderline
-            id={id}
-            value={field.value || ''}
-            onFocus={() => {
-              setFocused(true);
-            }}
-            onBlur={() => {
-              setFocused(false);
-            }}
-            startAdornment={
-              <Typography
-                variant={'subtitle1'}
-                color={focused ? theme.palette.primary.main : 'text.primary'}
-                width={'150px'}
-              >
-                {label}
-              </Typography>
-            }
-            onChange={(...e) => {
-              field.onChange(...e);
-              onChange && onChange(e);
-            }}
-            {...props}
-            variant="standard"
-            sx={{
-              width: '100%',
-              mt: '0 !important',
-              '& .MuiInput-input': {
-                width: '100%'
+          <>
+            <StyledInputUderline
+              id={id}
+              value={field.value || ''}
+              onFocus={() => {
+                setFocused(true);
+              }}
+              onBlur={() => {
+                setFocused(false);
+              }}
+              startAdornment={
+                <Typography
+                  variant={'subtitle1'}
+                  color={focused ? theme.palette.primary.main : 'text.primary'}
+                  width={'150px'}
+                >
+                  {label}
+                </Typography>
               }
-            }}
-          />
+              onChange={(...e) => {
+                field.onChange(...e);
+                onChange && onChange(e);
+              }}
+              {...props}
+              variant="standard"
+              sx={{
+                width: '100%',
+                mt: '0 !important',
+                '& .MuiInput-input': {
+                  width: '100%',
+                },
+              }}
+            />
+            {props?.type === 'file' && (
+              <img src={srcImg} width={'auto'} height={200} />
+            )}
+          </>
         );
       }}
     />

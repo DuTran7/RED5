@@ -1,64 +1,136 @@
 import { Button, Grid, Stack } from '@mui/material';
-import axios from 'axios';
-import { createAward, uploadFile } from 'components/service/AwardService';
+import {
+  createAward,
+  updateAward,
+  uploadFile,
+} from 'components/service/AwardService';
 import InputControl from 'components/shared/InputControl';
 import SelectBox from 'components/shared/SelectBox';
 import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { PROVINES } from 'utils/RawData/provines';
+import { IMAGE_SOURCE, ITEM_STATUS } from 'utils/constants';
 
 export default function CreateAwardForm({
   onClose,
   onHandleCreate,
   handleForgetPw,
   onChange,
+  data = null,
 }) {
+  console.log(data);
   const { enqueueSnackbar } = useSnackbar();
   const [formData, setFormData] = useState({});
   const [file, setFile] = useState(null);
-
-  const form = useRef(null);
+  const [fileUrl, setFileUrl] = useState(
+    data ? IMAGE_SOURCE + data?.name : null
+  );
+  const [statusForm, setStatusForm] = useState(ITEM_STATUS.ACTIVATED);
   const router = useRouter();
-  const { handleSubmit, control, getValues } = useForm();
+
+  // init status
+  const status = [ITEM_STATUS.ACTIVATED, ITEM_STATUS.INACTIVATED];
+  const { handleSubmit, control, getValues } = useForm({
+    defaultValues: {
+      id: data?.id,
+      actorName: data?.actorName,
+      title: data?.title,
+      description: data?.description,
+      file: data?.file ? IMAGE_SOURCE + data?.file : null,
+    },
+  });
+
+  const onSuccess = (message) => {
+    enqueueSnackbar(message, {
+      variant: 'success',
+    });
+    onClose();
+  };
+
   const onSubmit = async (d) => {
-    // create award
-    const body = new FormData(form.current);
+    let body = new FormData();
     body.append('image', file);
-    // body.append(
-    //   'jsonAlbum',
-    //   JSON.stringify({
-    //     actorName: d?.actorName,
-    //     albumType: 'string',
-    //     description: d?.description,
-    //     title: d?.title,
-    //   })
-    // );
-    console.log('avc', new FormData(form.current));
-    const createRes = await createAward(new FormData(form.current));
-    console.log(createRes);
+    body.append(
+      'jsonAlbum',
+      JSON.stringify({
+        actorName: d?.actorName,
+        albumType: 'string',
+        description: d?.description,
+        title: d?.title,
+      })
+    );
+    if (!data) {
+      // create award
+      const createRes = await createAward(body);
+      console.log(createRes);
+      if (!createRes?.status === 200) {
+        enqueueSnackbar('Create failed, please try again!', {
+          variant: 'error',
+        });
+        return;
+      }
+      onSuccess('Create success');
+    } else {
+      //update award
+      console.log(d);
+      console.log(fileUrl);
+      let fileUrlNew = data?.name;
+      if (file) {
+        const bodyUploadFile = new FormData();
+        bodyUploadFile.append('file', file);
+        bodyUploadFile.append(
+          'jsonAlbum',
+          JSON.stringify({
+            idAward: data?.id,
+            description: 'award id ' + data?.id,
+          })
+        );
+        const res = await uploadFile(bodyUploadFile);
+        if (!res?.status === 200) {
+          enqueueSnackbar('Create failed, please try again!', {
+            variant: 'error',
+          });
+          return;
+        }
+        fileUrlNew = res.data;
+      }
+      const bodyReq = {
+        id: data?.id,
+        status: statusForm,
+        actorName: d?.actorName,
+        description: d?.description,
+        name: fileUrlNew,
+        title: d?.title,
+      };
+      const updateRes = await updateAward(bodyReq);
+      if (!updateRes?.status === 200) {
+        enqueueSnackbar('Create failed, please try again!', {
+          variant: 'error',
+        });
+        console.log('updateRessss');
+        return;
+      }
+      onSuccess('Update success');
+    }
+  };
+
+  const handleChangeStatus = (e) => {
+    // setStatusForm()
+    console.log(e);
+    setStatusForm(e.target.value);
   };
 
   const updateFormValues = (data, name) => {
     setFormData({ ...formData, [name]: data });
   };
 
-  const updateLoadFile = (id) => {
-    const body = new FormData();
-    body.append('image', file);
-    body.append(
-      'jsonAlbum',
-      JSON.stringify({
-        idAward: id,
-        description: 'test',
-      })
-    );
-    return uploadFile(body);
-  };
+  useEffect(() => {
+    if (file) setFileUrl(URL.createObjectURL(file));
+  }, [file]);
 
   return (
-    <form ref={form} onSubmit={handleSubmit(onSubmit)} method="POST">
+    <form onSubmit={handleSubmit(onSubmit)} method="POST">
       <Grid
         container
         rowSpacing={'32px'}
@@ -66,8 +138,27 @@ export default function CreateAwardForm({
           xs: '0',
           sm: '40px',
         }}
+        sx={{
+          '& .MuiInputBase-root': {
+            verticalAlign: 'top',
+          },
+        }}
         pr={'40px'}
       >
+        <Stack
+          sx={{
+            display: 'none',
+          }}
+        >
+          <InputControl
+            control={control}
+            id={'id'}
+            name={'id'}
+            label={'ID:'}
+            onChange={(e) => updateFormValues(e[0].target.value, 'id')}
+            type={'text'}
+          />
+        </Stack>
         <Grid item xs={12} md={12} lg={6}>
           <InputControl
             control={control}
@@ -104,6 +195,7 @@ export default function CreateAwardForm({
             id={'image'}
             type={'file'}
             name={'image'}
+            srcImg={fileUrl}
             onChange={(e) => {
               updateFormValues(e[0]?.target.value, 'image');
               setFile(e[0]?.target.files[0]);
@@ -111,22 +203,24 @@ export default function CreateAwardForm({
             label={'Image:'}
           />
         </Grid>
-        {/* <Grid item xs={12} md={12} lg={6}>
+        <Grid item xs={12} md={12} lg={6}>
           <SelectBox
             titleVariant={'subtitle1'}
             title={'City/Provine:'}
-            defaultValue={provine}
-            handleChange={handleChangeProvine}
+            defaultValue={statusForm}
+            disabled={!data}
+            handleChange={handleChangeStatus}
             options={
-              PROVINES?.map((el) => ({
-                value: el.province_id,
-                name: el?.province_name,
+              status?.map((el) => ({
+                value: el,
+                name: el,
               })) || []
             }
             textTransform={'capitalize'}
-            value={provine}
+            value={statusForm}
           />
         </Grid>
+        {/* 
         <Grid item xs={12} md={12} lg={6}>
           <SelectBox
             titleVariant={'subtitle1'}

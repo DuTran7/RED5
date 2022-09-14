@@ -15,7 +15,7 @@ export async function request(
       method: method,
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json',
+        Accept: 'application/json, text/plain, */*',
         ...headers,
       },
       credentials: 'same-origin',
@@ -27,7 +27,7 @@ export async function request(
         Authorization: `Bearer ${session?.user?.token}` || '',
       };
     }
-
+    console.log(body);
     if (method === 'POST' || method === 'PUT') {
       Object.assign(options, { body: JSON.stringify(body) });
     }

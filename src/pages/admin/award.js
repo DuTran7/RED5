@@ -32,9 +32,9 @@ const Awards = () => {
         }}
       >
         <Container maxWidth={false}>
-          <AwardListToolbar />
+          <AwardListToolbar handleChangeList={updateAwards} />
           <Box sx={{ mt: 3 }}>
-            <AwardListResults awards={awards} />
+            <AwardListResults awards={awards} handleChangeList={updateAwards} />
           </Box>
         </Container>
       </Box>

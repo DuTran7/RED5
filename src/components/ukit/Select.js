@@ -5,6 +5,7 @@ import {
   TextField,
   Typography,
   Box,
+  FormControl,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -26,36 +27,46 @@ export const StyledSelectStandard = styled(Select)(({}) => ({
 }));
 
 export const StyledSelectBox = styled(
-  ({ value, defaultValue, onChange, startAdornment, children, ...props }) => {
+  ({
+    value,
+    defaultValue,
+    onChange,
+    startAdornment,
+    children,
+    disabled = false,
+    ...props
+  }) => {
     const [open, setOpen] = useState(false);
     return (
-      <StyledSelectStandard
-        {...props}
-        open={open}
-        value={value}
-        onChange={(e) => {
-          onChange(e);
-          setOpen(!open);
-        }}
-        onClick={() => setOpen(!open)}
-        variant={'standard'}
-        startAdornment={startAdornment}
-        defaultValue={defaultValue || ''}
-        IconComponent={() => (
-          <KeyboardArrowDownIcon
-            onClick={() => setOpen(!open)}
-            sx={{
-              fontSize: '20px',
-              '&:hover': {
-                cursor: 'pointer',
-                fill: theme.palette.primary.main,
-              },
-            }}
-          />
-        )}
-      >
-        {children}
-      </StyledSelectStandard>
+      <FormControl disabled={disabled}>
+        <StyledSelectStandard
+          {...props}
+          open={open}
+          value={value}
+          onChange={(e) => {
+            onChange(e);
+            setOpen(!open);
+          }}
+          onClick={() => !disabled && setOpen(!open)}
+          variant={'standard'}
+          startAdornment={startAdornment}
+          defaultValue={defaultValue || ''}
+          IconComponent={() => (
+            <KeyboardArrowDownIcon
+              onClick={() => !disabled && setOpen(!open)}
+              sx={{
+                fontSize: '20px',
+                '&:hover': {
+                  cursor: 'pointer',
+                  fill: theme.palette.primary.main,
+                },
+              }}
+            />
+          )}
+        >
+          {children}
+        </StyledSelectStandard>
+      </FormControl>
     );
   }
 )(({}) => ({}));

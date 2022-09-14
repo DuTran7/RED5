@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { API } from 'utils/constants';
 import { request } from 'utils/request';
 
@@ -10,13 +11,27 @@ export const getChapterDetail = (id) => {
 };
 
 export const uploadFile = (body) => {
-  return request('/file/upload', 'POST', body, {
-    'Content-Type': 'application/x-www-form-urlencoded',
+  //   return request('/file/upload', 'POST', body, {
+  //     'Content-Type': 'multipart/form-data',
+  //   });
+  return axios.post(process.env.NEXT_PUBLIC_API + '/file/upload', body, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
   });
 };
 
 export const createAward = (body) => {
-  return request('/award', 'POST', body, {
-    Accept: 'application/form-data',
+  //   return request('/award', 'POST', body, {
+  //     'Content-Type': 'multipart/form-data',
+  //   });
+  return axios.post(process.env.NEXT_PUBLIC_API + '/award', body, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
   });
+};
+
+export const updateAward = (body) => {
+  return request('/award', 'PUT', body);
 };

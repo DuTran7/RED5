@@ -9,6 +9,7 @@ export default function SelectBox({
   handleChange,
   defaultValue,
   options,
+  disabled = false,
   textTransform,
   titleVariant,
 }) {
@@ -32,6 +33,7 @@ export default function SelectBox({
           {title}
         </Typography>
         <StyledSelectBox
+          disabled={disabled}
           value={value}
           onChange={handleChange}
           displayEmpty
@@ -39,7 +41,9 @@ export default function SelectBox({
         >
           {options?.map((el, i) => (
             <MenuItem value={el.value} key={i}>
-              <Typography variant="bold70012">{el.name}</Typography>
+              <Typography variant="bold70012" color={'black'}>
+                {el.name}
+              </Typography>
             </MenuItem>
           ))}
         </StyledSelectBox>
