@@ -1,9 +1,4 @@
-import { useState } from 'react';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import PropTypes from 'prop-types';
-import { format } from 'date-fns';
 import {
-  Avatar,
   Box,
   Button,
   Card,
@@ -16,16 +11,27 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { getInitials } from 'utils/helper';
-import Image from 'next/image';
-import { IMAGE_SOURCE } from 'utils/constants';
-import StyledDialog from 'components/shared/Dialog';
 import CreateAwardForm from 'components/form/CreateAwardForm';
+import { updateAward, uploadFile } from 'components/service/AwardService';
+import Albums from 'components/shared/Albums';
+import StyledDialog from 'components/shared/Dialog';
+import { useSnackbar } from 'notistack';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import { IMAGE_SOURCE, ITEM_STATUS } from 'utils/constants';
 
-export const AwardListResults = ({ awards, handleChangeList, ...rest }) => {
+export const AwardListResults = ({
+  awards,
+  handleChangeList,
+  onClose,
+  ...rest
+}) => {
+  const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const [openAlbum, setOpenAlbum] = useState(false);
   const [awardSelected, setAwardSelected] = useState(null);
+  const [albumsSelected, setAlbumsSelected] = useState([]);
 
   const handleClose = () => {
     setOpen(false);
@@ -39,6 +45,47 @@ export const AwardListResults = ({ awards, handleChangeList, ...rest }) => {
   const handleClickAlbum = () => {
     setOpenAlbum(true);
   };
+
+  const handleAddImage = async (fileUrl, file) => {
+    const bodyUploadFile = new FormData();
+    bodyUploadFile.append('image', file);
+    bodyUploadFile.append(
+      'jsonAlbum',
+      JSON.stringify({
+        idAward: awardSelected?.id,
+        description: 'award id ' + awardSelected?.id,
+      })
+    );
+    const res = await uploadFile(bodyUploadFile);
+    if (!res?.status === 200) {
+      enqueueSnackbar('Upload file failed, please try again!', {
+        variant: 'error',
+      });
+      return;
+    }
+    enqueueSnackbar('Upload image success', {
+      variant: 'success',
+    });
+    handleCloseAlbum();
+    handleChangeList();
+  };
+  const onClickDelImg = async (id) => {
+    const res = await updateAward({
+      id,
+      status: ITEM_STATUS.DEACTIVATED,
+    });
+    if (!res?.status === 200) {
+      enqueueSnackbar('Delete file failed, please try again!', {
+        variant: 'error',
+      });
+      return;
+    }
+    enqueueSnackbar('Delete image success', {
+      variant: 'success',
+    });
+    handleCloseAlbum();
+    handleChangeList();
+  };
   const [selectedAwardIds, setSelectedAwardIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -51,7 +98,6 @@ export const AwardListResults = ({ awards, handleChangeList, ...rest }) => {
     } else {
       newSelectedAwardIds = [];
     }
-    console.log(newSelectedAwardIds);
     setSelectedAwardIds(newSelectedAwardIds);
   };
 
@@ -116,7 +162,7 @@ export const AwardListResults = ({ awards, handleChangeList, ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {awards.slice(0, limit).map(({ award }) => (
+              {awards.slice(0, limit).map(({ award, albums }) => (
                 <TableRow
                   hover
                   key={award.id}
@@ -153,23 +199,52 @@ export const AwardListResults = ({ awards, handleChangeList, ...rest }) => {
                     />
                   </TableCell>
                   <TableCell>
-                    <Button onClick={handleClickAlbum}>Album</Button>
+                    <Button
+                      onClick={() => {
+                        setAwardSelected(award);
+                        setAlbumsSelected(albums);
+                        handleClickAlbum();
+                      }}
+                      sx={{
+                        '&:hover': {
+                          '& .MuiTypography-body1': {
+                            color: 'blue',
+                          },
+                        },
+                      }}
+                    >
+                      <Typography variant="body1">
+                        {`View Albums (${albums?.length})`}
+                      </Typography>
+                    </Button>
                     <StyledDialog
-                      title={'Update Award'}
+                      title={'Albums'}
                       open={openAlbum}
                       handleClose={handleCloseAlbum}
                     >
-                      album
+                      <Albums
+                        data={albumsSelected}
+                        onClickAddImg={handleAddImage}
+                        onClickDelImg={onClickDelImg}
+                      />
                     </StyledDialog>
                   </TableCell>
                   <TableCell>
                     <Button
                       onClick={() => {
                         setAwardSelected(award);
+                        setAlbumsSelected(albums);
                         handleClickOpen();
                       }}
                     >
                       Update
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        onClickDelImg(award.id);
+                      }}
+                    >
+                      Delete
                     </Button>
                   </TableCell>
                 </TableRow>

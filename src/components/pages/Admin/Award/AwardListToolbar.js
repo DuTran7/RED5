@@ -92,7 +92,7 @@ export const AwardListToolbar = (props) => {
           <CreateAwardForm
             onClose={() => {
               handleClose();
-              props?.handleChangeList?.();
+              props?.handleChangeList();
             }}
           />
         </DialogContent>

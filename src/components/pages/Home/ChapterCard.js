@@ -19,7 +19,6 @@ export default function ChapterCard({ chapNo, name, image, onClick, data }) {
     >
       <Stack direction={'row'} justifyContent={'center'} pt={'24px'}>
         <Typography variant={'subtitle1'} color={'text.primary'}>
-          {!!image}
           {'Chapter ' + chapNo}
         </Typography>
       </Stack>

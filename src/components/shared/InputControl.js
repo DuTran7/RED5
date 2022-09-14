@@ -56,7 +56,9 @@ export default function InputControl({
               }}
             />
             {props?.type === 'file' && (
-              <img src={srcImg} width={'auto'} height={200} />
+              <img src={srcImg} width={'max-content'} style={{
+                width: 'max-content'
+              }} height={200} />
             )}
           </>
         );

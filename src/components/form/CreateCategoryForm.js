@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IMAGE_SOURCE, ITEM_STATUS } from 'utils/constants';
 
-export default function CreateAwardForm({ onClose, data = null }) {
+export default function CreateCategoryForm({ onClose, data = null }) {
   const { enqueueSnackbar } = useSnackbar();
   const [formData, setFormData] = useState({});
   const [file, setFile] = useState(null);
