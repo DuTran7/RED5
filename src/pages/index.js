@@ -181,7 +181,7 @@ export default function Home({ data }) {
   }
 
   const [chapters, setChapters] = useState(rs);
-
+  console.log(data);
   return (
     <DefaultLayout>
       <HomePage chapterList={data} />
