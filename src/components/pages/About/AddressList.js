@@ -32,6 +32,9 @@ export default function AddressList({ isMobile, data }) {
   useEffect(() => {
     setMobile(isMobile);
   }, [isMobile]);
+  useEffect(() => {
+    setListAddress(data?.content);
+  }, [data?.content]);
   return (
     <Stack
       justifyContent={'center'}
@@ -57,6 +60,7 @@ export default function AddressList({ isMobile, data }) {
               },
             }}
           >
+            {' '}
             <Typography
               variant="body1"
               height={'fit-content'}
@@ -67,17 +71,21 @@ export default function AddressList({ isMobile, data }) {
               }}
               title={e?.name}
             >
-              {e?.name}
+              <a target={'_blank'} href={e.link} rel={'noreferrer'}>
+                {e?.name}
+              </a>
             </Typography>
-            <NorthEast
-              sx={{
-                fill: {
-                  xs: theme.palette.text.primary,
-                  md: theme.palette.text.secondary,
-                },
-                fontSize: '20px',
-              }}
-            />
+            <a target={'_blank'} href={e.link} rel={'noreferrer'}>
+              <NorthEast
+                sx={{
+                  fill: {
+                    xs: theme.palette.text.primary,
+                    md: theme.palette.text.secondary,
+                  },
+                  fontSize: '20px',
+                }}
+              />
+            </a>
           </Stack>
         ))}
       <Stack py={'29px'}>

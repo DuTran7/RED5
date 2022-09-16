@@ -22,6 +22,7 @@ export default function HomePage(props) {
   };
 
   useEffect(() => {
+    console.log(props?.chapterList);
     setChapters(props?.chapterList);
   }, [props?.chapterList]);
   return (

@@ -54,7 +54,10 @@ const StyledBox = ({ children }) => {
           '.award-item': {
             // width: '400px !important',
             '& img': {
-              width: '20vw !important',
+              width: {
+                xs: '80vw !important',
+                md: '20vw !important',
+              },
               height: {
                 xs: '79vw !important',
                 md: '23vw !important',
