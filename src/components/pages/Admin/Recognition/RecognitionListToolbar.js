@@ -88,6 +88,7 @@ export const RecognitionListToolbar = (props) => {
         </DialogTitle>
         <DialogContent>
           <CreateRecognitionForm
+            press={props?.press}
             onClose={() => {
               handleClose();
               props?.handleChangeList();

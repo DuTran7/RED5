@@ -8,10 +8,12 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  Typography,
 } from '@mui/material';
 import CreateTeamForm from 'components/form/CreateTeamForm';
 import { uploadFile } from 'components/service/AwardService';
 import { updateTeam } from 'components/service/TeamService';
+import Albums from 'components/shared/Albums';
 import StyledDialog from 'components/shared/Dialog';
 import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
@@ -143,6 +145,7 @@ export const TeamListResults = ({
                 <TableCell>Actor Name</TableCell>
                 <TableCell>Title</TableCell>
                 <TableCell>Image</TableCell>
+                <TableCell>Albums</TableCell>
                 <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
@@ -162,6 +165,37 @@ export const TeamListResults = ({
                       height={50}
                       width={50}
                     />
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      onClick={() => {
+                        setTeamSelected(team);
+                        setAlbumsSelected(albums);
+                        handleClickAlbum();
+                      }}
+                      sx={{
+                        '&:hover': {
+                          '& .MuiTypography-body1': {
+                            color: 'blue',
+                          },
+                        },
+                      }}
+                    >
+                      <Typography variant="body1">
+                        {`View Albums (${albums?.length})`}
+                      </Typography>
+                    </Button>
+                    <StyledDialog
+                      title={'Albums'}
+                      open={openAlbum}
+                      handleClose={handleCloseAlbum}
+                    >
+                      <Albums
+                        data={albumsSelected}
+                        onClickAddImg={handleAddImage}
+                        onClickDelImg={onClickDelImg}
+                      />
+                    </StyledDialog>
                   </TableCell>
                   <TableCell>
                     <Button

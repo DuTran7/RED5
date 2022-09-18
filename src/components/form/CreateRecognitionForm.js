@@ -1,20 +1,22 @@
-import { Button, Grid, Stack } from '@mui/material';
+import { Button, Grid, Stack, Typography } from '@mui/material';
 import {
   createRecognition,
   updateRecognition,
 } from 'components/service/RecognitionsService';
 import InputControl from 'components/shared/InputControl';
+import SelectBox from 'components/shared/SelectBox';
 import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ITEM_STATUS } from 'utils/constants';
 
-export default function CreateRecognitionForm({ onClose, data = null }) {
+export default function CreateRecognitionForm({ onClose, press, data = null }) {
   const { enqueueSnackbar } = useSnackbar();
   const [formData, setFormData] = useState({});
-
+  console.log(press);
   const [statusForm, setStatusForm] = useState(ITEM_STATUS.ACTIVATED);
+  const [pressId, setPressId] = useState(data?.idPress || null);
   const router = useRouter();
 
   // init status
@@ -39,7 +41,9 @@ export default function CreateRecognitionForm({ onClose, data = null }) {
       // create press
       const createRes = await createRecognition({
         name: d?.name,
+        idPress: pressId,
         link: d?.link,
+        status: statusForm,
       });
       if (!createRes?.status === 200) {
         enqueueSnackbar('Create failed, please try again!', {
@@ -53,6 +57,7 @@ export default function CreateRecognitionForm({ onClose, data = null }) {
         id: data?.id,
         name: d?.name,
         link: d?.link,
+        idPress: pressId,
         status: statusForm,
       };
       const updateRes = await updateRecognition(bodyReq);
@@ -69,6 +74,10 @@ export default function CreateRecognitionForm({ onClose, data = null }) {
   const handleChangeStatus = (e) => {
     // setStatusForm()
     setStatusForm(e.target.value);
+  };
+  const handleChangePress = (e) => {
+    // setStatusForm()
+    setPressId(e.target.value);
   };
 
   const updateFormValues = (data, name) => {
@@ -125,7 +134,23 @@ export default function CreateRecognitionForm({ onClose, data = null }) {
             type={'text'}
           />
         </Grid>
-
+        {/* <Typography>{JSON.stringify(press[0]?.description)}</Typography> */}
+        <Grid item xs={12} md={12} lg={6}>
+          <SelectBox
+            titleVariant={'subtitle1'}
+            title={'Press:'}
+            defaultValue={pressId}
+            handleChange={handleChangePress}
+            options={
+              press?.map((el) => ({
+                value: el?.id,
+                name: el?.description,
+              })) || []
+            }
+            textTransform={'capitalize'}
+            value={pressId}
+          />
+        </Grid>
         {/* 
         <Grid item xs={12} md={12} lg={6}>
           <SelectBox

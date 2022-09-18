@@ -4,7 +4,7 @@ import { getChapters } from 'components/service/CategoryDetailService';
 import { getAllCategories } from 'components/service/CategoryService';
 import { useEffect, useState } from 'react';
 
-export default function Home({ data }) {
+export default function Home({}) {
   const name = [
     'Showtime Coffee',
     'The Running Bean',
@@ -179,12 +179,19 @@ export default function Home({ data }) {
       photo: 'Đỗ Sỹ',
     });
   }
-
   const [chapters, setChapters] = useState(rs);
-  console.log(data);
+  const updateData = async () => {
+    const res = await getAllCategories();
+    if (res.status === 200) {
+      setChapters(res.data);
+    }
+  };
+  useEffect(() => {
+    updateData();
+  }, []);
   return (
     <DefaultLayout>
-      <HomePage chapterList={data} />
+      <HomePage chapterList={chapters} />
     </DefaultLayout>
   );
 }
@@ -195,10 +202,10 @@ export async function getStaticProps() {
 
   // By returning { props: { posts } }, the Blog component
   // will receive `posts` as a prop at build time
-  const req = await getAllCategories();
+  // const req = await getAllCategories();
   return {
     props: {
-      data: req?.data,
+      // data: req?.data,
     },
   };
 }

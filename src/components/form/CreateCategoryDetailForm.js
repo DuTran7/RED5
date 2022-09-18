@@ -337,7 +337,6 @@ export default function CreateCategoryDetailForm({
             value={statusForm}
           />
         </Grid>
-        {JSON.stringify(categories)}
         <Grid item xs={12} md={12} lg={6}>
           <SelectBox
             titleVariant={'subtitle1'}

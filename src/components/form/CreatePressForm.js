@@ -212,6 +212,7 @@ export default function CreatePressForm({ onClose, data = null }) {
             value={statusForm}
           />
         </Grid>
+
         {/* 
         <Grid item xs={12} md={12} lg={6}>
           <SelectBox

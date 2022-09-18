@@ -7,17 +7,27 @@ import { RecognitionListResults } from 'components/pages/Admin/Recognition/Recog
 import { RecognitionListToolbar } from 'components/pages/Admin/Recognition/RecognitionListToolbar';
 import { getAllRecognitions } from 'components/service/RecognitionsService';
 import { useEffect, useState } from 'react';
+import { getAllPress } from 'components/service/PressService';
 
 const Recognitions = () => {
   const [data, setData] = useState([]);
+  const [press, setPtess] = useState([]);
   const updateData = async () => {
     const res = await getAllRecognitions();
     if (res?.data) {
       setData(res?.data);
     }
   };
+
+  const updatePress = async () => {
+    const res = await getAllPress();
+    if (res?.data) {
+      setPtess(res?.data);
+    }
+  };
   useEffect(() => {
     updateData();
+    updatePress();
   }, []);
   return (
     <DashboardLayout>
@@ -33,9 +43,13 @@ const Recognitions = () => {
         }}
       >
         <Container maxWidth={false}>
-          <RecognitionListToolbar handleChangeList={updateData} />
+          <RecognitionListToolbar handleChangeList={updateData} press={press} />
           <Box sx={{ mt: 3 }}>
-            <RecognitionListResults data={data} handleChangeList={updateData} />
+            <RecognitionListResults
+              data={data}
+              press={press}
+              handleChangeList={updateData}
+            />
           </Box>
         </Container>
       </Box>

@@ -25,6 +25,7 @@ import { ITEM_STATUS } from 'utils/constants';
 export const RecognitionListResults = ({
   data,
   handleChangeList,
+  press = [],
   onClose,
   ...rest
 }) => {
@@ -124,6 +125,7 @@ export const RecognitionListResults = ({
               <TableRow>
                 <TableCell>ID</TableCell>
                 <TableCell>Name</TableCell>
+                <TableCell>Press</TableCell>
                 <TableCell>Link</TableCell>
                 <TableCell>Action</TableCell>
               </TableRow>
@@ -137,6 +139,12 @@ export const RecognitionListResults = ({
                 >
                   <TableCell>{rc.id}</TableCell>
                   <TableCell>{rc.name}</TableCell>
+                  <TableCell>
+                    {
+                      press?.find((item) => item?.id === rc?.idPress)
+                        ?.description
+                    }
+                  </TableCell>
                   <TableCell>{rc.link}</TableCell>
 
                   <TableCell>
@@ -169,6 +177,7 @@ export const RecognitionListResults = ({
       >
         <CreateRecognitionForm
           data={itemSelected}
+          press={press}
           onClose={() => {
             handleClose();
             handleChangeList();

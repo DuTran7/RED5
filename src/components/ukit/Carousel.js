@@ -110,6 +110,7 @@ export const CenterCarousel = ({ children, onChange }) => {
     infinite: true,
     centerPadding: '0',
     slidesToShow: 3,
+    initialSlide: 1,
     focusOnSelect: true,
     arrows: false,
     afterChange: onChange,
