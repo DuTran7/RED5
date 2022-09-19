@@ -272,6 +272,18 @@ a:hover {
 
 .admin-cms .MuiTableCell-root,
 .admin-cms p,
-.admin-cms .MuiInputBase-input {
+.admin-cms .MuiInputBase-input,
+.admin-cms li {
   color: black;
+}
+
+.MuiMenu-root li {
+  color: grey;
+}
+
+.admin-cms .MuiSvgIcon-root {
+  color: grey;
+}
+.admin-cms .Mui-disabled .MuiSvgIcon-root {
+  color: rgb(227, 227, 227);
 }

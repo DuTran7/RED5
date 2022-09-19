@@ -100,6 +100,7 @@ export const theme = responsiveFontSizes(
         lineHeight: 1.33,
       },
     },
+
     components: {},
     transitions: {
       duration: {

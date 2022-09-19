@@ -14,7 +14,6 @@ import { ITEM_STATUS } from 'utils/constants';
 export default function CreateRecognitionForm({ onClose, press, data = null }) {
   const { enqueueSnackbar } = useSnackbar();
   const [formData, setFormData] = useState({});
-  console.log(press);
   const [statusForm, setStatusForm] = useState(ITEM_STATUS.ACTIVATED);
   const [pressId, setPressId] = useState(data?.idPress || null);
   const router = useRouter();

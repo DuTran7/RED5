@@ -27,7 +27,6 @@ export default function AddressList({ isMobile, data }) {
         itemPerPage * page + 4 - itemPerPage
       )
     );
-    console.log(listAddress);
   }, [page]);
   useEffect(() => {
     setMobile(isMobile);

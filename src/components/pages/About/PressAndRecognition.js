@@ -113,12 +113,18 @@ export default function PressAndRecognition({ isMobile }) {
       <Box
         {...other}
         sx={{
-          '& .MuiSvgIcon-root': {
-            opacity: isActive ? 1 : 0.5,
+          '& img': {
+            filter: isActive ? 'brightness(1)' : 'brightness(0.5)',
             '&:hover': {
-              opacity: 1,
+              filter: 'brightness(1)',
             },
           },
+          // '& .MuiSvgIcon-root': {
+          //   opacity: isActive ? 1 : 0.5,
+          //   '&:hover': {
+          //     opacity: 1,
+          //   },
+          // },
         }}
       >
         {children}
@@ -191,9 +197,10 @@ export default function PressAndRecognition({ isMobile }) {
                 >
                   <img
                     src={IMAGE_SOURCE + el?.name}
-                    viewBox="0 0 180 80"
-                    sx={{
+                    style={{
                       fontSize: '80px',
+                      maxWidth: '180px',
+                      maxHeight: '80px',
                       width: 'fit-content !important',
                     }}
                   />

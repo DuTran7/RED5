@@ -85,7 +85,7 @@ export const PressListResults = ({
     handleChangeList();
   };
   const [selectedPressIds, setSelectedPressIds] = useState([]);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(999);
   const [page, setPage] = useState(0);
 
   const handleSelectAll = (event) => {
