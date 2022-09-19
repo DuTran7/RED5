@@ -18,6 +18,7 @@ import {
 import AddressList from './AddressList';
 export default function PressAndRecognition({ isMobile }) {
   const [indexSelected, setIndexSelected] = useState(-1);
+  const [pressSelected, setPressSelected] = useState(null);
   const [pressList, setPressList] = useState([]);
   const [recognition, setRecognition] = useState([]);
   const listLogo = [
@@ -132,6 +133,11 @@ export default function PressAndRecognition({ isMobile }) {
     );
   };
 
+  const handleClickLogo = (data, index) => {
+    setIndexSelected(index);
+    setPressSelected(data);
+  };
+
   const updateData = async () => {
     const res = await getAllPress();
     const res1 = await getAllRecognitions();
@@ -192,16 +198,23 @@ export default function PressAndRecognition({ isMobile }) {
               pressList?.map((el, i) => (
                 <StyledIcon
                   key={i}
-                  onClick={() => setIndexSelected(i)}
+                  onClick={() => {
+                    handleClickLogo(el, i);
+                  }}
+                  sx={
+                    {
+                      // maxWidth: '180px',
+                    }
+                  }
                   isActive={indexSelected === i}
                 >
                   <img
                     src={IMAGE_SOURCE + el?.name}
                     style={{
-                      fontSize: '80px',
-                      maxWidth: '180px',
+                      // fontSize: '80px',
+                      // maxWidth: '180px',
                       maxHeight: '80px',
-                      width: 'fit-content !important',
+                      // width: 'fit-content !important',
                     }}
                   />
                 </StyledIcon>

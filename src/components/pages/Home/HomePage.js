@@ -82,6 +82,7 @@ export default function HomePage(props) {
               minWidth={'241px'}
               onClick={() => navigateToChapterDetail(c)}
               sx={{
+                height: 'calc(100vh - 84px)',
                 '&:hover': {
                   cursor: 'pointer',
                 },

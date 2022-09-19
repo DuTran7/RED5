@@ -41,40 +41,38 @@ export default function AddressList({ isMobile, data }) {
     >
       {listAddress &&
         listAddress?.map((e, i) => (
-          <Stack
-            direction={'row'}
-            key={i}
-            height={{
-              xs: '52px',
-              md: '74px',
-            }}
-            alignItems={'center'}
-            justifyContent={'space-between'}
-            borderBottom={'1px solid ' + theme.palette.divider}
-            p={'26px 24px'}
-            sx={{
-              '&:hover': {
-                background: 'rgba(255, 255, 255, 0.04);',
-                cursor: 'pointer',
-              },
-            }}
-          >
-            {' '}
-            <Typography
-              variant="body1"
-              height={'fit-content'}
-              sx={{
-                whiteSpace: 'nowrap',
-                textOverflow: 'ellipsis',
-                overflow: 'hidden',
+          <a target={'_blank'} href={e.link} rel={'noreferrer'}>
+            <Stack
+              direction={'row'}
+              key={i}
+              height={{
+                xs: '52px',
+                md: '74px',
               }}
-              title={e?.name}
+              alignItems={'center'}
+              justifyContent={'space-between'}
+              borderBottom={'1px solid ' + theme.palette.divider}
+              p={'26px 24px'}
+              sx={{
+                '&:hover': {
+                  background: 'rgba(255, 255, 255, 0.04);',
+                  cursor: 'pointer',
+                },
+              }}
             >
-              <a target={'_blank'} href={e.link} rel={'noreferrer'}>
+              {' '}
+              <Typography
+                variant="body1"
+                height={'fit-content'}
+                sx={{
+                  whiteSpace: 'nowrap',
+                  textOverflow: 'ellipsis',
+                  overflow: 'hidden',
+                }}
+                title={e?.name}
+              >
                 {e?.name}
-              </a>
-            </Typography>
-            <a target={'_blank'} href={e.link} rel={'noreferrer'}>
+              </Typography>
               <NorthEast
                 sx={{
                   fill: {
@@ -84,8 +82,8 @@ export default function AddressList({ isMobile, data }) {
                   fontSize: '20px',
                 }}
               />
-            </a>
-          </Stack>
+            </Stack>
+          </a>
         ))}
       <Stack py={'29px'}>
         <Pagination

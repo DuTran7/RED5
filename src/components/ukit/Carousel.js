@@ -54,34 +54,42 @@ export const ChapterCarousel = ({ children }) => {
 
 export const LogoCarousel = ({ children }) => {
   const settings = {
-    infinite: false,
-    centerPadding: '0px',
-    slidesToShow: 5.1,
-    swipeToSlide: true,
+    speed: 500,
+    // slidesToShow: 3,
     arrows: false,
+    infinite: false,
+    focusOnSelect: true,
+    rtl: false,
+    rows: 1,
     responsive: [
       {
         breakpoint: 2000,
         settings: {
-          slidesToShow: 5.1,
+          slidesToShow: 7,
         },
       },
       {
         breakpoint: 1441,
         settings: {
-          slidesToShow: 5.8,
+          slidesToShow: 6,
+        },
+      },
+      {
+        breakpoint: 1085,
+        settings: {
+          slidesToShow: 4,
         },
       },
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 4.5,
+          slidesToShow: 3.5,
         },
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 4.1,
+          slidesToShow: 2.1,
         },
       },
       {

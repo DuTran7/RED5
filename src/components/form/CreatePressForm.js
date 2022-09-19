@@ -93,7 +93,7 @@ export default function CreatePressForm({ onClose, data = null }) {
       const bodyReq = {
         id: data?.id,
         description: d?.description,
-        name: d?.name,
+        name: fileUrlNew,
         status: statusForm,
       };
       const updateRes = await updatePress(bodyReq);
