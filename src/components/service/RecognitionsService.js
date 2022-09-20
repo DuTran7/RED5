@@ -2,8 +2,17 @@ import axios from 'axios';
 import { API } from 'utils/constants';
 import { request } from 'utils/request';
 
-export const getAllRecognitions = () => {
-  return request('/recognition/get-all', 'GET');
+export const getAllRecognitions = (page = 0, pageSize = 4) => {
+  return request(
+    `/recognition/get-all?pageNumber=${page}&pageSize=${pageSize}`,
+    'GET'
+  );
+};
+export const getRecognitionsByPress = (idPress, page = 0, pageSize = 4) => {
+  return request(
+    `/recognition/get-by-id-press?idPress=${idPress}&pageNumber=${page}&pageSize=${pageSize}`,
+    'GET'
+  );
 };
 
 export const createRecognition = (body) => {

@@ -1,7 +1,7 @@
 // import { Image } from '@mui/icons-material';
 import { Box, Stack, Typography } from '@mui/material';
 import { getAllPress } from 'components/service/PressService';
-import { getAllRecognitions } from 'components/service/RecognitionsService';
+import { getAllRecognitions, getRecognitionsByPress } from 'components/service/RecognitionsService';
 import { LogoCarousel } from 'components/ukit/Carousel';
 import Image from 'next/image';
 import { cloneElement, useEffect, useState } from 'react';
@@ -136,6 +136,7 @@ export default function PressAndRecognition({ isMobile }) {
   const handleClickLogo = (data, index) => {
     setIndexSelected(index);
     setPressSelected(data);
+    console.log(data)
   };
 
   const updateData = async () => {
@@ -149,8 +150,11 @@ export default function PressAndRecognition({ isMobile }) {
     }
   };
   useEffect(() => {
-    updateData();
-  }, []);
+    if (pressSelected === null) {
+      updateData();
+    } 
+  }, [pressSelected]);
+
   return (
     <Box
       sx={{
@@ -183,13 +187,14 @@ export default function PressAndRecognition({ isMobile }) {
           {`Press & Recognition`}
         </Typography>
         <Stack
+          // width={'100vw'}
           sx={{
             background:
               'linear-gradient(180deg, rgb(0 0 0) 0%, #1c1c1c61 100%)',
             padding: '0 20px',
             '& .slick-slide': {
-              width: 'fit-content !important',
-              marginRight: 3,
+              // width: 'fit-contesnt !important',
+              // marginRight: 3,
             },
           }}
         >
@@ -201,11 +206,10 @@ export default function PressAndRecognition({ isMobile }) {
                   onClick={() => {
                     handleClickLogo(el, i);
                   }}
-                  sx={
-                    {
-                      // maxWidth: '180px',
-                    }
-                  }
+                  sx={{
+                    minWidth: '180px',
+                    // maxWidth: '180px',
+                  }}
                   isActive={indexSelected === i}
                 >
                   <img
@@ -221,7 +225,7 @@ export default function PressAndRecognition({ isMobile }) {
               ))}
           </LogoCarousel>
         </Stack>
-        <AddressList isMobile={isMobile} data={recognition} />
+        <AddressList isMobile={isMobile} data={recognition} press={pressSelected} />
       </Stack>
     </Box>
   );

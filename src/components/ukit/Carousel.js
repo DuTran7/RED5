@@ -55,12 +55,10 @@ export const ChapterCarousel = ({ children }) => {
 export const LogoCarousel = ({ children }) => {
   const settings = {
     speed: 500,
-    // slidesToShow: 3,
     arrows: false,
-    infinite: false,
+    infinite: true,
     focusOnSelect: true,
-    rtl: false,
-    rows: 1,
+    // rows: 1,
     responsive: [
       {
         breakpoint: 2000,
@@ -71,19 +69,19 @@ export const LogoCarousel = ({ children }) => {
       {
         breakpoint: 1441,
         settings: {
-          slidesToShow: 6,
+          slidesToShow: 4.5,
         },
       },
       {
         breakpoint: 1085,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 3.5,
         },
       },
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3.5,
+          slidesToShow: 2.5,
         },
       },
       {

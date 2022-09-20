@@ -1,9 +1,11 @@
 import { NorthEast } from '@mui/icons-material';
 import { Pagination, Stack, Typography } from '@mui/material';
+import { getAllPress } from 'components/service/PressService';
+import { getAllRecognitions, getRecognitionsByPress } from 'components/service/RecognitionsService';
 import { useEffect, useState } from 'react';
 import { theme } from 'theme';
 
-export default function AddressList({ isMobile, data }) {
+export default function AddressList({ isMobile, data, press }) {
   // const data = [
   //   'Hybird bar',
   //   'September Coffee',
@@ -12,28 +14,52 @@ export default function AddressList({ isMobile, data }) {
   //   'Hybird bar',
   //   'Nguyen Hoang Tu flagship store',
   // ];
-  const [listAddress, setListAddress] = useState(data?.content || []);
+  const [listAddress, setListAddress] = useState([]);
+  const [recognition, setRecognition] = useState(data);
   const [page, setPage] = useState(1);
   const [mobile, setMobile] = useState(false);
+  const [pressSelected, setPressSelected] = useState(press);
   const handleChange = (event, value) => {
     setPage(value);
+    const newPage = value - 1;
+    updateRecognitionByPress(press?.id, newPage);
   };
 
-  useEffect(() => {
-    const itemPerPage = 4;
-    setListAddress(
-      data?.content?.slice(
-        itemPerPage * page - itemPerPage,
-        itemPerPage * page + 4 - itemPerPage
-      )
-    );
-  }, [page]);
+  const updateRecognitionByPress = async (id, page) => {
+    let res = null;
+    if (id) {
+      res = await getRecognitionsByPress(id, page);
+    } else {
+      res = await getAllRecognitions(page, 4);
+    }
+    console.log(res);
+    if (res.status === 200) {
+      setListAddress(res.data?.content);
+      setRecognition(res.data);
+    }
+  };
+
   useEffect(() => {
     setMobile(isMobile);
   }, [isMobile]);
   useEffect(() => {
-    setListAddress(data?.content);
-  }, [data?.content]);
+    setListAddress(recognition?.content);
+  }, [recognition?.content]);
+
+  // Listen change pressId
+  useEffect(() => {
+    console.log('1111', press);
+    if (press) {
+      console.log(press);
+      updateRecognitionByPress(press?.id, 0);
+    } else {
+      setRecognition(data);
+    }
+  }, [press]);
+
+  useEffect(() => {
+    setRecognition(data);
+  }, [data]);
   return (
     <Stack
       justifyContent={'center'}
@@ -85,11 +111,16 @@ export default function AddressList({ isMobile, data }) {
             </Stack>
           </a>
         ))}
+      {listAddress?.length === 0 && (
+        <Typography variant="h5" textAlign={'center'} my={3}>
+          Recognitions are empty!
+        </Typography>
+      )}
       <Stack py={'29px'}>
         <Pagination
-          count={100}
+          count={recognition?.totalPages}
           siblingCount={mobile ? 2 : 3}
-          page={page}
+          page={recognition?.number}
           boundaryCount={mobile ? 0 : 1}
           onChange={handleChange}
           sx={{
