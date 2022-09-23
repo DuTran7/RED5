@@ -56,9 +56,9 @@ export const LogoCarousel = ({ children }) => {
   const settings = {
     speed: 500,
     arrows: false,
-    infinite: true,
+    infinite: false,
     focusOnSelect: true,
-    // rows: 1,
+    rows: 1,
     responsive: [
       {
         breakpoint: 2000,

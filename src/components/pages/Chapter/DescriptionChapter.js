@@ -8,6 +8,12 @@ import Image from 'next/image';
 import LegendBox from './LegendBox';
 export default function DescriptionChapter({ chapter }) {
   const arr = chapter?.detailCategory?.description.split('<cap>');
+  if (
+    !chapter?.detailCategory?.description ||
+    !chapter?.detailCategory?.description.trim()
+  ) {
+    return <></>;
+  }
   return (
     <Box
       sx={{

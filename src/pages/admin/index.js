@@ -3,7 +3,7 @@ import { DashboardLayout } from 'components/layouts/DashboardLayout';
 import Head from 'next/head';
 
 export default function AdminDashboard() {
-  return <DashboardLayout>asdasd</DashboardLayout>;
+  return <DashboardLayout>Wellcome to admin page!</DashboardLayout>;
 }
 
 // const Dashboard = () => (

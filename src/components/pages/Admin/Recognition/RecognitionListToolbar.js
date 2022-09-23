@@ -80,7 +80,7 @@ export const RecognitionListToolbar = (props) => {
       >
         <DialogTitle>
           <Stack direction={'row'} justifyContent={'space-between'}>
-            Create Award
+            Create Recognition
             <Button>
               <CloseIcon onClick={handleClose} />
             </Button>

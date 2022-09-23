@@ -178,7 +178,7 @@ export const CategoryListResults = ({
                     />
                   </TableCell> */}
                   <TableCell>{categories.name}</TableCell>
-                  <TableCell>{categories.description}</TableCell>
+                  <TableCell>{categories?.description || ''}</TableCell>
                   <TableCell>
                     {albums[0]?.length > 0 ? (
                       <img

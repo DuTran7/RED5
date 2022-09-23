@@ -80,7 +80,7 @@ export const CategoryListToolbar = (props) => {
       >
         <DialogTitle>
           <Stack direction={'row'} justifyContent={'space-between'}>
-            Create Award
+            Create Category
             <Button>
               <CloseIcon onClick={handleClose} />
             </Button>

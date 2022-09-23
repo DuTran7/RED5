@@ -67,7 +67,7 @@ export default function AddressList({ isMobile, data, press }) {
     >
       {listAddress &&
         listAddress?.map((e, i) => (
-          <a target={'_blank'} href={e.link} rel={'noreferrer'}>
+          <a key={i} target={'_blank'} href={e.link} rel={'noreferrer'}>
             <Stack
               direction={'row'}
               key={i}

@@ -79,7 +79,7 @@ export const PressListToolbar = (props) => {
       >
         <DialogTitle>
           <Stack direction={'row'} justifyContent={'space-between'}>
-            Create Award
+            Create Press
             <Button>
               <CloseIcon onClick={handleClose} />
             </Button>

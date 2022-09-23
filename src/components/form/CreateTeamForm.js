@@ -53,7 +53,7 @@ export default function CreateTeamForm({ onClose, data = null }) {
       })
     );
     if (!data) {
-      // create award
+      // create team
       const createRes = await createTeam(body);
       if (!createRes?.status === 200) {
         enqueueSnackbar('Create failed, please try again!', {

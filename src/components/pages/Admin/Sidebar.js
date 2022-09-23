@@ -22,11 +22,11 @@ import { XCircle as XCircleIcon } from './icons/x-circle';
 import { NavItem } from './nav-item';
 import { Red5 } from 'components/shared/icons';
 const items = [
-  {
-    href: '/admin',
-    // icon: <ChartBarIcon fontSize="small" />,
-    title: 'Dashboard',
-  },
+  // {
+  //   href: '/admin',
+  //   // icon: <ChartBarIcon fontSize="small" />,
+  //   title: 'Dashboard',
+  // },
   {
     href: '/admin/award',
     // icon: <UsersIcon fontSize="small" />,

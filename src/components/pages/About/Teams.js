@@ -124,9 +124,7 @@ export default function Teams({ isMobile }) {
             <PersonInfo
               key={i}
               isMobile={isMobile}
-              src={
-                e?.albums?.[0]?.name ? IMAGE_SOURCE + e?.albums?.[0]?.name : ''
-              }
+              src={e?.team?.name ? IMAGE_SOURCE + e?.team?.name : ''}
               name={e?.team?.actorName}
               position={e?.team?.title}
             />

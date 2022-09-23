@@ -16,7 +16,14 @@ import HardCoverHorizontal from './HardCoverHorizontal';
 import { getChapterDetail } from 'components/service/CategoryDetailService';
 export default function ChapterDetail({ data }) {
   const router = useRouter();
+
   const [chapter, setChapter] = useState(data);
+
+  const getConditionToShowArrow = (chapter) => {
+    const hasAlbums = chapter?.albums?.length > 0;
+    const hasDescription = !!chapter?.detailCategory?.description.trim();
+    return hasAlbums || hasDescription;
+  };
 
   useEffect(() => {
     const name = router.query.chapter;
@@ -44,11 +51,15 @@ export default function ChapterDetail({ data }) {
       setChapter({ ...chapter, ...data });
     }
   }, []);
+
   return (
     <ScrollContainer height={'100vh'}>
       <HardCoverVertical name={chapter?.detailCategory?.name} />
       <HardCoverHorizontal name={chapter?.detailCategory?.name} />
-      <ShortInfoChapter data={chapter?.detailCategory} />
+      <ShortInfoChapter
+        data={chapter?.detailCategory}
+        hasMore={getConditionToShowArrow(chapter)}
+      />
       <DescriptionChapter chapter={chapter} />
       <Stack
         direction={{

@@ -90,7 +90,7 @@ export default function CreateCategoryDetailForm({
         }
         imgUrl = res.data?.data;
       }
-      // create award
+      // create category
       const createRes = await createDetailCategory({
         name: d?.name,
         description: description,
@@ -226,6 +226,7 @@ export default function CreateCategoryDetailForm({
             onChange={(e) => updateFormValues(e[0].target.value, 'description')}
             type={'text'}
           /> */}
+          {/* < */}
           <TextareaAutosize
             aria-label="Category description"
             placeholder="description"

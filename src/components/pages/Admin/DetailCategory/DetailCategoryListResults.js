@@ -233,7 +233,8 @@ export const DetailCategoryListResults = ({
                       color={'black'}
                       title={detailCategory?.description}
                     >
-                      {detailCategory?.description?.slice(0, 150) + '...'}
+                      {detailCategory?.description &&
+                        detailCategory?.description?.slice(0, 150) + '...'}
                     </Typography>
                   </TableCell>
                   <TableCell>

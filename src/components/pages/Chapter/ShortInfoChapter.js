@@ -5,7 +5,7 @@ import { theme } from 'theme';
 import EastIcon from '@mui/icons-material/East';
 import LegendBox from './LegendBox';
 import { IMAGE_SOURCE } from 'utils/constants';
-export default function ShortInfoChapter({ data }) {
+export default function ShortInfoChapter({ data, hasMore = false }) {
   const router = useRouter();
   return (
     <Box
@@ -35,24 +35,26 @@ export default function ShortInfoChapter({ data }) {
             backgroundPosition: 'bottom',
           }}
         >
-          <Stack
-            position={'absolute'}
-            right={'26.67px'}
-            bottom={'36.67px'}
-            sx={{
-              display: {
-                xs: 'none',
-                md: 'flex',
-              },
-            }}
-          >
-            <EastIcon
+          {hasMore && (
+            <Stack
+              position={'absolute'}
+              right={'26.67px'}
+              bottom={'36.67px'}
               sx={{
-                color: theme.palette.common.white,
-                fontSize: '66px',
+                display: {
+                  xs: 'none',
+                  md: 'flex',
+                },
               }}
-            />
-          </Stack>
+            >
+              <EastIcon
+                sx={{
+                  color: theme.palette.common.white,
+                  fontSize: '66px',
+                }}
+              />
+            </Stack>
+          )}
         </Box>
         <Stack
           p={{
