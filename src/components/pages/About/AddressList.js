@@ -1,7 +1,10 @@
 import { NorthEast } from '@mui/icons-material';
 import { Pagination, Stack, Typography } from '@mui/material';
 import { getAllPress } from 'components/service/PressService';
-import { getAllRecognitions, getRecognitionsByPress } from 'components/service/RecognitionsService';
+import {
+  getAllRecognitions,
+  getRecognitionsByPress,
+} from 'components/service/RecognitionsService';
 import { useEffect, useState } from 'react';
 import { theme } from 'theme';
 
@@ -32,7 +35,6 @@ export default function AddressList({ isMobile, data, press }) {
     } else {
       res = await getAllRecognitions(page, 4);
     }
-    console.log(res);
     if (res.status === 200) {
       setListAddress(res.data?.content);
       setRecognition(res.data);
@@ -48,9 +50,7 @@ export default function AddressList({ isMobile, data, press }) {
 
   // Listen change pressId
   useEffect(() => {
-    console.log('1111', press);
     if (press) {
-      console.log(press);
       updateRecognitionByPress(press?.id, 0);
     } else {
       setRecognition(data);

@@ -25,10 +25,10 @@ export default function ChapterDetail({ data }) {
     return hasAlbums || hasDescription;
   };
 
-  useEffect(() => {
-    const name = router.query.chapter;
-    if (name) setChapter({ ...chapter, name });
-  }, [router.query]);
+  // useEffect(() => {
+  //   const name = router.query.chapter;
+  //   if (name) setChapter({ ...chapter, name });
+  // }, [router.query]);
 
   // fetch data
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function ChapterDetail({ data }) {
     } else {
       setChapter({ ...chapter, ...data });
     }
-  }, []);
+  }, [router.query.slug]);
 
   return (
     <ScrollContainer height={'100vh'}>

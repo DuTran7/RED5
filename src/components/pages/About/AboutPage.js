@@ -2,7 +2,7 @@ import { Box, Stack } from '@mui/material';
 import ScrollContainer from 'components/shared/ScrollContainer';
 import { AboutTabHorizontal, AboutTabs } from 'components/ukit/Tabs';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { theme } from 'theme';
 import Awards from './Awards';
 import ContactUs from './ContactUs';
@@ -11,13 +11,50 @@ import Megazines from './Megazines';
 import PressAndRecognition from './PressAndRecognition';
 import Teams from './Teams';
 
-export default function AboutPage({ isMobile }) {
+export default function AboutPage({ isMobile, position }) {
+  const teamRef = useRef();
+  const cultureRef = useRef();
+  const awardRef = useRef();
+  const pressRef = useRef();
+  const contactRef = useRef();
+
   const router = useRouter();
   const [value, setValue] = useState('culture');
+  const [valueToScroll, setValueToScroll] = useState('culture');
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (event, newValue, scroll) => {
     setValue(newValue);
+    if (scroll) {
+      setValueToScroll(newValue);
+    }
   };
+
+  useEffect(() => {
+    if (position >= contactRef.current.offsetLeft) {
+      setValue('contact');
+      return;
+    }
+    if (position >= pressRef.current.offsetLeft) {
+      setValue('press');
+      return;
+    }
+    if (position >= awardRef.current.offsetLeft) {
+      setValue('awards');
+      return;
+    }
+    if (position >= teamRef.current.offsetLeft) {
+      setValue('team');
+      return;
+    }
+    if (position >= contactRef.current.offsetLeft) {
+      setValue('contact');
+      return;
+    }
+    if (position >= cultureRef.current.offsetLeft) {
+      setValue('culture');
+      return;
+    }
+  }, [position]);
 
   useEffect(() => {
     if (value) {
@@ -28,9 +65,10 @@ export default function AboutPage({ isMobile }) {
         inline: 'start',
       });
     }
-  }, [value]);
+  }, [valueToScroll]);
+
   return (
-    <ScrollContainer>
+    <ScrollContainer customClass="about-scroll">
       <Stack
         flexGrow={0}
         position={'fixed'}
@@ -48,7 +86,10 @@ export default function AboutPage({ isMobile }) {
             'linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0) 104.37%)',
         }}
       >
-        <AboutTabs value={value} onChange={handleChange} />
+        <AboutTabs
+          value={value}
+          onChange={(e, nvl) => handleChange(e, nvl, true)}
+        />
       </Stack>
       <Stack
         position={'fixed'}
@@ -69,20 +110,20 @@ export default function AboutPage({ isMobile }) {
       >
         <AboutTabHorizontal value={value} onChange={handleChange} />
       </Stack>
-      <div id="culture">
+      <div id="culture" ref={cultureRef}>
         <Culture />
       </div>
-      <div id="team">
+      <div id="team" ref={teamRef}>
         <Teams isMobile={isMobile} />
       </div>
-      <div id="awards">
+      <div id="awards" ref={awardRef}>
         <Awards />
       </div>
-      <div id="press">
+      <div id="press" ref={pressRef}>
         <PressAndRecognition isMobile={isMobile} />
       </div>
       <Megazines />
-      <div id="contact">
+      <div id="contact" ref={contactRef}>
         <ContactUs />
       </div>
     </ScrollContainer>

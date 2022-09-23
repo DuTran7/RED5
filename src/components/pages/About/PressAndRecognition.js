@@ -1,7 +1,10 @@
 // import { Image } from '@mui/icons-material';
 import { Box, Stack, Typography } from '@mui/material';
 import { getAllPress } from 'components/service/PressService';
-import { getAllRecognitions, getRecognitionsByPress } from 'components/service/RecognitionsService';
+import {
+  getAllRecognitions,
+  getRecognitionsByPress,
+} from 'components/service/RecognitionsService';
 import { LogoCarousel } from 'components/ukit/Carousel';
 import Image from 'next/image';
 import { cloneElement, useEffect, useState } from 'react';
@@ -136,7 +139,6 @@ export default function PressAndRecognition({ isMobile }) {
   const handleClickLogo = (data, index) => {
     setIndexSelected(index);
     setPressSelected(data);
-    console.log(data)
   };
 
   const updateData = async () => {
@@ -152,7 +154,7 @@ export default function PressAndRecognition({ isMobile }) {
   useEffect(() => {
     if (pressSelected === null) {
       updateData();
-    } 
+    }
   }, [pressSelected]);
 
   return (
@@ -225,7 +227,11 @@ export default function PressAndRecognition({ isMobile }) {
               ))}
           </LogoCarousel>
         </Stack>
-        <AddressList isMobile={isMobile} data={recognition} press={pressSelected} />
+        <AddressList
+          isMobile={isMobile}
+          data={recognition}
+          press={pressSelected}
+        />
       </Stack>
     </Box>
   );

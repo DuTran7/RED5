@@ -1,11 +1,16 @@
 import { Box } from '@mui/material';
 import { theme } from 'theme';
 
-export default function ScrollContainer({ children, height, ...other }) {
+export default function ScrollContainer({
+  children,
+  height,
+  customClass = '',
+  ...other
+}) {
   return (
     <Box
       {...other}
-      className="scroll-horizontal"
+      className={'scroll-horizontal ' + customClass}
       sx={{
         display: {
           xs: 'block',
