@@ -109,7 +109,63 @@ export const LogoCarousel = ({ children }) => {
   );
 };
 
-export const CenterCarousel = ({ children, onChange }) => {
+export const ImageSlider = ({}) => {
+  const settings = {
+    className: 'center',
+    centerMode: true,
+    infinite: true,
+    centerPadding: '0',
+    slidesToShow: 1,
+    initialSlide: 1,
+    focusOnSelect: true,
+    arrows: false,
+    afterChange: onChange,
+    swipeToSlide: false,
+    responsive: [
+      {
+        breakpoint: 2000,
+        settings: {
+          // slidesToShow: 7.2,
+        },
+      },
+      {
+        breakpoint: 1441,
+        settings: {
+          // slidesToShow: 7.2,
+        },
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          // slidesToShow: 5.5,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1.2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1.2,
+        },
+      },
+    ],
+  };
+  return (
+    <div
+      style={{
+        width: '100%',
+      }}
+    >
+      <Slider {...settings}>{children}</Slider>
+    </div>
+  );
+};
+
+export const CenterCarousel = ({ children, onChange, curIndex, ...other }) => {
   const settings = {
     className: 'center',
     centerMode: true,
@@ -120,7 +176,7 @@ export const CenterCarousel = ({ children, onChange }) => {
     focusOnSelect: true,
     arrows: false,
     afterChange: onChange,
-    swipeToSlide: true,
+    swipeToSlide: false,
     responsive: [
       {
         breakpoint: 2000,

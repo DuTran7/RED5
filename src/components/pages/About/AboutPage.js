@@ -65,7 +65,7 @@ export default function AboutPage({ isMobile, position }) {
         inline: 'start',
       });
     }
-  }, [valueToScroll]);
+  }, [value]);
 
   return (
     <ScrollContainer customClass="about-scroll">
@@ -108,7 +108,10 @@ export default function AboutPage({ isMobile, position }) {
             'linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0) 104.37%)',
         }}
       >
-        <AboutTabHorizontal value={value} onChange={handleChange} />
+        <AboutTabHorizontal
+          value={value}
+          onChange={(e, nvl) => handleChange(e, nvl, true)}
+        />
       </Stack>
       <div id="culture" ref={cultureRef}>
         <Culture />

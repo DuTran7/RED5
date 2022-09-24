@@ -3,7 +3,7 @@ import { Backdrop, Box, Button, Stack, Typography } from '@mui/material';
 import { getAllAwards } from 'components/service/AwardService';
 import { CenterCarousel } from 'components/ukit/Carousel';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ImageGallery from 'react-image-gallery';
 import { theme } from 'theme';
 import { IMAGE_SOURCE } from 'utils/constants';
@@ -16,13 +16,17 @@ const StyledBox = ({ children }) => {
         background: theme.palette.common.black,
         '& .slick-list': {
           paddingLeft: {
-            xs: '98px !important',
+            xs: '25% !important',
+            sm: '0px !important',
             md: '0px !important',
           },
         },
         '& .slick-track': {
           display: 'flex',
           alignItems: 'flex-end',
+        },
+        '.award-item': {
+          alignItems: 'center',
         },
         '& .slick-active, & .slick-slide': {
           padding: {
@@ -34,13 +38,14 @@ const StyledBox = ({ children }) => {
             // width: '400px !important',
             '& img': {
               width: {
-                xs: '18vw !important',
+                xs: '78vw !important',
+                sm: '25vw !important',
                 md: '20vw !important',
                 lg: '23vw !important',
               },
               height: {
-                xs: '74vw !important',
-                md: '21vw !important',
+                xs: 'fit-content',
+                md: 'fit-content',
               },
               // minHeight: '300px !important',
               // minWidth: '300px !important',
@@ -60,12 +65,13 @@ const StyledBox = ({ children }) => {
             '& img': {
               width: {
                 xs: '80vw !important',
-                md: '20vw !important',
-                lg: '23vw !important',
+                sm: '30vw !important',
+                md: '22vw !important',
+                lg: '25vw !important',
               },
               height: {
-                xs: '79vw !important',
-                md: '23vw !important',
+                xs: 'fit-content',
+                md: 'fit-content',
               },
               // minHeight: '310px !important',
               // minWidth: '310px !important',
@@ -84,8 +90,10 @@ const StyledBox = ({ children }) => {
 };
 
 export default function Awards() {
+  const sliderRef = useRef();
   const [slide, setSlide] = useState();
   const [curIndex, setCurIndex] = useState(0);
+  const [albumsSelected, setAlbumsSelected] = useState([]);
   const [awards, setAwards] = useState([
     {
       image: '/imgs/Award.png',
@@ -125,6 +133,14 @@ export default function Awards() {
   useEffect(() => {
     updateData();
   }, []);
+  useEffect(() => {
+    if (curIndex) {
+      const awardSelected = awards?.find((e, i) => i === curIndex);
+      if (awardSelected) {
+        setAlbumsSelected(awardSelected?.albums);
+      }
+    }
+  }, [curIndex]);
   return (
     <StyledBox>
       <Stack
@@ -170,9 +186,9 @@ export default function Awards() {
             showFullscreenButton={false}
             showNav={false}
             thumbnailPosition={'bottom'}
-            items={awards.map(({ award, albums }) => ({
-              original: IMAGE_SOURCE + award?.name,
-              thumbnail: IMAGE_SOURCE + award?.name,
+            items={albumsSelected.map((el) => ({
+              original: IMAGE_SOURCE + el?.name,
+              thumbnail: IMAGE_SOURCE + el?.name,
             }))}
           />
           {/* </Stack> */}
@@ -187,7 +203,13 @@ export default function Awards() {
         >
           Awards
         </Typography>
-        <CenterCarousel onChange={setCurIndex}>
+        <CenterCarousel
+          onChange={(e) => {
+            setCurIndex(Math.round(e));
+            console.log(e);
+          }}
+          curIndex={curIndex}
+        >
           {awards &&
             awards?.map(({ award, albums }, i) => (
               <Box
