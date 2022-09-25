@@ -1,10 +1,11 @@
 import { NorthEast } from '@mui/icons-material';
-import { Pagination, Stack, Typography } from '@mui/material';
+import { Pagination, PaginationItem, Stack, Typography } from '@mui/material';
 import { getAllPress } from 'components/service/PressService';
 import {
   getAllRecognitions,
   getRecognitionsByPress,
 } from 'components/service/RecognitionsService';
+import Loading from 'components/shared/Loading';
 import { useEffect, useState } from 'react';
 import { theme } from 'theme';
 
@@ -17,11 +18,19 @@ export default function AddressList({ isMobile, data, press }) {
   //   'Hybird bar',
   //   'Nguyen Hoang Tu flagship store',
   // ];
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
   const [listAddress, setListAddress] = useState([]);
   const [recognition, setRecognition] = useState(data);
   const [page, setPage] = useState(1);
   const [mobile, setMobile] = useState(false);
   const [pressSelected, setPressSelected] = useState(press);
+  const [loading, setLoading] = useState(false);
   const handleChange = (event, value) => {
     setPage(value);
     const newPage = value - 1;
@@ -29,6 +38,7 @@ export default function AddressList({ isMobile, data, press }) {
   };
 
   const updateRecognitionByPress = async (id, page) => {
+    setOpen(true);
     let res = null;
     if (id) {
       res = await getRecognitionsByPress(id, page);
@@ -36,9 +46,16 @@ export default function AddressList({ isMobile, data, press }) {
       res = await getAllRecognitions(page, 4);
     }
     if (res.status === 200) {
+      console.log(res);
       setListAddress(res.data?.content);
       setRecognition(res.data);
     }
+    await new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve();
+      }, 500);
+    });
+    setOpen(false);
   };
 
   useEffect(() => {
@@ -65,6 +82,7 @@ export default function AddressList({ isMobile, data, press }) {
       justifyContent={'center'}
       borderTop={'1px solid ' + theme.palette.divider}
     >
+      <Loading open={open} handleClose={handleClose} />
       {listAddress &&
         listAddress?.map((e, i) => (
           <a key={i} target={'_blank'} href={e.link} rel={'noreferrer'}>
@@ -120,10 +138,44 @@ export default function AddressList({ isMobile, data, press }) {
         <Pagination
           count={recognition?.totalPages}
           siblingCount={mobile ? 2 : 3}
-          page={recognition?.number}
+          page={(recognition?.number || 0) + 1}
           boundaryCount={mobile ? 0 : 1}
           onChange={handleChange}
+          renderItem={(item) => (
+            <PaginationItem
+              components={{
+                previous: () => (
+                  <Stack
+                    mr={{
+                      xs: 2,
+                      md: 3,
+                    }}
+                  >
+                    <Typography variant="h6">Previous</Typography>
+                  </Stack>
+                ),
+                next: () => (
+                  <Stack
+                    ml={{
+                      xs: 2,
+                      md: 3,
+                    }}
+                  >
+                    <Typography variant="h6">Next</Typography>
+                  </Stack>
+                ),
+              }}
+              {...item}
+            />
+          )}
           sx={{
+            '.MuiPaginationItem-page': {
+              // color: theme.palette.common.grey,
+              opacity: 0.5,
+              '&.Mui-selected': {
+                opacity: 1,
+              },
+            },
             '.MuiPagination-ul': {
               justifyContent: 'center',
             },

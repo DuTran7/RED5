@@ -11,9 +11,11 @@ import { getAllPress } from 'components/service/PressService';
 
 const Recognitions = () => {
   const [data, setData] = useState([]);
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(0);
   const [press, setPtess] = useState([]);
   const updateData = async () => {
-    const res = await getAllRecognitions();
+    const res = await getAllRecognitions(page, limit);
     if (res?.data) {
       setData(res?.data);
     }
@@ -29,6 +31,9 @@ const Recognitions = () => {
     updateData();
     updatePress();
   }, []);
+  useEffect(() => {
+    updateData();
+  }, [limit, page]);
   return (
     <DashboardLayout>
       <Head>
@@ -48,6 +53,10 @@ const Recognitions = () => {
             <RecognitionListResults
               data={data}
               press={press}
+              limit={limit}
+              setLimit={setLimit}
+              page={page}
+              setPage={setPage}
               handleChangeList={updateData}
             />
           </Box>

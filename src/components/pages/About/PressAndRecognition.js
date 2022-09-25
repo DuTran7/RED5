@@ -189,7 +189,7 @@ export default function PressAndRecognition({ isMobile }) {
           {`Press & Recognition`}
         </Typography>
         <Stack
-          // width={'100vw'}
+          width={'100%'}
           sx={{
             background:
               'linear-gradient(180deg, rgb(0 0 0) 0%, #1c1c1c61 100%)',
@@ -201,30 +201,30 @@ export default function PressAndRecognition({ isMobile }) {
           }}
         >
           <LogoCarousel>
-            {pressList &&
-              pressList?.map((el, i) => (
-                <StyledIcon
-                  key={i}
-                  onClick={() => {
-                    handleClickLogo(el, i);
-                  }}
-                  sx={{
-                    minWidth: '180px',
+            {pressList?.map((el, i) => (
+              <StyledIcon
+                key={i}
+                onClick={() => {
+                  handleClickLogo(el, i);
+                }}
+                sx={{
+                  minWidth: '180px',
+                  // maxWidth: '180px',
+                }}
+                isActive={indexSelected === i}
+              >
+                <img
+                  src={IMAGE_SOURCE + el?.name}
+                  style={{
+                    // fontSize: '80px',
                     // maxWidth: '180px',
+                    maxHeight: '80px',
+                    // width: 'fit-content !important',
+                    margin: '0 auto',
                   }}
-                  isActive={indexSelected === i}
-                >
-                  <img
-                    src={IMAGE_SOURCE + el?.name}
-                    style={{
-                      // fontSize: '80px',
-                      // maxWidth: '180px',
-                      maxHeight: '80px',
-                      // width: 'fit-content !important',
-                    }}
-                  />
-                </StyledIcon>
-              ))}
+                />
+              </StyledIcon>
+            ))}
           </LogoCarousel>
         </Stack>
         <AddressList

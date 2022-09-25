@@ -27,6 +27,10 @@ export const RecognitionListResults = ({
   handleChangeList,
   press = [],
   onClose,
+  limit,
+  page,
+  setPage,
+  setLimit,
   ...rest
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -66,8 +70,6 @@ export const RecognitionListResults = ({
     handleChangeList();
   };
   const [selectedRecognitionIds, setSelectedRecognitionIds] = useState([]);
-  const [limit, setLimit] = useState(999);
-  const [page, setPage] = useState(0);
 
   const handleSelectAll = (event) => {
     let newSelectedRecognitionIds;

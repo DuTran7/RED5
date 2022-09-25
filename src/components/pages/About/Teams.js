@@ -127,6 +127,7 @@ export default function Teams({ isMobile }) {
               src={e?.team?.name ? IMAGE_SOURCE + e?.team?.name : ''}
               name={e?.team?.actorName}
               position={e?.team?.title}
+              data={e}
             />
           ))}
       </Box>

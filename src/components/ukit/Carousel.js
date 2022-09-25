@@ -54,46 +54,48 @@ export const ChapterCarousel = ({ children }) => {
 
 export const LogoCarousel = ({ children }) => {
   const settings = {
-    speed: 500,
     arrows: false,
-    infinite: false,
+    slidesToShow: 6,
+    initialSlide: 0,
     focusOnSelect: true,
-    rows: 1,
+    // rows: 1,
+    // infinite: false,
+    // swipeToSlide: true,
     responsive: [
       {
         breakpoint: 2000,
         settings: {
-          slidesToShow: 7,
+          // slidesToShow: 6.5,
         },
       },
       {
         breakpoint: 1441,
         settings: {
-          slidesToShow: 4.5,
+          slidesToShow: 5,
         },
       },
       {
         breakpoint: 1085,
         settings: {
-          slidesToShow: 3.5,
+          slidesToShow: 4,
         },
       },
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2.5,
+          slidesToShow: 3,
         },
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2.1,
+          slidesToShow: 2,
         },
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1.7,
+          slidesToShow: 2,
         },
       },
     ],
@@ -109,17 +111,19 @@ export const LogoCarousel = ({ children }) => {
   );
 };
 
-export const ImageSlider = ({}) => {
+export const ImageSlider = ({ children }) => {
   const settings = {
-    className: 'center',
-    centerMode: true,
+    // className: 'center',
+    // centerMode: true,
     infinite: true,
-    centerPadding: '0',
+    autoplay: true,
+    speed: 200,
+    cssEase: 'linear',
+    // centerPadding: '10px',
+    pauseOnHover: false,
     slidesToShow: 1,
-    initialSlide: 1,
-    focusOnSelect: true,
+    initialSlide: 0,
     arrows: false,
-    afterChange: onChange,
     swipeToSlide: false,
     responsive: [
       {
@@ -143,13 +147,13 @@ export const ImageSlider = ({}) => {
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 1.2,
+          // slidesToShow: 1.2,
         },
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1.2,
+          // slidesToShow: 1.2,
         },
       },
     ],

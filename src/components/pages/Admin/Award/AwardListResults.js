@@ -140,7 +140,7 @@ export const AwardListResults = ({
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
+                {/* <TableCell padding="checkbox">
                   <Checkbox
                     checked={selectedAwardIds.length === awards.length}
                     color="primary"
@@ -150,7 +150,7 @@ export const AwardListResults = ({
                     }
                     onChange={handleSelectAll}
                   />
-                </TableCell>
+                </TableCell> */}
                 <TableCell>ID</TableCell>
                 <TableCell>Title</TableCell>
                 <TableCell>Description</TableCell>
@@ -168,13 +168,13 @@ export const AwardListResults = ({
                   key={award.id}
                   selected={selectedAwardIds.indexOf(award.id) !== -1}
                 >
-                  <TableCell padding="checkbox">
+                  {/* <TableCell padding="checkbox">
                     <Checkbox
                       checked={selectedAwardIds.indexOf(award.id) !== -1}
                       onChange={(event) => handleSelectOne(event, award.id)}
                       value="true"
                     />
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell>
                     <Box
                       sx={{

@@ -71,6 +71,7 @@ export default function Megazines() {
         flexWrap={'wrap'}
         alignItems={'center'}
         justifyContent={'flex-start'}
+        alignContent={'center'}
         columnGap={3}
         rowGap={3}
         height={'100%'}
@@ -120,8 +121,8 @@ export default function Megazines() {
           listImg.map((e, i) => (
             <Stack
               flexBasis={{
-                xs: '46.5%',
-                md: '12.2%',
+                xs: '45.1%',
+                md: 100 / (listImg?.length / 1.5) + '%',
               }}
               key={i}
               onClick={handleToggle}
@@ -132,8 +133,8 @@ export default function Megazines() {
               <img
                 src={e}
                 key={i}
-                // width={580}
-                // height={1000}
+                width={'100%'}
+                height={'auto'}
                 alt={'loading'}
               />
             </Stack>

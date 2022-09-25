@@ -1,8 +1,10 @@
 import { Stack, Typography } from '@mui/material';
+import { ImageSlider } from 'components/ukit/Carousel';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { IMAGE_SOURCE } from 'utils/constants';
 
-export default function PersonInfo({ src, name, position, isMobile }) {
+export default function PersonInfo({ src, name, position, isMobile, data }) {
   const [mobile, setMobile] = useState(false);
 
   useEffect(() => {
@@ -24,8 +26,40 @@ export default function PersonInfo({ src, name, position, isMobile }) {
           md: 360,
         }}
         height={480}
+        sx={{
+          '& .personal-albums': {
+            display: 'none',
+          },
+          '&:hover': {
+            '.personal-avatar': {
+              display: data?.albums?.length > 0 ? 'none' : 'block',
+            },
+            '.personal-albums': {
+              display: 'block',
+            },
+          },
+        }}
       >
-        <img src={src} width={mobile ? 343 : 360} height={480} alt={'staff'} />
+        <img
+          className="personal-avatar"
+          src={src}
+          width={mobile ? 343 : 360}
+          height={480}
+          alt={'staff'}
+        />
+        <Stack className="personal-albums">
+          <ImageSlider>
+            {data?.albums?.map((el, i) => (
+              <img
+                key={i}
+                src={IMAGE_SOURCE + el.name}
+                width={mobile ? 343 : 360}
+                height={480}
+                alt={'staff'}
+              />
+            ))}
+          </ImageSlider>
+        </Stack>
         <Stack
           position={'absolute'}
           bottom={0}

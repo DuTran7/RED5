@@ -156,6 +156,7 @@ export const CategoryListResults = ({
                     onChange={handleSelectAll}
                   />
                 </TableCell> */}
+                <TableCell>ID</TableCell>
                 <TableCell>Name</TableCell>
                 <TableCell>Description</TableCell>
                 <TableCell>Image</TableCell>
@@ -177,6 +178,7 @@ export const CategoryListResults = ({
                       value="true"
                     />
                   </TableCell> */}
+                  <TableCell>{categories.id}</TableCell>
                   <TableCell>{categories.name}</TableCell>
                   <TableCell>{categories?.description || ''}</TableCell>
                   <TableCell>

@@ -46,7 +46,7 @@ export const RecognitionListToolbar = (props) => {
           </Button>
         </Box>
       </Box>
-      <Box sx={{ mt: 3 }}>
+      {/* <Box sx={{ mt: 3 }}>
         <Card>
           <CardContent>
             <Box sx={{ maxWidth: 500 }}>
@@ -67,7 +67,7 @@ export const RecognitionListToolbar = (props) => {
             </Box>
           </CardContent>
         </Card>
-      </Box>
+      </Box> */}
       <Dialog
         open={open}
         onClose={handleClose}

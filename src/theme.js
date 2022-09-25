@@ -68,6 +68,11 @@ export const theme = responsiveFontSizes(
         fontSize: '16px',
         lineHeight: 1.75,
       },
+      h6: {
+        fontWeight: 400,
+        fontSize: '12px',
+        lineHeight: 1.3,
+      },
       caption: {
         fontFamily: 'Red5 Helvetica',
         fontWeight: 400,
