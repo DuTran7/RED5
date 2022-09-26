@@ -115,8 +115,6 @@ export default function Awards() {
   useEffect(() => {
     if (curIndex) {
       const awardSelected = awards?.find((e, i) => i === curIndex);
-      console.log(awards);
-      console.log(awardSelected);
       if (awardSelected) {
         setAlbumsSelected(awardSelected?.albums);
       }
@@ -187,7 +185,6 @@ export default function Awards() {
         <CenterCarousel
           onChange={(e) => {
             setCurIndex(Math.round(e));
-            console.log(e);
           }}
           curIndex={curIndex}
         >

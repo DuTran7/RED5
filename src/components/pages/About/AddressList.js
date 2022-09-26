@@ -46,7 +46,6 @@ export default function AddressList({ isMobile, data, press }) {
       res = await getAllRecognitions(page, 4);
     }
     if (res.status === 200) {
-      console.log(res);
       setListAddress(res.data?.content);
       setRecognition(res.data);
     }

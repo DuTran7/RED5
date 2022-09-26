@@ -27,6 +27,7 @@
     "moment": "^2.29.3",
     "next": "^12.1.6",
     "next-auth": "3.29.3",
+    "next-seo": "^5.5.0",
     "notistack": "^2.0.5",
     "react": "18.1.0",
     "react-device-detect": "^2.2.2",

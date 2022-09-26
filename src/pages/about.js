@@ -2,6 +2,10 @@ import DefaultLayout from 'components/layouts/DefaultLayput';
 import AboutPage from 'components/pages/About/AboutPage';
 import { useEffect, useState } from 'react';
 
+const seo = {
+  title: 'About - Red5',
+  description: `Our definition of a beautiful design emphasizes on the relationship between human and space, activities and environment rather than meaningless decoration in order to deliver clients true experiences of happiness via their interactions with the spaces.`,
+};
 export default function About({ isMobile }) {
   const [position, setPosition] = useState();
 
@@ -24,7 +28,7 @@ export default function About({ isMobile }) {
   }, []);
 
   return (
-    <DefaultLayout>
+    <DefaultLayout seo={seo}>
       <AboutPage isMobile={isMobile} position={position} />
     </DefaultLayout>
   );

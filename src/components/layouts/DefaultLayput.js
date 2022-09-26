@@ -1,21 +1,24 @@
 import { Box } from '@mui/system';
 import Header from 'components/shared/Header';
 import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 
-const DefaultLayout = ({ children, showFooter = true }) => {
+const DefaultLayout = ({ children, showFooter = true, seo }) => {
   return (
-    <Box>
-      <Head></Head>
-      <Header />
-      <Box
-        sx={{
-          overflowX: 'scroll',
-        }}
-      >
-        {children}
+    <>
+      <NextSeo {...seo} />
+      <Box>
+        <Header />
+        <Box
+          sx={{
+            overflowX: 'scroll',
+          }}
+        >
+          {children}
+        </Box>
+        {/* {showFooter && <Footer />} */}
       </Box>
-      {/* {showFooter && <Footer />} */}
-    </Box>
+    </>
   );
 };
 
