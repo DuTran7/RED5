@@ -217,17 +217,6 @@ export const AwardListResults = ({
                         {`View Albums (${albums?.length})`}
                       </Typography>
                     </Button>
-                    <StyledDialog
-                      title={'Albums'}
-                      open={openAlbum}
-                      handleClose={handleCloseAlbum}
-                    >
-                      <Albums
-                        data={albumsSelected}
-                        onClickAddImg={handleAddImage}
-                        onClickDelImg={onClickDelImg}
-                      />
-                    </StyledDialog>
                   </TableCell>
                   <TableCell>
                     <Button
@@ -264,6 +253,17 @@ export const AwardListResults = ({
             handleClose();
             handleChangeList();
           }}
+        />
+      </StyledDialog>
+      <StyledDialog
+        title={'Albums'}
+        open={openAlbum}
+        handleClose={handleCloseAlbum}
+      >
+        <Albums
+          data={albumsSelected}
+          onClickAddImg={handleAddImage}
+          onClickDelImg={onClickDelImg}
         />
       </StyledDialog>
       <TablePagination

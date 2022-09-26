@@ -92,30 +92,9 @@ const StyledBox = ({ children }) => {
 export default function Awards() {
   const sliderRef = useRef();
   const [slide, setSlide] = useState();
-  const [curIndex, setCurIndex] = useState(0);
+  const [curIndex, setCurIndex] = useState(1);
   const [albumsSelected, setAlbumsSelected] = useState([]);
-  const [awards, setAwards] = useState([
-    {
-      image: '/imgs/Award.png',
-      name: 'THE BEST OF RETAIL DESIGN SILVER AWARD 2019',
-      project: 'Nguyen Anh Tu',
-    },
-    {
-      image: '/imgs/Award.png',
-      name: 'THE BEST OF RETAIL DESIGN SILVER AWARD 2020',
-      project: 'Nguyen Anh Tu',
-    },
-    {
-      image: '/imgs/Award.png',
-      name: 'THE BEST OF RETAIL DESIGN SILVER AWARD 2021',
-      project: 'Nguyen Anh Tu',
-    },
-    {
-      image: '/imgs/Award.png',
-      name: 'THE BEST OF RETAIL DESIGN SILVER AWARD 2022',
-      project: 'Nguyen Anh Tu',
-    },
-  ]);
+  const [awards, setAwards] = useState([]);
   const [open, setOpen] = useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -136,11 +115,13 @@ export default function Awards() {
   useEffect(() => {
     if (curIndex) {
       const awardSelected = awards?.find((e, i) => i === curIndex);
+      console.log(awards);
+      console.log(awardSelected);
       if (awardSelected) {
         setAlbumsSelected(awardSelected?.albums);
       }
     }
-  }, [curIndex]);
+  }, [curIndex, awards]);
   return (
     <StyledBox>
       <Stack
@@ -186,7 +167,7 @@ export default function Awards() {
             showFullscreenButton={false}
             showNav={false}
             thumbnailPosition={'bottom'}
-            items={albumsSelected.map((el) => ({
+            items={albumsSelected?.map((el) => ({
               original: IMAGE_SOURCE + el?.name,
               thumbnail: IMAGE_SOURCE + el?.name,
             }))}
