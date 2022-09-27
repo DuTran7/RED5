@@ -24,7 +24,7 @@ export default function ScrollContainer({
   };
 
   const onTouchMove = (e) => {
-    
+    // console.log(e.targetTouches[0]);
     setTouchEnd(e.targetTouches[0].clientX);
     setTouchEndY(e.targetTouches[0].clientY);
   };
@@ -38,7 +38,6 @@ export default function ScrollContainer({
     const isRightSwipe = distance < -minSwipeDistance;
     if (isLeftSwipe || isRightSwipe) {
     }
-    
   };
   return (
     <Box

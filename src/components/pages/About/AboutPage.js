@@ -69,7 +69,7 @@ export default function AboutPage({ isMobile, position }) {
   }, [value]);
 
   useEffect(() => {
-    if (isMobile) {
+    if (false) {
       let newP = swipeScroll;
       if (swipeScroll < 0) {
         newP = 0;
