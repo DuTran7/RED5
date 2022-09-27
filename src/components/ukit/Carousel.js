@@ -1,4 +1,6 @@
 import { Box } from '@mui/material';
+import { useEffect, useRef } from 'react';
+import { isMobile } from 'react-device-detect';
 import Slider from 'react-slick';
 
 export const ChapterCarousel = ({ children }) => {
@@ -57,10 +59,11 @@ export const LogoCarousel = ({ children }) => {
     arrows: false,
     slidesToShow: 6,
     initialSlide: 0,
-    focusOnSelect: true,
+    // focusOnSelect: false,
+    // slidesToScroll: 4,
     // rows: 1,
     // infinite: false,
-    // swipeToSlide: true,
+    swipeToSlide: true,
     responsive: [
       {
         breakpoint: 2000,
@@ -169,18 +172,26 @@ export const ImageSlider = ({ children }) => {
   );
 };
 
-export const CenterCarousel = ({ children, onChange, curIndex, ...other }) => {
+export const CenterCarousel = ({
+  refEl,
+  children,
+  onChange,
+  curIndex = 1,
+  ...other
+}) => {
+  const sliderRef = useRef();
   const settings = {
     className: 'center',
     centerMode: true,
-    infinite: true,
+    // infinite: true,
     centerPadding: '0',
     slidesToShow: 3,
     initialSlide: 1,
-    focusOnSelect: true,
-    arrows: false,
-    afterChange: onChange,
-    swipeToSlide: false,
+    focusOnSelect: !isMobile,
+    // arrows: false,
+    // variableWidth: true,
+    beforeChange: onChange,
+    swipeToSlide: true,
     responsive: [
       {
         breakpoint: 2000,
@@ -209,18 +220,29 @@ export const CenterCarousel = ({ children, onChange, curIndex, ...other }) => {
       {
         breakpoint: 480,
         settings: {
+          initialSlide: 1,
           slidesToShow: 1.2,
         },
       },
     ],
   };
+
+  useEffect(() => {
+    if (isMobile) {
+      setTimeout(() => {
+        sliderRef.current.slickGoTo(curIndex);
+      }, 500);
+    }
+  }, [isMobile, sliderRef, curIndex]);
   return (
     <div
       style={{
         width: '100%',
       }}
     >
-      <Slider {...settings}>{children}</Slider>
+      <Slider ref={sliderRef} {...settings}>
+        {children}
+      </Slider>
     </div>
   );
 };

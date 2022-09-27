@@ -1,4 +1,4 @@
-import { Box, Stack } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import ScrollContainer from 'components/shared/ScrollContainer';
 import { AboutTabHorizontal, AboutTabs } from 'components/ukit/Tabs';
 import { useRouter } from 'next/router';
@@ -10,7 +10,7 @@ import Culture from './Culture';
 import Megazines from './Megazines';
 import PressAndRecognition from './PressAndRecognition';
 import Teams from './Teams';
-
+const distanceOriginal = 0;
 export default function AboutPage({ isMobile, position }) {
   const teamRef = useRef();
   const cultureRef = useRef();
@@ -20,6 +20,7 @@ export default function AboutPage({ isMobile, position }) {
 
   const router = useRouter();
   const [value, setValue] = useState('culture');
+  const [swipeScroll, setSwipeScroll] = useState(0);
   const [valueToScroll, setValueToScroll] = useState('culture');
 
   const handleChange = (event, newValue, scroll) => {
@@ -67,8 +68,45 @@ export default function AboutPage({ isMobile, position }) {
     }
   }, [value]);
 
+  useEffect(() => {
+    if (isMobile) {
+      let newP = swipeScroll;
+      if (swipeScroll < 0) {
+        newP = 0;
+        setSwipeScroll(newP);
+      }
+      if (newP >= contactRef.current.offsetTop - distanceOriginal) {
+        setValue('contact');
+        return;
+      }
+      if (newP >= pressRef.current.offsetTop - distanceOriginal) {
+        setValue('press');
+        return;
+      }
+      if (newP >= awardRef.current.offsetTop - distanceOriginal) {
+        setValue('awards');
+        return;
+      }
+      if (newP >= teamRef.current.offsetTop - distanceOriginal) {
+        setValue('team');
+        return;
+      }
+      if (newP >= contactRef.current.offsetTop - distanceOriginal) {
+        setValue('contact');
+        return;
+      }
+      if (newP >= cultureRef.current.offsetTop - distanceOriginal) {
+        setValue('culture');
+        return;
+      }
+    }
+  }, [swipeScroll]);
+
   return (
-    <ScrollContainer customClass="about-scroll">
+    <ScrollContainer
+      customClass="about-scroll"
+      onSwipe={(position) => setSwipeScroll(swipeScroll + position)}
+    >
       <Stack
         flexGrow={0}
         position={'fixed'}

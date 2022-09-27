@@ -9,7 +9,7 @@ export default function ChapterCard({ chapNo, name, image, onClick, data }) {
       sx={{
         background: theme.palette.common.black,
         '&:hover': {
-          backgroundImage: image ? `url(${IMAGE_SOURCE + image})` : 'none',
+          backgroundImage: image ? `linear-gradient(#00000066, #00000066), url(${IMAGE_SOURCE + image})` : 'none',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
           backgroundPosition: 'center center',

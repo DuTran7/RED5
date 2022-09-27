@@ -4,6 +4,7 @@ import { getAllAwards } from 'components/service/AwardService';
 import { CenterCarousel } from 'components/ukit/Carousel';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import ImageGallery from 'react-image-gallery';
 import { theme } from 'theme';
 import { IMAGE_SOURCE } from 'utils/constants';
@@ -90,8 +91,6 @@ const StyledBox = ({ children }) => {
 };
 
 export default function Awards() {
-  const sliderRef = useRef();
-  const [slide, setSlide] = useState();
   const [curIndex, setCurIndex] = useState(1);
   const [albumsSelected, setAlbumsSelected] = useState([]);
   const [awards, setAwards] = useState([]);
@@ -183,8 +182,8 @@ export default function Awards() {
           Awards
         </Typography>
         <CenterCarousel
-          onChange={(e) => {
-            setCurIndex(Math.round(e));
+          onChange={(cur, next) => {
+            setCurIndex(Math.floor(Math.abs(next)));
           }}
           curIndex={curIndex}
         >

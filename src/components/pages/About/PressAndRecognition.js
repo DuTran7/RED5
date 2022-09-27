@@ -204,9 +204,6 @@ export default function PressAndRecognition({ isMobile }) {
             {pressList?.map((el, i) => (
               <StyledIcon
                 key={i}
-                onClick={() => {
-                  handleClickLogo(el, i);
-                }}
                 sx={{
                   minWidth: '180px',
                   // maxWidth: '180px',
@@ -214,6 +211,9 @@ export default function PressAndRecognition({ isMobile }) {
                 isActive={indexSelected === i}
               >
                 <img
+                  onClick={(e) => {
+                    handleClickLogo(el, i);
+                  }}
                   src={IMAGE_SOURCE + el?.name}
                   style={{
                     // fontSize: '80px',

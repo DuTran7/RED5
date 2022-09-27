@@ -1,5 +1,6 @@
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
+import { isMobile } from 'react-device-detect';
 import { theme } from 'theme';
 
 export default function ContactUs() {
@@ -77,7 +78,7 @@ export default function ContactUs() {
             item
             xs={12}
             md={4}
-            borderRight={'1px solid ' + theme.palette.divider}
+            borderRight={isMobile ? '' : '1px solid ' + theme.palette.divider}
             p={{
               xs: '80px 16px 32px',
               md: 0,
@@ -127,7 +128,7 @@ export default function ContactUs() {
             item
             xs={12}
             md={4}
-            borderRight={'1px solid ' + theme.palette.divider}
+            borderRight={isMobile ? '' : '1px solid ' + theme.palette.divider}
             p={{
               xs: '0 16px 32px',
               md: 0,
