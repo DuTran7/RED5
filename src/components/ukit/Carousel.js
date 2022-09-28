@@ -120,6 +120,7 @@ export const ImageSlider = ({ children }) => {
     // centerMode: true,
     infinite: true,
     autoplay: true,
+    autoplaySpeed: 1500,
     speed: 200,
     cssEase: 'linear',
     // centerPadding: '10px',

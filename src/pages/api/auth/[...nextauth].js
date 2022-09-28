@@ -24,30 +24,31 @@ export default NextAuth({
       },
       async authorize(cre, req) {
         const { email, password, username } = cre;
-        // const fetchUser = await request(API.AUTH_PROFILE, 'POST', {
-        //   email: email,
-        //   password: password,
-        //   username: username,
-        // });
-        // const user = await fetchUser.data;
-        // if (fetchUser?.successCode === 'OK') {
-        //   if (fetchUser?.data) {
-        //     return {
-        //       ...fetchUser.data[0],
-        //       user: {
-        //         ...fetchUser.data[0]?.username,
-        //         expiredToken: new Date().setMinutes(
-        //           new Date().getMinutes() + 5
-        //         ),
-        //       },
-        //       expiredToken: new Date().setMinutes(new Date().getMinutes() + 5),
-        //       email: fetchUser.data[0]?.email,
-        //       token: fetchUser.data[0]?.tokenDto?.accessToken,
-        //     };
-        //   } else {
-        //     throw new Error(fetchUser?.messageCode);
-        //   }
-        // }
+        const fetchUser = await request(API.AUTH_PROFILE, 'POST', {
+          email: email,
+          password: password,
+          username: username,
+        });
+        const user = await fetchUser.data;
+        console.log(user);
+        if (fetchUser?.successCode === 'OK') {
+          if (fetchUser?.data) {
+            return {
+              ...fetchUser.data[0],
+              user: {
+                ...fetchUser.data[0]?.username,
+                expiredToken: new Date().setMinutes(
+                  new Date().getMinutes() + 5
+                ),
+              },
+              expiredToken: new Date().setMinutes(new Date().getMinutes() + 5),
+              email: fetchUser.data[0]?.email,
+              token: fetchUser.data[0]?.accessToken,
+            };
+          } else {
+            throw new Error(fetchUser?.messageCode);
+          }
+        }
         return null;
       },
     }),

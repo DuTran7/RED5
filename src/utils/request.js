@@ -8,7 +8,7 @@ export async function request(
   headers = {},
   callback
 ) {
-  const session = await getSession();
+  let session = null;
 
   try {
     const options = {
@@ -21,13 +21,16 @@ export async function request(
       credentials: 'same-origin',
       cache: 'no-store',
     };
-    if (session && session?.user?.token) {
-      options.headers = {
-        ...options.headers,
-        Authorization: `Bearer ${session?.user?.token}` || '',
-      };
-    }
+
     if (method === 'POST' || method === 'PUT') {
+      console.log(session);
+      session = await getSession();
+      if (session && session?.user?.token) {
+        options.headers = {
+          ...options.headers,
+          Authorization: `Bearer ${session?.user?.token}` || '',
+        };
+      }
       Object.assign(options, { body: JSON.stringify(body) });
     }
 

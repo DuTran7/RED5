@@ -15,6 +15,7 @@ const Awards = () => {
     }
   };
   useEffect(() => {
+    
     updateAwards();
   }, []);
   return (

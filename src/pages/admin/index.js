@@ -1,6 +1,7 @@
 import { Box, Container } from '@mui/material';
 import { DashboardLayout } from 'components/layouts/DashboardLayout';
 import Head from 'next/head';
+import { useEffect } from 'react';
 
 export default function AdminDashboard() {
   return <DashboardLayout>Wellcome to admin page!</DashboardLayout>;

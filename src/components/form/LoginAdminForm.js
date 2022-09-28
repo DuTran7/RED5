@@ -1,8 +1,21 @@
-import { Stack } from '@mui/material';
+import { Button, FormControlLabel, Stack, Typography } from '@mui/material';
 import InputControl from 'components/shared/InputControl';
+import {
+  StyledContainerBtn,
+  StyledOutlineButton,
+  StyledPrimaryBtn,
+} from 'components/ukit/Button';
+import { signIn } from 'next-auth/client';
+import { useRouter } from 'next/router';
+import { useSnackbar } from 'notistack';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { theme } from 'theme';
 
-export default function LoginAdminForm() {
+export default function LoginAdminForm({ handleForgetPw }) {
+  const { enqueueSnackbar } = useSnackbar();
+  const router = useRouter();
+  const [loginError, setLoginError] = useState(false);
   const {
     control,
     handleSubmit,
@@ -10,7 +23,26 @@ export default function LoginAdminForm() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    const user = await signIn('credentials', {
+      ...data,
+      redirect: false,
+    });
+    // const user = await axios.post('/api/auth/callback/credentials', {
+    //   ...d,
+    //   csrfToken,
+
+    // });
+
+    if (!!!user.error) {
+      console.log(user);
+      router.push('/admin');
+      // router.push(window.location.origin + ROUTER.PROFILE);
+      enqueueSnackbar('You are login successfull', { variant: 'success' });
+    } else {
+      setLoginError(user.error);
+    }
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack>
@@ -20,8 +52,55 @@ export default function LoginAdminForm() {
             id={'email'}
             name={'email'}
             label={'Email:'}
-            onChange={(e) => {}}
+            type={'email'}
+            // onChange={(e) => {}}
           />
+          <InputControl
+            control={control}
+            id={'password'}
+            type={'password'}
+            name={'password'}
+            label={'Password:'}
+          />
+          <Stack my={2} direction={'row'} justifyContent={'flex-end'}>
+            <Typography
+              onClick={handleForgetPw}
+              variant="body1"
+              color={theme.palette.primary.main}
+              sx={{
+                textDecoration: 'underline',
+                cursor: 'pointer',
+              }}
+            >
+              <a>forget password?</a>
+            </Typography>
+          </Stack>
+          <Stack
+            direction={'column'}
+            justifyContent={'center'}
+            alignItems={'center'}
+            rowGap={'16px'}
+            mt={'20px'}
+          >
+            {loginError && (
+              <Typography
+                variant="subtitle1"
+                color={theme.palette.primary.main}
+              >
+                <i>{loginError}</i>
+              </Typography>
+            )}
+            <StyledPrimaryBtn width={'100%'} type="submit">
+              <Typography variant={'body1'} color={'text.secondary'}>
+                log in
+              </Typography>
+            </StyledPrimaryBtn>
+            {/* <Button width={'100%'} onClick={onHandleCreateAccount}>
+              <Typography variant={'subtitle2'} color={'text.secondary'}>
+                Create an account
+              </Typography>
+            </Button> */}
+          </Stack>
         </Stack>
       </Stack>
     </form>

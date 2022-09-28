@@ -39,6 +39,15 @@ export const StyledBtnUnderline = styled(StyledBtn)(() => ({
   },
 }));
 
+export const StyledPrimaryBtn = styled(StyledBtn)(() => ({
+  color: theme.palette.primary.main,
+  background: theme.palette.common.black,
+  border: '1px solid ' + theme.palette.common.black,
+  '.MuiTypography-root': {
+    color: theme.palette.primary.main,
+  },
+}))
+
 export const StyledContainerBtn = styled(StyledBtn)(() => ({
   color: theme.palette.common.black,
   background: theme.palette.common.custom,

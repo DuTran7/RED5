@@ -4,6 +4,8 @@ export const PAYPAL_CLIENT_ID =
   'AcjSv1tmHo9WHQIsgEUhL1bUTzFynjahzhRcaGSG05Gthew_tS5sjlMC3PYCtDO6dYxjemfv5Q4qESM3';
 export const API_URL = process.env.NEXT_PUBLIC_API;
 export const API = {
+  AUTH_PROFILE: '/auth/login',
+  AUTH_FORGET_PW: '/auth/forget-password',
   CATEGORY: {
     ALL: '/category/get-all',
     BY_ID: '/category/get-by-id=',
@@ -60,4 +62,9 @@ export const BODY_TYPE_REQUEST = {
 export const ITEM_STATUS = {
   ACTIVATED: 'ACTIVATED',
   DEACTIVATED: 'DEACTIVATED',
+};
+
+export const TYPE_FORM = {
+  LOGIN: 'login',
+  FORGET_PW: 'forget-pw',
 };
