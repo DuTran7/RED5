@@ -25,12 +25,12 @@ export const DashboardLayout = (props) => {
   const [session] = useSession();
   const router = useRouter();
   useEffect(() => {
-    console.log(session?.user);
-    if (new Date().getTime() > session?.user?.expiredToken) {
-      enqueueSnackbar('Please login and try again', { variant: 'error' });
-      router.push('/admin/login');
+    if (new Date().getTime() < session?.user?.expiredToken) {
       return;
     }
+    enqueueSnackbar('Please login and try again', { variant: 'error' });
+    router.push('/admin/login');
+    return;
   }, []);
 
   return (
