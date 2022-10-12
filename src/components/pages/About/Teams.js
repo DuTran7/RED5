@@ -102,7 +102,7 @@ export default function Teams({ isMobile }) {
             md: 'flex',
           },
           background: theme.palette.common.black,
-          columnGap: 15,
+          columnGap: 12,
           direction: {
             xs: 'column',
             md: 'row',

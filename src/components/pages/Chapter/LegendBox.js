@@ -19,6 +19,7 @@ export default function LegendBox({ label, name }) {
         sx={{
           opacity: 0.9,
         }}
+        lineHeight={1.2}
         color={'text.primary'}
       >
         {name}
