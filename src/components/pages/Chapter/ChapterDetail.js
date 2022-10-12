@@ -53,7 +53,7 @@ export default function ChapterDetail({ data }) {
   }, [router.query.slug]);
 
   return (
-    <ScrollContainer height={'100vh'}>
+    <ScrollContainer height={'100vh'} customClass={'cursor-custom'}>
       <HardCoverVertical name={chapter?.detailCategory?.name} />
       <HardCoverHorizontal name={chapter?.detailCategory?.name} />
       <ShortInfoChapter

@@ -31,7 +31,6 @@ export default function LoginPage() {
         {typeForm === TYPE_FORM.LOGIN && (
           <LoginAdminForm
             handleForgetPw={() => {
-              console.log(1);
               setTypeForm(TYPE_FORM.FORGET_PW);
             }}
           />

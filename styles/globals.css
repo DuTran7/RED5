@@ -270,6 +270,10 @@ a:hover {
   }
 }
 
+.cursor-custom {
+  cursor: url('/icons/arrowRight.svg'), auto;
+}
+
 .admin-cms .MuiTableCell-root,
 .admin-cms p,
 .admin-cms .MuiInputBase-input,

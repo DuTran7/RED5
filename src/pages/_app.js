@@ -38,7 +38,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         item.addEventListener('wheel', (evt) => {
           evt.preventDefault();
           item.scrollLeft += evt.deltaY;
-          console.log('wheel', evt);
+          // console.log('wheel', evt);
         });
 
         // item.addEventListener('', (e) => {

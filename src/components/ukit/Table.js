@@ -1,16 +1,18 @@
-import { Link, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import {
+  Link,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from '@mui/material';
 import React from 'react';
 import { theme } from 'theme';
 
-export default function StyledTable({
-  columns,
-  rows,
-  ...rest
-}) {
+export default function StyledTable({ columns, rows, ...rest }) {
   const renderRows = () => {
-    const onClickLink = () => {
-      console.info("I'm a button.");
-    }
+    const onClickLink = () => {};
     return (rows || []).map((item, index) => (
       <TableRow
         // StyledTableRowhover
@@ -24,7 +26,7 @@ export default function StyledTable({
         {(columns || []).map((column) => (
           <TableCell
             key={column.key}
-            align={"left"}
+            align={'left'}
             // width={column.width}
             sx={{
               color: theme.palette.common.darkBlack,
@@ -32,13 +34,24 @@ export default function StyledTable({
               lineHeight: '24px',
               maxWidth: '165px',
               padding: '12px',
-              verticalAlign: 'super'
-            }}>
-            {column.key !== 'action' ? item[column.key] : <Link color={theme.palette.link.blue} underline="none" href="#" onClick={onClickLink}>View order</Link>}
+              verticalAlign: 'super',
+            }}
+          >
+            {column.key !== 'action' ? (
+              item[column.key]
+            ) : (
+              <Link
+                color={theme.palette.link.blue}
+                underline="none"
+                href="#"
+                onClick={onClickLink}
+              >
+                View order
+              </Link>
+            )}
           </TableCell>
-        ))
-        }
-      </TableRow >
+        ))}
+      </TableRow>
     ));
   };
 
@@ -51,7 +64,7 @@ export default function StyledTable({
               {columns.map((item) => (
                 <TableCell
                   key={item.key}
-                  align={"left"}
+                  align={'left'}
                   width={item.width}
                   sx={{
                     fontWeight: '700',
@@ -62,7 +75,7 @@ export default function StyledTable({
                     // textTransform: 'capitalize',
                     lineHeight: '18px',
                     maxWidth: '165px',
-                    padding: '12px'
+                    padding: '12px',
                   }}
                 >
                   {item.title}
@@ -73,7 +86,6 @@ export default function StyledTable({
           <TableBody>{renderRows()}</TableBody>
         </Table>
       </TableContainer>
-    </React.Fragment >
+    </React.Fragment>
   );
 }
-
