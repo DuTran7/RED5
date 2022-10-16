@@ -4,7 +4,7 @@ import { IMAGE_SOURCE } from 'utils/constants';
 
 export default function PhotosCard({ photos, width }) {
   return (
-    <Stack rowGap={2}>
+    <Stack rowGap={1}>
       <Box
         height={{
           xs: 'auto',

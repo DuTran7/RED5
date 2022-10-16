@@ -21,6 +21,9 @@ export default function HardCoverVertical({ name }) {
           md: 'flex',
         },
       }}
+      onClick={(evt) => {
+        evt.preventDefault();
+      }}
     >
       <Stack
         width={'100%'}
@@ -28,7 +31,10 @@ export default function HardCoverVertical({ name }) {
         justifyContent={'center'}
         alignItems={'center'}
         borderBottom={'1px solid ' + theme.palette.divider}
-        onClick={() => router.push('/')}
+        onClick={(evt) => {
+          evt.preventDefault();
+          router.push({ pathname: '/' });
+        }}
         sx={{
           '&:hover': {
             background: 'rgba(255, 255, 255, 0.1)',

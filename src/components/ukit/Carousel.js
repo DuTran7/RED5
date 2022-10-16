@@ -193,6 +193,7 @@ export const CenterCarousel = ({
     // variableWidth: true,
     beforeChange: onChange,
     swipeToSlide: true,
+    arrows: false,
     responsive: [
       {
         breakpoint: 2000,

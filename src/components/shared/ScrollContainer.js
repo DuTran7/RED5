@@ -33,7 +33,7 @@ export default function ScrollContainer({
     if (!touchStart || !touchEnd || !touchStartY || !touchEndY) return;
     const distance = touchStart - touchEnd;
     const distanceY = touchStartY - touchEndY;
-    onSwipe(distanceY);
+    onSwipe?.(distanceY);
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
     if (isLeftSwipe || isRightSwipe) {

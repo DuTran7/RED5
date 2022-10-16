@@ -37,7 +37,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       for (let item of scrollContainer) {
         item.addEventListener('wheel', (evt) => {
           evt.preventDefault();
-          item.scrollLeft += evt.deltaY;
+          item.scrollLeft += evt.deltaY * 7;
+          // item.scrollLeft += 500;
           // console.log('wheel', evt);
         });
 
@@ -45,6 +46,13 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 
         // })
       }
+      return () => {
+        for (let item of scrollContainer) {
+          item.removeEventListener('wheel', (evt) => {
+            evt.preventDefault();
+          });
+        }
+      };
     }
 
     if (isMobile) {
