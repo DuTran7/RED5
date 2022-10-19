@@ -77,6 +77,7 @@ export const StyledTabs = styled(Tabs)(({}) => ({
   },
 }));
 export const StyledTabsHorizontal = styled(Tabs)(({}) => ({
+  background: 'linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%)',
   width: '100%',
   '& .MuiTabs-scroller': {
     overflow: 'unset !important',

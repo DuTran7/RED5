@@ -71,7 +71,7 @@ export default function Teams({ isMobile }) {
         // minWidth={'calc(100vw - 80px)'}
         p={{
           xs: '80px 16px',
-          md: '15vw 200px 0 160px',
+          md: '0 200px 20vh 160px',
         }}
       >
         <Stack
@@ -81,6 +81,7 @@ export default function Teams({ isMobile }) {
           }}
           height={'100%'}
           rowGap={3}
+          justifyContent={'center'}
         >
           <Typography variant={'h2'} color={'text.primary'}>
             Are you looking for a tame and timid digital studio? Well keep

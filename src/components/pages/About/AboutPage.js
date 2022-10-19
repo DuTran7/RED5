@@ -141,9 +141,6 @@ export default function AboutPage({ isMobile, position }) {
             xs: 'flex',
             md: 'none',
           },
-
-          background:
-            'linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0) 104.37%)',
         }}
       >
         <AboutTabHorizontal

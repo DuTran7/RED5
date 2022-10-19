@@ -13,6 +13,8 @@ const StyledBox = ({ children }) => {
   return (
     <Box
       sx={{
+        height: '100%',
+        alignItems: 'center',
         display: 'flex',
         background: theme.palette.common.black,
         '& .slick-list': {
@@ -128,7 +130,7 @@ export default function Awards() {
         alignItems={'center'}
         p={{
           xs: '80px 0px',
-          md: '64px 80px',
+          md: '0px 80px',
         }}
         rowGap={3}
         sx={{}}

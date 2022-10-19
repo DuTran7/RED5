@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import CreateAwardForm from 'components/form/CreateAwardForm';
 import CreateCategoryForm from 'components/form/CreateCategoryForm';
-import { uploadFile } from 'components/service/AwardService';
+import { updateFile, uploadFile } from 'components/service/AwardService';
 import { updateCategory } from 'components/service/CategoryService';
 import Albums from 'components/shared/Albums';
 import StyledDialog from 'components/shared/Dialog';
@@ -51,7 +51,7 @@ export const CategoryListResults = ({
     const bodyUploadFile = new FormData();
     bodyUploadFile.append('image', file);
     bodyUploadFile.append(
-      'jsonCategory',
+      'jsonAlbum',
       JSON.stringify({
         idCategory: categorySelected?.id,
         description: 'category id ' + categorySelected?.id,
@@ -71,7 +71,7 @@ export const CategoryListResults = ({
     handleChangeList();
   };
   const onClickDelImg = async (id) => {
-    const res = await updateCategory({
+    const res = await updateFile({
       id,
       status: ITEM_STATUS.DEACTIVATED,
     });

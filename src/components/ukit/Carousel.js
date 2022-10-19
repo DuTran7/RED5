@@ -6,8 +6,10 @@ import Slider from 'react-slick';
 export const ChapterCarousel = ({ children }) => {
   const settings = {
     className: 'center',
+    accessibility: false,
     infinite: true,
     centerPadding: '60px',
+    arrows: false,
     slidesToShow: 7.2,
     swipeToSlide: true,
     responsive: [
@@ -120,9 +122,9 @@ export const ImageSlider = ({ children }) => {
     // centerMode: true,
     infinite: true,
     autoplay: true,
-    autoplaySpeed: 1500,
+    autoplaySpeed: 800,
     speed: 200,
-    cssEase: 'linear',
+    cssEase: 'fade',
     // centerPadding: '10px',
     pauseOnHover: false,
     slidesToShow: 1,
