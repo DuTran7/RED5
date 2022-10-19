@@ -68,3 +68,7 @@ export const TYPE_FORM = {
   LOGIN: 'login',
   FORGET_PW: 'forget-pw',
 };
+
+export const CLASS_CUSTOM = {
+  CURSOL_CUSTOM: 'cursor-custom',
+};

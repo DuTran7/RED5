@@ -15,18 +15,39 @@ export default function HomePage(props) {
   const router = useRouter();
   const { chapterList } = props;
   const [chapters, setChapters] = useState(chapterList);
-  const navigateToChapterDetail = (obj) => {
+  const navigateToChapterDetail = (obj, index) => {
     const slug =
       String(obj?.categories?.id) +
       '/' +
       String(obj?.categories?.description)?.split(' ').join('-');
-    localStorage.setItem('CHAPTER', JSON.stringify(obj));
+    localStorage.setItem('CHAPTER', JSON.stringify({ ...obj, index }));
     router.push(ROUTER.CHAPTER + slug);
   };
 
   useEffect(() => {
     setChapters(props?.chapterList);
   }, [props?.chapterList]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      const oldChapter = localStorage.getItem('CHAPTER');
+      if (oldChapter) {
+        const index = JSON.parse(oldChapter)?.index || 0;
+        const element = document.getElementById('chapter-' + --index);
+        const melement = document.getElementById('mchapter-' + --index);
+        element?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+          inline: 'start',
+        });
+        melement?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+          inline: 'start',
+        });
+      }
+    }, 0);
+  }, [chapters]);
   return (
     <>
       <Box
@@ -69,10 +90,12 @@ export default function HomePage(props) {
           {chapters?.map((c, i) => (
             <SwiperSlide key={i}>
               <Box
+                id={'mchapter-' + i}
+                key={i}
                 borderRight={'1px solid'}
                 borderColor={theme.palette.divider}
                 overflow={'none auto'}
-                onClick={() => navigateToChapterDetail(c)}
+                onClick={() => navigateToChapterDetail(c, i)}
                 // minWidth={'200px'}
               >
                 <ChapterCard
@@ -97,12 +120,13 @@ export default function HomePage(props) {
         <ScrollContainer>
           {chapters?.map((c, i) => (
             <Box
+              id={'chapter-' + i}
               key={i}
               borderRight={'1px solid'}
               borderColor={theme.palette.divider}
               overflow={'auto hidden'}
               minWidth={'241px'}
-              onClick={() => navigateToChapterDetail(c)}
+              onClick={() => navigateToChapterDetail(c, i)}
               sx={{
                 height: 'calc(100vh - 84px)',
                 '&:hover': {

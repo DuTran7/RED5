@@ -30,20 +30,19 @@ export default NextAuth({
           username: username,
         });
         const user = await fetchUser.data;
-        console.log(user);
         if (fetchUser?.successCode === 'OK') {
-          if (fetchUser?.data) {
+          if (user) {
             return {
-              ...fetchUser.data[0],
+              ...user[0],
               user: {
-                ...fetchUser.data[0]?.username,
+                ...user[0]?.username,
                 expiredToken: new Date().setMinutes(
                   new Date().getMinutes() + 5
                 ),
               },
               expiredToken: new Date().setMinutes(new Date().getMinutes() + 5),
-              email: fetchUser.data[0]?.email,
-              token: fetchUser.data[0]?.accessToken,
+              email: user[0]?.email,
+              token: user[0]?.accessToken,
             };
           } else {
             throw new Error(fetchUser?.messageCode);

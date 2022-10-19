@@ -23,7 +23,6 @@ export async function request(
     };
 
     if (method === 'POST' || method === 'PUT') {
-      console.log(session);
       session = await getSession();
       if (session && session?.user?.token) {
         options.headers = {

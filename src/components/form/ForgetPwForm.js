@@ -22,7 +22,6 @@ export default function ForgetPwForm({ onClose, onHandleLogin }) {
   });
   const onSubmit = async (d) => {
     const data = await request(API.AUTH_FORGET_PW + '?email=' + d.email, 'GET');
-    console.log(data);
     setMessageCode(data?.messageCode);
   };
 

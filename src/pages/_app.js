@@ -41,14 +41,22 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       for (let item of scrollContainer) {
         item.addEventListener('wheel', (evt) => {
           evt.preventDefault();
-          item.scrollLeft += evt.deltaY;
-          console.log('wheel', evt);
+          item.scrollLeft += evt.deltaY * 7;
+          // item.scrollLeft += 500;
+          // console.log('wheel', evt);
         });
 
         // item.addEventListener('', (e) => {
 
         // })
       }
+      return () => {
+        for (let item of scrollContainer) {
+          item.removeEventListener('wheel', (evt) => {
+            evt.preventDefault();
+          });
+        }
+      };
     }
 
     if (isMobile) {

@@ -35,7 +35,6 @@ export default function LoginAdminForm({ handleForgetPw }) {
     // });
 
     if (!!!user.error) {
-      console.log(user);
       router.push('/admin');
       // router.push(window.location.origin + ROUTER.PROFILE);
       enqueueSnackbar('You are login successfull', { variant: 'success' });

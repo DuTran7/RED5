@@ -12,7 +12,6 @@ export const getChapterDetail = (id) => {
 
 export async function uploadFile(body) {
   const session = await getSession();
-  console.log(session);
   return await axios.post(process.env.NEXT_PUBLIC_API + '/file/upload', body, {
     headers: {
       'Content-Type': 'multipart/form-data',
