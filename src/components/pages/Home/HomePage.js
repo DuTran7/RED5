@@ -72,17 +72,17 @@ export default function HomePage(props) {
           slidesPerView={1.5}
           freeMode={true}
           modules={[FreeMode]}
-          breakpoints={{
-            640: {
-              slidesPerView: 1.5,
-            },
-            768: {
-              slidesPerView: 4.3,
-            },
-            1024: {
-              slidesPerView: 6.2,
-            },
-          }}
+          // breakpoints={{
+          //   640: {
+          //     slidesPerView: 1.5,
+          //   },
+          //   768: {
+          //     slidesPerView: 4.3,
+          //   },
+          //   1024: {
+          //     slidesPerView: 6.2,
+          //   },
+          // }}
         >
           {chapters?.map((c, i) => (
             <SwiperSlide key={i}>
