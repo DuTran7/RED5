@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import CreateAwardForm from 'components/form/CreateAwardForm';
 import CreateCategoryForm from 'components/form/CreateCategoryForm';
-import { uploadFile } from 'components/service/AwardService';
+import { updateFile, uploadFile } from 'components/service/AwardService';
 import { updateCategory } from 'components/service/CategoryService';
 import Albums from 'components/shared/Albums';
 import StyledDialog from 'components/shared/Dialog';
@@ -71,6 +71,23 @@ export const CategoryListResults = ({
     handleChangeList();
   };
   const onClickDelImg = async (id) => {
+    const res = await updateFile({
+      id,
+      status: ITEM_STATUS.DEACTIVATED,
+    });
+    if (!res?.status === 200) {
+      enqueueSnackbar('Delete img failed, please try again!', {
+        variant: 'error',
+      });
+      return;
+    }
+    enqueueSnackbar('Delete image success', {
+      variant: 'success',
+    });
+    handleCloseAlbum();
+    handleChangeList();
+  };
+  const onClickDel = async (id) => {
     const res = await updateCategory({
       id,
       status: ITEM_STATUS.DEACTIVATED,
@@ -224,7 +241,7 @@ export const CategoryListResults = ({
                     </Button>
                     <Button
                       onClick={() => {
-                        onClickDelImg(categories.id);
+                        onClickDel(categories.id);
                       }}
                     >
                       Delete
