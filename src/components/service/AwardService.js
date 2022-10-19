@@ -20,6 +20,7 @@ export async function uploadFile(body) {
   });
 }
 export async function updateFile(body) {
+  return request('/file', 'PUT', body);
   const session = await getSession();
   return await axios.put(process.env.NEXT_PUBLIC_API + '/file', body, {
     headers: {

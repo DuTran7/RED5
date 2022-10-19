@@ -8,6 +8,9 @@ import { theme } from 'theme';
 import { KEY_ROUTER, ROUTER } from 'utils/constants';
 import ChapterCard from './ChapterCard';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode, Pagination } from 'swiper';
+
 export default function HomePage(props) {
   const router = useRouter();
   const { chapterList } = props;
@@ -64,26 +67,47 @@ export default function HomePage(props) {
         position={'relative'}
         minWidth={'100vw'}
       >
-        <ChapterCarousel>
+        <Swiper
+          loop={true}
+          slidesPerView={1.5}
+          freeMode={true}
+          modules={[FreeMode]}
+          breakpoints={{
+            640: {
+              slidesPerView: 1.5,
+              spaceBetween: 20,
+            },
+            768: {
+              slidesPerView: 4.3,
+              spaceBetween: 40,
+            },
+            1024: {
+              slidesPerView: 6.2,
+              spaceBetween: 50,
+            },
+          }}
+        >
           {chapters?.map((c, i) => (
-            <Box
-              id={'mchapter-' + i}
-              key={i}
-              borderRight={'1px solid'}
-              borderColor={theme.palette.divider}
-              overflow={'none auto'}
-              onClick={() => navigateToChapterDetail(c, i)}
-              // minWidth={'200px'}
-            >
-              <ChapterCard
-                data={c}
-                chapNo={++i}
-                name={c?.categories?.description}
-                image={c?.albums?.[0].name}
-              />
-            </Box>
+            <SwiperSlide key={i}>
+              <Box
+                id={'mchapter-' + i}
+                key={i}
+                borderRight={'1px solid'}
+                borderColor={theme.palette.divider}
+                overflow={'none auto'}
+                onClick={() => navigateToChapterDetail(c, i)}
+                // minWidth={'200px'}
+              >
+                <ChapterCard
+                  data={c}
+                  chapNo={++i}
+                  name={c?.categories?.description}
+                  image={c?.albums?.[0].name}
+                />
+              </Box>
+            </SwiperSlide>
           ))}
-        </ChapterCarousel>
+        </Swiper>
       </Box>
       <Box
         sx={{

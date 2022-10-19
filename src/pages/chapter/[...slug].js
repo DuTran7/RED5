@@ -7,7 +7,6 @@ export default function Chapter() {
   const router = useRouter();
   const [data, setData] = useState(null);
   const updateData = async (id) => {
-    console.log(id);
     const res = await getChapterDetail(id);
     if (res?.status === 200) {
       setData(res?.data);

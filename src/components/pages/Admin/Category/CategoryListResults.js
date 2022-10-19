@@ -76,6 +76,23 @@ export const CategoryListResults = ({
       status: ITEM_STATUS.DEACTIVATED,
     });
     if (!res?.status === 200) {
+      enqueueSnackbar('Delete img failed, please try again!', {
+        variant: 'error',
+      });
+      return;
+    }
+    enqueueSnackbar('Delete image success', {
+      variant: 'success',
+    });
+    handleCloseAlbum();
+    handleChangeList();
+  };
+  const onClickDel = async (id) => {
+    const res = await updateCategory({
+      id,
+      status: ITEM_STATUS.DEACTIVATED,
+    });
+    if (!res?.status === 200) {
       enqueueSnackbar('Delete file failed, please try again!', {
         variant: 'error',
       });
@@ -224,7 +241,7 @@ export const CategoryListResults = ({
                     </Button>
                     <Button
                       onClick={() => {
-                        onClickDelImg(categories.id);
+                        onClickDel(categories.id);
                       }}
                     >
                       Delete

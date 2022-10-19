@@ -11,6 +11,10 @@ import { PAYPAL_CLIENT_ID } from 'utils/constants';
 import '../../styles/globals.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+
+import "swiper/css";
+import "swiper/css/free-mode";
+
 import { useRouter } from 'next/router';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
