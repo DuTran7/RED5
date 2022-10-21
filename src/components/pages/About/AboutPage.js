@@ -10,7 +10,7 @@ import Culture from './Culture';
 import Megazines from './Megazines';
 import PressAndRecognition from './PressAndRecognition';
 import Teams from './Teams';
-const distanceOriginal = 0;
+const distanceOriginal = 30;
 export default function AboutPage({ isMobile, position }) {
   const teamRef = useRef();
   const cultureRef = useRef();
@@ -20,7 +20,7 @@ export default function AboutPage({ isMobile, position }) {
 
   const router = useRouter();
   const [value, setValue] = useState('culture');
-  const [swipeScroll, setSwipeScroll] = useState(0);
+  const [offsetTop, setOffsetTop] = useState(0);
   const [valueToScroll, setValueToScroll] = useState('culture');
 
   const handleChange = (event, newValue, scroll) => {
@@ -69,43 +69,39 @@ export default function AboutPage({ isMobile, position }) {
   }, [value]);
 
   useEffect(() => {
-    if (false) {
-      let newP = swipeScroll;
-      if (swipeScroll < 0) {
-        newP = 0;
-        setSwipeScroll(newP);
-      }
-      if (newP >= contactRef.current.offsetTop - distanceOriginal) {
+    if (offsetTop > 0) {
+      if (offsetTop >= contactRef.current.offsetTop - distanceOriginal) {
         setValue('contact');
         return;
       }
-      if (newP >= pressRef.current.offsetTop - distanceOriginal) {
+      if (offsetTop >= pressRef.current.offsetTop - distanceOriginal) {
         setValue('press');
         return;
       }
-      if (newP >= awardRef.current.offsetTop - distanceOriginal) {
+      if (offsetTop >= awardRef.current.offsetTop - distanceOriginal) {
         setValue('awards');
         return;
       }
-      if (newP >= teamRef.current.offsetTop - distanceOriginal) {
+      if (offsetTop >= teamRef.current.offsetTop - distanceOriginal) {
         setValue('team');
         return;
       }
-      if (newP >= contactRef.current.offsetTop - distanceOriginal) {
+      if (offsetTop >= contactRef.current.offsetTop - distanceOriginal) {
         setValue('contact');
         return;
       }
-      if (newP >= cultureRef.current.offsetTop - distanceOriginal) {
+      if (offsetTop >= cultureRef.current.offsetTop - distanceOriginal) {
         setValue('culture');
         return;
       }
     }
-  }, [swipeScroll]);
+  }, [offsetTop]);
 
   return (
     <ScrollContainer
       customClass="about-scroll"
       onSwipe={(position) => setSwipeScroll(swipeScroll + position)}
+      onScroll={(e) => setOffsetTop(e.target.scrollTop)}
     >
       <Stack
         flexGrow={0}
