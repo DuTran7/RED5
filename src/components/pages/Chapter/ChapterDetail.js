@@ -86,10 +86,6 @@ export default function ChapterDetail({ data }) {
     };
   }, [chapter]);
 
-  useEffect(() => {
-    console.log(isShowBackToTop);
-  }, [isShowBackToTop]);
-
   return (
     <>
       {isShowBackToTop && (

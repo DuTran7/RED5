@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, debounce, Stack, Typography } from '@mui/material';
 import ScrollContainer from 'components/shared/ScrollContainer';
 import { AboutTabHorizontal, AboutTabs } from 'components/ukit/Tabs';
 import { useRouter } from 'next/router';
@@ -10,7 +10,7 @@ import Culture from './Culture';
 import Megazines from './Megazines';
 import PressAndRecognition from './PressAndRecognition';
 import Teams from './Teams';
-const distanceOriginal = 30;
+const distanceOriginal = 50;
 export default function AboutPage({ isMobile, position }) {
   const teamRef = useRef();
   const cultureRef = useRef();
@@ -47,10 +47,6 @@ export default function AboutPage({ isMobile, position }) {
       setValue('team');
       return;
     }
-    if (position >= contactRef.current.offsetLeft) {
-      setValue('contact');
-      return;
-    }
     if (position >= cultureRef.current.offsetLeft) {
       setValue('culture');
       return;
@@ -67,40 +63,36 @@ export default function AboutPage({ isMobile, position }) {
       });
     }
   }, [value]);
+  const handleScrollToElement = () => {
+    if (offsetTop >= contactRef.current.offsetTop - distanceOriginal) {
+      setValueToScroll('contact');
+      return;
+    }
+    if (offsetTop >= pressRef.current.offsetTop - distanceOriginal) {
+      setValueToScroll('press');
+      return;
+    }
+    if (offsetTop >= awardRef.current.offsetTop - distanceOriginal) {
+      setValueToScroll('awards');
+      return;
+    }
+    if (offsetTop >= teamRef.current.offsetTop - distanceOriginal) {
+      setValueToScroll('team');
+      return;
+    }
+    if (offsetTop >= cultureRef.current.offsetTop - distanceOriginal) {
+      setValueToScroll('culture');
+      return;
+    }
+  };
 
   useEffect(() => {
-    if (offsetTop > 0) {
-      if (offsetTop >= contactRef.current.offsetTop - distanceOriginal) {
-        setValue('contact');
-        return;
-      }
-      if (offsetTop >= pressRef.current.offsetTop - distanceOriginal) {
-        setValue('press');
-        return;
-      }
-      if (offsetTop >= awardRef.current.offsetTop - distanceOriginal) {
-        setValue('awards');
-        return;
-      }
-      if (offsetTop >= teamRef.current.offsetTop - distanceOriginal) {
-        setValue('team');
-        return;
-      }
-      if (offsetTop >= contactRef.current.offsetTop - distanceOriginal) {
-        setValue('contact');
-        return;
-      }
-      if (offsetTop >= cultureRef.current.offsetTop - distanceOriginal) {
-        setValue('culture');
-        return;
-      }
-    }
+    handleScrollToElement();
   }, [offsetTop]);
 
   return (
     <ScrollContainer
       customClass="about-scroll"
-      onSwipe={(position) => setSwipeScroll(swipeScroll + position)}
       onScroll={(e) => setOffsetTop(e.target.scrollTop)}
     >
       <Stack
@@ -140,7 +132,7 @@ export default function AboutPage({ isMobile, position }) {
         }}
       >
         <AboutTabHorizontal
-          value={value}
+          value={valueToScroll}
           onChange={(e, nvl) => handleChange(e, nvl, true)}
         />
       </Stack>
