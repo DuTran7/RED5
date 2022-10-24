@@ -189,11 +189,11 @@ export const CenterCarousel = ({
     infinite: true,
     centerPadding: '0',
     slidesToShow: 3,
-    initialSlide: 1,
+    // initialSlide: 1,
     // arrows: false,
     // variableWidth: true,
     beforeChange: onChange,
-    swipeToSlide: true,
+    swipeToSlide: false,
     arrows: false,
     responsive: [
       {
@@ -234,7 +234,7 @@ export const CenterCarousel = ({
         sliderRef.current.slickGoTo(curIndex);
       }, 100);
     }
-  }, [isMobile, sliderRef, curIndex]);
+  }, [isMobile]);
   return (
     <div
       style={{
