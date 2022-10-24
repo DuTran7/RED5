@@ -190,7 +190,6 @@ export const CenterCarousel = ({
     centerPadding: '0',
     slidesToShow: 3,
     initialSlide: 1,
-    focusOnSelect: !isMobile,
     // arrows: false,
     // variableWidth: true,
     beforeChange: onChange,
@@ -219,6 +218,7 @@ export const CenterCarousel = ({
         breakpoint: 600,
         settings: {
           slidesToShow: 1.2,
+          focusOnSelect: true,
         },
       },
       {
@@ -226,6 +226,7 @@ export const CenterCarousel = ({
         settings: {
           initialSlide: 1,
           slidesToShow: 1.2,
+          focusOnSelect: true,
         },
       },
     ],
