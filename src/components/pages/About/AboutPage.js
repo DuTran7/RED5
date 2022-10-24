@@ -56,11 +56,13 @@ export default function AboutPage({ isMobile, position }) {
   useEffect(() => {
     if (value) {
       const element = document.getElementById(value);
-      element?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-        inline: 'start',
-      });
+      setTimeout(() => {
+        element?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+          inline: 'start',
+        });
+      }, 100);
     }
   }, [value]);
   const handleScrollToElement = () => {

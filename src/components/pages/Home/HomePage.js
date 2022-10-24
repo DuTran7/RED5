@@ -50,7 +50,11 @@ export default function HomePage(props) {
     }, 0);
   }, [chapters]);
   return (
-    <>
+    <Box
+      sx={{
+        overflow: 'hidden',
+      }}
+    >
       <Box
         sx={{
           display: {
@@ -59,20 +63,21 @@ export default function HomePage(props) {
           },
           background: theme.palette.common.black,
           overflowY: 'hidden',
-          overflowX: 'scroll',
+          overflowX: 'hidden',
           height: 'calc(100vh)',
           '& .slick-list': {
             // padding: '0 0 0 134px !important',
           },
         }}
         position={'relative'}
-        minWidth={'100vw'}
+        width={'100vw'}
       >
         <Swiper
           loop={true}
           slidesPerView={1.5}
           freeMode={true}
           modules={[FreeMode]}
+
           // breakpoints={{
           //   640: {
           //     slidesPerView: 1.5,
@@ -86,13 +91,20 @@ export default function HomePage(props) {
           // }}
         >
           {chapters?.map((c, i) => (
-            <SwiperSlide key={i}>
+            <SwiperSlide
+              key={i}
+              style={{
+                '.swiper-slide': {
+                  overflowY: 'hidden',
+                },
+              }}
+            >
               <Box
                 id={'mchapter-' + i}
                 key={i}
                 borderRight={'1px solid'}
                 borderColor={theme.palette.divider}
-                overflow={'none auto'}
+                overflow={'none none'}
                 onClick={() => navigateToChapterDetail(c, i)}
                 // minWidth={'200px'}
               >
@@ -142,6 +154,6 @@ export default function HomePage(props) {
           ))}
         </ScrollContainer>
       </Box>
-    </>
+    </Box>
   );
 }

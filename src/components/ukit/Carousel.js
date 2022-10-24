@@ -10,37 +10,37 @@ export const ChapterCarousel = ({ children }) => {
     infinite: true,
     centerPadding: '60px',
     arrows: false,
-    slidesToShow: 7.2,
+    // slidesToShow: 7.2,
     swipeToSlide: true,
     responsive: [
       {
         breakpoint: 2000,
         settings: {
-          slidesToShow: 7.2,
+          // slidesToShow: 7.2,
         },
       },
       {
         breakpoint: 1441,
         settings: {
-          slidesToShow: 7.2,
+          // slidesToShow: 7.2,
         },
       },
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 5.5,
+          // slidesToShow: 5.5,
         },
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 5.1,
+          // slidesToShow: 5.1,
         },
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1.534,
+          // slidesToShow: 1.5,
         },
       },
     ],
@@ -186,7 +186,7 @@ export const CenterCarousel = ({
   const settings = {
     className: 'center',
     centerMode: true,
-    // infinite: true,
+    infinite: true,
     centerPadding: '0',
     slidesToShow: 3,
     initialSlide: 1,
@@ -216,15 +216,11 @@ export const CenterCarousel = ({
       },
       {
         breakpoint: 600,
-        settings: {
-          slidesToShow: 1.2,
-          focusOnSelect: true,
-        },
+        settings: {},
       },
       {
         breakpoint: 480,
         settings: {
-          initialSlide: 1,
           slidesToShow: 1.2,
           focusOnSelect: true,
         },
@@ -236,7 +232,7 @@ export const CenterCarousel = ({
     if (isMobile) {
       setTimeout(() => {
         sliderRef.current.slickGoTo(curIndex);
-      }, 500);
+      }, 100);
     }
   }, [isMobile, sliderRef, curIndex]);
   return (

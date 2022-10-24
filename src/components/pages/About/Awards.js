@@ -185,7 +185,7 @@ export default function Awards() {
         </Typography>
         <CenterCarousel
           onChange={(cur, next) => {
-            setCurIndex(Math.floor(Math.abs(next)));
+            setCurIndex(Math.ceil(Math.abs(next)));
           }}
           curIndex={curIndex}
         >

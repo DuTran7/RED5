@@ -22,7 +22,7 @@ export default function ChapterDetail({ data }) {
 
   const getConditionToShowArrow = (chapter) => {
     const hasAlbums = chapter?.albums?.length > 0;
-    const hasDescription = !!chapter?.detailCategory?.description.trim();
+    const hasDescription = !!chapter?.detailCategory?.description?.trim();
     return hasAlbums || hasDescription;
   };
 
