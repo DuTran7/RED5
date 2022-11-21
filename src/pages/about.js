@@ -19,7 +19,7 @@ export default function About({ isMobile }) {
     for (let item of scrollContainer) {
       item.addEventListener('wheel', (evt) => {
         evt.preventDefault();
-        item.scrollLeft += evt.deltaY * 4;
+        item.scrollLeft += evt.deltaY;
         setPosition(item.scrollLeft);
       });
       return document.removeEventListener('wheel', () => {});

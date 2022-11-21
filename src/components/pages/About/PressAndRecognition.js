@@ -161,8 +161,16 @@ export default function PressAndRecognition({ isMobile }) {
     <Box
       sx={{
         display: 'flex',
+        height: '100%',
         background: theme.palette.common.black,
+        '& .slick-slide img': {
+          maxHeight: {
+            xs: '60px',
+            md: '80px',
+          },
+        },
       }}
+      className={'press-list'}
       minWidth={{
         xs: '100vw',
         md: 'calc(100vw - 80px)',
@@ -171,10 +179,11 @@ export default function PressAndRecognition({ isMobile }) {
       <Stack
         width={'100vw'}
         height={'100%'}
+        justifyContent={'center'}
         rowGap={3}
         p={{
           xs: '80px 16px',
-          md: '64px 120px 0',
+          md: '0px 120px 0',
         }}
       >
         <Typography
@@ -218,7 +227,6 @@ export default function PressAndRecognition({ isMobile }) {
                   style={{
                     // fontSize: '80px',
                     // maxWidth: '180px',
-                    maxHeight: '80px',
                     // width: 'fit-content !important',
                     margin: '0 auto',
                   }}

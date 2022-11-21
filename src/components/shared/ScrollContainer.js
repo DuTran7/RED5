@@ -7,6 +7,7 @@ export default function ScrollContainer({
   height,
   customClass = '',
   onSwipe,
+  onScroll,
   ...other
 }) {
   const [touchStart, setTouchStart] = useState(null);
@@ -61,6 +62,7 @@ export default function ScrollContainer({
         xs: 'none',
         md: '100vw',
       }}
+      onScroll={onScroll}
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}

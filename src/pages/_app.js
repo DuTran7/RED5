@@ -12,8 +12,8 @@ import '../../styles/globals.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-import "swiper/css";
-import "swiper/css/free-mode";
+import 'swiper/css';
+import 'swiper/css/free-mode';
 
 import { useRouter } from 'next/router';
 
@@ -41,7 +41,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       for (let item of scrollContainer) {
         item.addEventListener('wheel', (evt) => {
           evt.preventDefault();
-          item.scrollLeft += evt.deltaY * 7;
+          item.scrollLeft += evt.deltaY;
           // item.scrollLeft += 500;
           // console.log('wheel', evt);
         });

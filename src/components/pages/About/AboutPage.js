@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, debounce, Stack, Typography } from '@mui/material';
 import ScrollContainer from 'components/shared/ScrollContainer';
 import { AboutTabHorizontal, AboutTabs } from 'components/ukit/Tabs';
 import { useRouter } from 'next/router';
@@ -10,7 +10,7 @@ import Culture from './Culture';
 import Megazines from './Megazines';
 import PressAndRecognition from './PressAndRecognition';
 import Teams from './Teams';
-const distanceOriginal = 0;
+const distanceOriginal = 50;
 export default function AboutPage({ isMobile, position }) {
   const teamRef = useRef();
   const cultureRef = useRef();
@@ -20,7 +20,7 @@ export default function AboutPage({ isMobile, position }) {
 
   const router = useRouter();
   const [value, setValue] = useState('culture');
-  const [swipeScroll, setSwipeScroll] = useState(0);
+  const [offsetTop, setOffsetTop] = useState(0);
   const [valueToScroll, setValueToScroll] = useState('culture');
 
   const handleChange = (event, newValue, scroll) => {
@@ -47,10 +47,6 @@ export default function AboutPage({ isMobile, position }) {
       setValue('team');
       return;
     }
-    if (position >= contactRef.current.offsetLeft) {
-      setValue('contact');
-      return;
-    }
     if (position >= cultureRef.current.offsetLeft) {
       setValue('culture');
       return;
@@ -60,52 +56,46 @@ export default function AboutPage({ isMobile, position }) {
   useEffect(() => {
     if (value) {
       const element = document.getElementById(value);
-      element?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-        inline: 'start',
-      });
+      setTimeout(() => {
+        element?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+          inline: 'start',
+        });
+      }, 100);
     }
   }, [value]);
+  const handleScrollToElement = () => {
+    if (offsetTop >= contactRef.current.offsetTop - distanceOriginal) {
+      setValueToScroll('contact');
+      return;
+    }
+    if (offsetTop >= pressRef.current.offsetTop - distanceOriginal) {
+      setValueToScroll('press');
+      return;
+    }
+    if (offsetTop >= awardRef.current.offsetTop - distanceOriginal) {
+      setValueToScroll('awards');
+      return;
+    }
+    if (offsetTop >= teamRef.current.offsetTop - distanceOriginal) {
+      setValueToScroll('team');
+      return;
+    }
+    if (offsetTop >= cultureRef.current.offsetTop - distanceOriginal) {
+      setValueToScroll('culture');
+      return;
+    }
+  };
 
   useEffect(() => {
-    if (false) {
-      let newP = swipeScroll;
-      if (swipeScroll < 0) {
-        newP = 0;
-        setSwipeScroll(newP);
-      }
-      if (newP >= contactRef.current.offsetTop - distanceOriginal) {
-        setValue('contact');
-        return;
-      }
-      if (newP >= pressRef.current.offsetTop - distanceOriginal) {
-        setValue('press');
-        return;
-      }
-      if (newP >= awardRef.current.offsetTop - distanceOriginal) {
-        setValue('awards');
-        return;
-      }
-      if (newP >= teamRef.current.offsetTop - distanceOriginal) {
-        setValue('team');
-        return;
-      }
-      if (newP >= contactRef.current.offsetTop - distanceOriginal) {
-        setValue('contact');
-        return;
-      }
-      if (newP >= cultureRef.current.offsetTop - distanceOriginal) {
-        setValue('culture');
-        return;
-      }
-    }
-  }, [swipeScroll]);
+    handleScrollToElement();
+  }, [offsetTop]);
 
   return (
     <ScrollContainer
       customClass="about-scroll"
-      onSwipe={(position) => setSwipeScroll(swipeScroll + position)}
+      onScroll={(e) => setOffsetTop(e.target.scrollTop)}
     >
       <Stack
         flexGrow={0}
@@ -141,13 +131,10 @@ export default function AboutPage({ isMobile, position }) {
             xs: 'flex',
             md: 'none',
           },
-
-          background:
-            'linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0) 104.37%)',
         }}
       >
         <AboutTabHorizontal
-          value={value}
+          value={valueToScroll}
           onChange={(e, nvl) => handleChange(e, nvl, true)}
         />
       </Stack>

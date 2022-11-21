@@ -51,7 +51,7 @@ export const CategoryListResults = ({
     const bodyUploadFile = new FormData();
     bodyUploadFile.append('image', file);
     bodyUploadFile.append(
-      'jsonCategory',
+      'jsonAlbum',
       JSON.stringify({
         idCategory: categorySelected?.id,
         description: 'category id ' + categorySelected?.id,

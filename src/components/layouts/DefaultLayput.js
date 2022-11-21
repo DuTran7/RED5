@@ -14,7 +14,11 @@ const DefaultLayout = ({ children, showFooter = true, seo }) => {
         <Header />
         <Box
           sx={{
-            overflowX: 'scroll',
+            overflowX: {
+              xs: 'hidden',
+              md: 'scroll',
+            },
+            overflowY: 'hidden',
           }}
         >
           {children}

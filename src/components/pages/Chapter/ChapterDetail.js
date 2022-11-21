@@ -18,10 +18,11 @@ export default function ChapterDetail({ data }) {
   const router = useRouter();
 
   const [chapter, setChapter] = useState(data);
+  const [isShowBackToTop, setIsShowBackToTop] = useState(false);
 
   const getConditionToShowArrow = (chapter) => {
     const hasAlbums = chapter?.albums?.length > 0;
-    const hasDescription = !!chapter?.detailCategory?.description.trim();
+    const hasDescription = !!chapter?.detailCategory?.description?.trim();
     return hasAlbums || hasDescription;
   };
 
@@ -87,26 +88,33 @@ export default function ChapterDetail({ data }) {
 
   return (
     <>
-      <Typography
-        variant={'body1'}
-        color={'text.primary'}
-        minWidth={'90px'}
-        sx={{
-          textDecoration: 'underline',
-        }}
-        position="absolute"
-        right={24}
-        bottom={24}
-        zIndex={3}
-      >
-        <a href="#chapter-detail-top">Back to top</a>
-      </Typography>
+      {isShowBackToTop && (
+        <Typography
+          variant={'body1'}
+          color={'text.primary'}
+          minWidth={'90px'}
+          sx={{
+            textDecoration: 'underline',
+          }}
+          position="absolute"
+          right={24}
+          bottom={24}
+          zIndex={3}
+        >
+          <a href="#chapter-detail-top">Back to top</a>
+        </Typography>
+      )}
       <ScrollContainer
         height={'100vh'}
         customClass={
           getConditionToShowArrow(chapter) ? CLASS_CUSTOM.CURSOL_CUSTOM : ''
         }
         onClick={handleClickContainer}
+        onScroll={(e) => {
+          setIsShowBackToTop(
+            e?.target?.scrollLeft > 200 || e.target.scrollTop > 200
+          );
+        }}
       >
         <div id="chapter-detail-top"></div>
 
