@@ -7,6 +7,7 @@ import { theme } from 'theme';
 import { useSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
+import Head from 'next/head';
 
 const DashboardLayoutRoot = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -35,6 +36,9 @@ export const DashboardLayout = (props) => {
 
   return (
     <>
+      <Head>
+        <link rel="shortcut icon" href="/favicon.svg" />
+      </Head>
       <DashboardLayoutRoot>
         {new Date().getTime() <= session?.user?.expiredToken && (
           <Box

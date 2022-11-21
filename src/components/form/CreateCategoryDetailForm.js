@@ -1,4 +1,11 @@
-import { Button, Grid, Stack, TextareaAutosize } from '@mui/material';
+import {
+  Button,
+  Grid,
+  Stack,
+  TextareaAutosize,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import {
   createAward,
   updateAward,
@@ -15,6 +22,7 @@ import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IMAGE_SOURCE, ITEM_STATUS } from 'utils/constants';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 export default function CreateCategoryDetailForm({
   onClose,
@@ -227,6 +235,62 @@ export default function CreateCategoryDetailForm({
             type={'text'}
           /> */}
           {/* < */}
+          <Stack
+            direction={'row'}
+            columnGap={1}
+            alignContent={'center'}
+            alignItems={'center'}
+          >
+            <Typography variant="subtitle1" color={'black'}>
+              Help
+            </Typography>
+            <Tooltip
+              title={
+                <Stack>
+                  <Typography variant="body1">
+                    <b
+                      style={{
+                        fontWeight: 'bold',
+                        color: '#d5d5d5',
+                      }}
+                    >
+                      Cách thêm tiêu đề:{' '}
+                    </b>
+                    {`Sau khi viết xong tiêu đề User cần thêm "<cap>" vào sau tiêu đề
+                  `}
+                  </Typography>
+                  <Typography mb={2} variant="body1">
+                    {`E.g.: Đây là tiêu đề <cap> đây là dòng tiếp theo ... `}
+                  </Typography>
+                  <Typography variant="body1">
+                    <b
+                      style={{
+                        fontWeight: 'bold',
+                        color: '#d5d5d5',
+                      }}
+                    >
+                      Cách xuống dòng:
+                    </b>
+                    {` Sau khi viết xong một đoạn User cần thêm "<br>" vào sau từ cuối cùng của đoạn để xuống dòng
+                  `}
+                  </Typography>
+                  <Typography variant="body1">
+                    {`E.g.: Đây là. Nội dung <br> đây là đoạn tiếp theo <br> đây là đoạn tiếp ... `}
+                  </Typography>
+                </Stack>
+              }
+            >
+              <HelpOutlineIcon
+                sx={{
+                  fill: 'black',
+                  fontSize: '14px',
+                  '&:hover': {
+                    cursor: 'help',
+                  },
+                }}
+              />
+            </Tooltip>
+          </Stack>
           <TextareaAutosize
             aria-label="Category description"
             placeholder="description"

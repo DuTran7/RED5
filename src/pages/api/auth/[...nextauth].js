@@ -37,10 +37,10 @@ export default NextAuth({
               user: {
                 ...user[0]?.username,
                 expiredToken: new Date().setMinutes(
-                  new Date().getMinutes() + 5
+                  new Date().getMinutes() + 13
                 ),
               },
-              expiredToken: new Date().setMinutes(new Date().getMinutes() + 5),
+              expiredToken: new Date().setMinutes(new Date().getMinutes() + 13),
               email: user[0]?.email,
               token: user[0]?.accessToken,
             };

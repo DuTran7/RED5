@@ -43,15 +43,18 @@ export default function LoginAdminForm({ handleForgetPw }) {
     }
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} style={{
+      width: '100%'
+    }}>
       <Stack>
-        <Stack>
+        <Stack width={'100%'}>
           <InputControl
             control={control}
             id={'email'}
             name={'email'}
             label={'Email:'}
             type={'email'}
+            minWidth={'90px'}
             // onChange={(e) => {}}
           />
           <InputControl
@@ -60,6 +63,7 @@ export default function LoginAdminForm({ handleForgetPw }) {
             type={'password'}
             name={'password'}
             label={'Password:'}
+            minWidth={'90px'}
           />
           <Stack my={2} direction={'row'} justifyContent={'flex-end'}>
             <Typography

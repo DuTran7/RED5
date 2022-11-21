@@ -7,6 +7,9 @@ const DefaultLayout = ({ children, showFooter = true, seo }) => {
   return (
     <>
       <NextSeo {...seo} />
+      <Head>
+        <link rel="shortcut icon" href="/favicon.svg" />
+      </Head>
       <Box>
         <Header />
         <Box

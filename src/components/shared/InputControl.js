@@ -13,6 +13,7 @@ export default function InputControl({
   onChange,
   register,
   srcImg,
+  minWidth,
   ...props
 }) {
   const [focused, setFocused] = useState(undefined);
@@ -36,7 +37,7 @@ export default function InputControl({
                 <Typography
                   variant={'subtitle1'}
                   color={focused ? theme.palette.primary.main : 'text.primary'}
-                  minWidth={'150px'}
+                  minWidth={minWidth || '150px'}
                 >
                   {label}
                 </Typography>
