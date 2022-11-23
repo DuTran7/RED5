@@ -29,36 +29,6 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       setClassCommon('chrome');
     }
 
-    if (isDesktop) {
-      const scrollContainer =
-        document.getElementsByClassName('scroll-horizontal');
-
-      // scrollContainer.addEventListener('wheel', (evt) => {
-      //   evt.preventDefault();
-      //   scrollContainer.scrollLeft += evt.deltaY;
-      // });
-
-      for (let item of scrollContainer) {
-        item.addEventListener('wheel', (evt) => {
-          evt.preventDefault();
-          item.scrollLeft += evt.deltaY;
-          // item.scrollLeft += 500;
-          // console.log('wheel', evt);
-        });
-
-        // item.addEventListener('', (e) => {
-
-        // })
-      }
-      return () => {
-        for (let item of scrollContainer) {
-          item.removeEventListener('wheel', (evt) => {
-            evt.preventDefault();
-          });
-        }
-      };
-    }
-
     if (isMobile) {
       setClientType('mobile');
     }

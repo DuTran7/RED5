@@ -2,14 +2,27 @@ import { Box, Stack, Typography } from '@mui/material';
 import { theme } from 'theme';
 import { IMAGE_SOURCE } from 'utils/constants';
 
-export default function ChapterCard({ chapNo, name, image, onClick, data }) {
+export default function ChapterCard({
+  chapNo,
+  name,
+  image,
+  onClick,
+  data,
+  shouldBlur,
+}) {
   return (
     <Stack
       height={'calc(100vh - 84px)'}
       sx={{
         background: theme.palette.common.black,
+        filter: shouldBlur ? 'blur(15px)' : '',
+        transition: 'ease-out all .3s',
         '&:hover': {
-          backgroundImage: image ? `linear-gradient(#00000066, #00000066), url(${IMAGE_SOURCE + image})` : 'none',
+          backgroundImage: image
+            ? `linear-gradient(#00000066, #00000066), url(${
+                IMAGE_SOURCE + image
+              })`
+            : 'none',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
           backgroundPosition: 'center center',

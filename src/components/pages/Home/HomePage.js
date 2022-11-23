@@ -13,7 +13,7 @@ import { FreeMode, Pagination } from 'swiper';
 
 export default function HomePage(props) {
   const router = useRouter();
-  const { chapterList } = props;
+  const { chapterList, isWheel } = props;
   const [chapters, setChapters] = useState(chapterList);
   const navigateToChapterDetail = (obj, index) => {
     const slug =
@@ -109,6 +109,7 @@ export default function HomePage(props) {
                 // minWidth={'200px'}
               >
                 <ChapterCard
+                  shouldBlur={isWheel}
                   data={c}
                   chapNo={++i}
                   name={c?.categories?.description}
@@ -145,6 +146,7 @@ export default function HomePage(props) {
               }}
             >
               <ChapterCard
+                shouldBlur={isWheel}
                 data={c}
                 chapNo={++i}
                 name={c?.categories?.description}
