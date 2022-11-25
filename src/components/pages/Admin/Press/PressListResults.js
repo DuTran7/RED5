@@ -15,7 +15,7 @@ import { updatePress } from 'components/service/PressService';
 import StyledDialog from 'components/shared/Dialog';
 import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { theme } from 'theme';
 import { IMAGE_SOURCE, ITEM_STATUS } from 'utils/constants';
@@ -64,7 +64,6 @@ export const PressListResults = ({
     enqueueSnackbar('Upload image success', {
       variant: 'success',
     });
-    handleCloseAlbum();
     handleChangeList();
   };
   const onClickDelImg = async (id) => {
@@ -81,7 +80,6 @@ export const PressListResults = ({
     enqueueSnackbar('Delete image success', {
       variant: 'success',
     });
-    handleCloseAlbum();
     handleChangeList();
   };
   const [selectedPressIds, setSelectedPressIds] = useState([]);
@@ -132,6 +130,17 @@ export const PressListResults = ({
     setPage(newPage);
   };
 
+  useEffect(() => {
+    if (itemSelected) {
+      const newAlbum = data?.find(
+        (el) => el.press?.id === itemSelected?.id
+      )?.albums;
+
+      if (newAlbum?.length > 0) {
+        setAlbumsSelected(newAlbum);
+      }
+    }
+  }, [data]);
   return (
     <Card className="admin-cms" {...rest}>
       <PerfectScrollbar>

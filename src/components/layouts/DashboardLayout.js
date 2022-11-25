@@ -54,7 +54,10 @@ export const DashboardLayout = (props) => {
           </Box>
         )}
       </DashboardLayoutRoot>
-      <Navbar onSidebarOpen={() => setSidebarOpen(true)} />
+      <Navbar
+        onSidebarOpen={() => setSidebarOpen(true)}
+        sessionUser={session}
+      />
       <Sidebar onClose={() => setSidebarOpen(false)} open={isSidebarOpen} />
     </>
   );

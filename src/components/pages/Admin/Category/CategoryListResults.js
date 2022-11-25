@@ -18,7 +18,7 @@ import Albums from 'components/shared/Albums';
 import StyledDialog from 'components/shared/Dialog';
 import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { IMAGE_SOURCE, ITEM_STATUS } from 'utils/constants';
 
@@ -67,7 +67,6 @@ export const CategoryListResults = ({
     enqueueSnackbar('Upload image success', {
       variant: 'success',
     });
-    handleCloseAlbum();
     handleChangeList();
   };
   const onClickDelImg = async (id) => {
@@ -84,7 +83,6 @@ export const CategoryListResults = ({
     enqueueSnackbar('Delete image success', {
       variant: 'success',
     });
-    handleCloseAlbum();
     handleChangeList();
   };
   const onClickDel = async (id) => {
@@ -154,6 +152,18 @@ export const CategoryListResults = ({
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
+
+  useEffect(() => {
+    if (categorySelected) {
+      const newAlbum = categories?.find(
+        (el) => el.categories?.id === categorySelected?.id
+      )?.albums;
+
+      if (newAlbum?.length > 0) {
+        setAlbumsSelected(newAlbum);
+      }
+    }
+  }, [categories]);
 
   return (
     <Card className="admin-cms" {...rest}>

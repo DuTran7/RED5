@@ -11,8 +11,10 @@ import { useForm } from 'react-hook-form';
 import { IMAGE_SOURCE } from 'utils/constants';
 import InputControl from './InputControl';
 import { theme } from 'theme';
+import { useSnackbar } from 'notistack';
 
 export default function Albums({ data = [], onClickAddImg, onClickDelImg }) {
+  const { enqueueSnackbar } = useSnackbar();
   const [file, setFile] = useState(null);
   const [fileUrl, setFileUrl] = useState(null);
   const [description, setDescription] = useState(null);
@@ -28,6 +30,10 @@ export default function Albums({ data = [], onClickAddImg, onClickDelImg }) {
   }, [file]);
 
   const onClickAddImage = () => {
+    if (!file) {
+      enqueueSnackbar('File not found!', { variant: 'error' });
+      return;
+    }
     onClickAddImg?.(fileUrl, file, description);
   };
 

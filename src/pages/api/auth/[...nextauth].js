@@ -78,7 +78,7 @@ export default NextAuth({
           session.token = data[0]?.accessToken;
           session.user.token = data[0]?.accessToken;
           (session.user.expiredToken = new Date().setMinutes(
-            new Date().getMinutes() + 5
+            new Date().getMinutes() + 13
           )),
             (session.user.tokenDto.refreshToken = data[0]?.refreshToken);
         }
