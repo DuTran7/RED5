@@ -130,7 +130,6 @@ export default function CreateCategoryDetailForm({
           'jsonAlbum',
           JSON.stringify({
             idAward: data?.id,
-            description: 'award id ' + data?.id,
           })
         );
         const res = await uploadFile(bodyUploadFile);
