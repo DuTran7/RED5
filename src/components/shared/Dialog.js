@@ -28,8 +28,8 @@ export default function StyledDialog({
       <DialogTitle>
         <Stack direction={'row'} justifyContent={'space-between'}>
           {title}
-          <Button>
-            <CloseIcon onClick={handleClose} />
+          <Button onClick={handleClose}>
+            <CloseIcon />
           </Button>
         </Stack>
       </DialogTitle>
