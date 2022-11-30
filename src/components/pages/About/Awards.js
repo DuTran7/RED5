@@ -32,6 +32,10 @@ const StyledBox = ({ children }) => {
           alignItems: 'center',
         },
         '& .slick-active, & .slick-slide': {
+          marginTop: {
+            xs: '10px',
+            md: '40px',
+          },
           padding: {
             xs: '0 8px',
             md: '0 40px',
@@ -59,6 +63,7 @@ const StyledBox = ({ children }) => {
           },
         },
         '& .slick-center': {
+          
           opacity: '1',
           '& .MuiTypography-root': {
             visibility: 'unset',
@@ -94,6 +99,7 @@ const StyledBox = ({ children }) => {
 
 export default function Awards() {
   const [curIndex, setCurIndex] = useState(1);
+  const [curIndexx, setCurIndexx] = useState(2);
   const [albumsSelected, setAlbumsSelected] = useState([]);
   const [awards, setAwards] = useState([]);
   const [open, setOpen] = useState(false);
@@ -114,13 +120,12 @@ export default function Awards() {
     updateData();
   }, []);
   useEffect(() => {
-    if (curIndex) {
-      const awardSelected = awards?.find((e, i) => i === curIndex);
-      if (awardSelected) {
-        setAlbumsSelected(awardSelected?.albums);
-      }
+    console.log(curIndexx);
+    const awardSelected = awards?.find((e, i) => i === curIndexx);
+    if (awardSelected) {
+      setAlbumsSelected(awardSelected?.albums);
     }
-  }, [curIndex, awards]);
+  }, [curIndexx, awards]);
   return (
     <StyledBox>
       <Stack
@@ -149,6 +154,7 @@ export default function Awards() {
               position: 'absolute',
               right: '20px',
               top: '20px',
+              zIndex: 1,
             }}
             onClick={handleClose}
           >
@@ -185,7 +191,9 @@ export default function Awards() {
         </Typography>
         <CenterCarousel
           onChange={(cur, next) => {
-            setCurIndex(Math.ceil(Math.abs(next)));
+            const vl = Math.ceil(Math.abs(next));
+            console.log(vl);
+            setCurIndexx(vl);
           }}
           curIndex={curIndex}
         >
@@ -210,7 +218,7 @@ export default function Awards() {
                   },
                 }}
                 onClick={() => {
-                  if (i === curIndex) {
+                  if (i === curIndexx) {
                     handleToggle();
                   }
                 }}
@@ -223,9 +231,10 @@ export default function Awards() {
                   alt={'award'}
                 />
                 <Stack
-                  justifyContent={'center'}
+                  justifyContent={'flex-start'}
                   alignItems={'center'}
                   mt={'18px'}
+                  minHeight={'150px'}
                 >
                   <Typography variant={'body1'} color={'text.primary'}>
                     {award?.title}

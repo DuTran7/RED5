@@ -204,9 +204,25 @@ a {
 a:hover {
   color: #cf1f25;
 }
+/* Gallery custom */
 .image-gallery {
   height: 73vh;
-  width: 40vh;
+  max-height: 73vh;
+  margin-top: -100px;
+  width: auto;
+}
+
+.image-gallery .image-gallery-slides img {
+  max-height: 73vh;
+  height: 73vh;
+}
+
+.image-gallery .image-gallery-thumbnails img {
+  height: 100px;
+}
+
+.image-gallery-thumbnails-container {
+  /* transform: none !important; */
 }
 @font-face {
   font-family: 'Red5 Helvetica';

@@ -20,7 +20,6 @@ const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
 
 export const Navbar = (props) => {
   const { onSidebarOpen, ...other } = props;
-  console.log(props);
   return (
     <>
       <DashboardNavbarRoot

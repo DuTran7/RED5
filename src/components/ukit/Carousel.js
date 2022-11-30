@@ -229,12 +229,10 @@ export const CenterCarousel = ({
   };
 
   useEffect(() => {
-    if (isMobile) {
-      setTimeout(() => {
-        sliderRef.current.slickGoTo(curIndex);
-      }, 100);
-    }
-  }, [isMobile]);
+    setTimeout(() => {
+      sliderRef.current.slickGoTo(curIndex);
+    }, 100);
+  }, []);
   return (
     <div
       style={{
