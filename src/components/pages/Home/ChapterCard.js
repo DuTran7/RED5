@@ -15,8 +15,10 @@ export default function ChapterCard({
       height={'calc(100vh - 84px)'}
       sx={{
         background: theme.palette.common.black,
-        filter: shouldBlur ? 'blur(15px)' : '',
-        transition: 'ease-out all .3s',
+        '& div': {
+          filter: shouldBlur ? 'blur(15px)' : '',
+          transition: 'ease-out all .35s',
+        },
         '&:hover': {
           backgroundImage: image
             ? `linear-gradient(#00000066, #00000066), url(${

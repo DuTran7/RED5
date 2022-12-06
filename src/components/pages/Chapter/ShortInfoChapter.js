@@ -5,6 +5,7 @@ import { theme } from 'theme';
 import EastIcon from '@mui/icons-material/East';
 import LegendBox from './LegendBox';
 import { IMAGE_SOURCE } from 'utils/constants';
+import Image from 'next/image';
 export default function ShortInfoChapter({ data, hasMore = false }) {
   const router = useRouter();
   return (
@@ -28,13 +29,20 @@ export default function ShortInfoChapter({ data, hasMore = false }) {
           sx={{
             display: 'flex',
             flexGrow: 1,
-            backgroundImage: `url('${IMAGE_SOURCE + data?.image}')`,
+            // backgroundImage: `url('${IMAGE_SOURCE + data?.image}')`,
             width: '100%',
             height: '476px',
             backgroundSize: 'cover',
             backgroundPosition: 'bottom',
           }}
         >
+          <Image
+            src={IMAGE_SOURCE + data?.image}
+            alt={data?.image}
+            priority
+            layout='fill'
+            objectFit='cover'
+          />
           {hasMore && (
             <Stack
               position={'absolute'}

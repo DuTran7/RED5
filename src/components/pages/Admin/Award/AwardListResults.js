@@ -46,14 +46,14 @@ export const AwardListResults = ({
     setOpenAlbum(true);
   };
 
-  const handleAddImage = async (fileUrl, file) => {
+  const handleAddImage = async (fileUrl, file, description = '') => {
     const bodyUploadFile = new FormData();
     bodyUploadFile.append('image', file);
     bodyUploadFile.append(
       'jsonAlbum',
       JSON.stringify({
         idAward: awardSelected?.id,
-        description: 'award id ' + awardSelected?.id,
+        description: description,
       })
     );
     const res = await uploadFile(bodyUploadFile);

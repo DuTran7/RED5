@@ -58,7 +58,7 @@ export const DetailCategoryListResults = ({
       'jsonAlbum',
       JSON.stringify({
         idDetailCategory: itemSelected?.id,
-        description: description || 'detailCategory id ' + itemSelected?.id,
+        description: description || '',
       })
     );
     const res = await uploadFile(bodyUploadFile);
