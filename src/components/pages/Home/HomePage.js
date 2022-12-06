@@ -47,7 +47,7 @@ export default function HomePage(props) {
         });
         localStorage.removeItem('CHAPTER');
       }
-    }, 0);
+    }, 500);
   }, [chapters]);
   return (
     <Box

@@ -28,34 +28,8 @@ export default function ChapterDetail({ data }) {
 
   const handleClickContainer = (event) => {};
 
-  // useEffect(() => {
-  //   const name = router.query.chapter;
-  //   if (name) setChapter({ ...chapter, name });
-  // }, [router.query]);
-
   // fetch data
   useEffect(() => {
-    // const _data = JSON.parse(localStorage.getItem('CHAPTER'));
-    // const params = router.query?.slug || [];
-    // const isSameId =
-    //   String(chapter?.detailCategory?.name) === params[1]?.split('-').join(' ');
-    // console.log(_data);
-    // console.log(chapter);
-    // console.log(chapter?.detailCategory?.name);
-    // if (
-    //   String(_data?.detailCategory?.name) &&
-    //   params[1]?.split('-').join(' ') &&
-    //   !isSameId
-    // ) {
-    //   const getChapter = async (id) => {
-    //     return id ? await getChapterDetail(id) : null;
-    //   };
-    //   getChapter(params[0]).then((res) => {
-    //     setChapter({ ...res?.data });
-    //   });
-    // } else {
-    //   setChapter({ ...chapter, ..._data });
-    // }
     setChapter(data);
   }, [data]);
 
@@ -72,7 +46,6 @@ export default function ChapterDetail({ data }) {
           left: (item.scrollLeft += 1000),
           behavior: 'smooth',
         });
-        // console.log('wheel', evt);
       });
     }
 

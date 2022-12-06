@@ -33,7 +33,6 @@ export default function Home({}) {
           setIsWheel(true);
           item.scrollLeft += evt.deltaY;
           // item.scrollLeft += 500;
-          // console.log('wheel', evt);
           setTimeout(() => {
             setIsWheel(false);
           }, 150);

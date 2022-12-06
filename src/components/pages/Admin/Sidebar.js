@@ -92,18 +92,18 @@ export const Sidebar = (props) => {
       >
         <div>
           <Stack sx={{ p: 3 }} alignItems={'center'}>
-            {/* <NextLink href="/" passHref>
+            <NextLink href="/admin" passHref>
               <a>
                 <Red5
                   viewBox="0 0 60 36"
                   sx={{
                     height: '1em',
                     width: '2em',
-                    fontSize: '10vw',
+                    fontSize: '100px',
                   }}
                 />
               </a>
-            </NextLink> */}
+            </NextLink>
           </Stack>
         </div>
         <Divider
