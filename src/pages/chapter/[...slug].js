@@ -25,7 +25,6 @@ export async function getStaticProps({ params }) {
 
   // Call an external API endpoint to get posts
   const res = await getChapterDetail(id);
-  console.log(res);
   // By returning { props: { posts } }, the Blog component
   // will receive `posts` as a prop at build time
   const detailCategory = res?.data?.detailCategory;
