@@ -15,7 +15,7 @@ import { debounce } from 'lodash';
 export default function HomePage(props) {
   const router = useRouter();
   const { chapterList, isWheel } = props;
-  const [chapters, setChapters] = useState(chapterList);
+  const [chapters, setChapters] = useState(chapterList || []);
   const [scrolling, setScrolling] = useState(false);
   const navigateToChapterDetail = (obj, index) => {
     const slug =
@@ -63,6 +63,26 @@ export default function HomePage(props) {
         overflow: 'hidden',
       }}
     >
+      {chapters?.length === 0 && (
+        <Box
+          sx={{
+            background: theme.palette.common.black,
+            overflowY: 'hidden',
+            overflowX: 'hidden',
+            height: 'calc(100vh)',
+            '& .slick-list': {
+              // padding: '0 0 0 134px !important',
+            },
+          }}
+          position={'relative'}
+          width={'100vw'}
+          p={5}
+        >
+          <Typography variant={'h3'} color={'text.primary'}>
+            Chapters are empty. Were are updating...
+          </Typography>
+        </Box>
+      )}
       <Box
         sx={{
           display: {

@@ -25,11 +25,12 @@ export async function getStaticProps({ params }) {
 
   // Call an external API endpoint to get posts
   const res = await getChapterDetail(id);
+  console.log(res);
   // By returning { props: { posts } }, the Blog component
   // will receive `posts` as a prop at build time
   const detailCategory = res?.data?.detailCategory;
   const seoConfig = {
-    title: detailCategory?.name,
+    title: detailCategory?.name || null,
     titleTemplate: '%s - Red5',
     additionalLinkTags: [
       {
@@ -44,26 +45,32 @@ export async function getStaticProps({ params }) {
     openGraph: {
       type: 'website',
       title: 'Albums',
-      images: res?.data?.albums?.map((img) => ({
-        url: IMAGE_SOURCE + img?.name,
-        width: 800,
-        height: 600,
-        alt: img?.description,
-      })),
+      images:
+        res?.data?.albums?.map((img) => ({
+          url: IMAGE_SOURCE + img?.name || null,
+          width: 800,
+          height: 600,
+          alt: img?.description || null,
+        })) || null,
     },
   };
   return {
     props: {
       // posts,
-      chapterInfo: res?.data,
+      chapterInfo: res?.data || null,
       seo: seoConfig,
     },
-    revalidate: 10
+    revalidate: 10,
   };
 }
 export async function getStaticPaths(b) {
+  const arr = Array(20)
+    .fill(1)
+    .map((item, idx) => ({
+      params: { slug: [`${++idx}`, 'something'] },
+    }));
   return {
-    paths: [{ params: { slug: ['1', 'some thing'] } }],
+    paths: arr,
     fallback: true, // can also be true or 'blocking'
   };
 }
