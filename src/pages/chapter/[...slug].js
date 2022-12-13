@@ -1,9 +1,8 @@
 import ChapterDetail from 'components/pages/Chapter/ChapterDetail';
 import { getChapterDetail } from 'components/service/CategoryDetailService';
+import { getAllCategories } from 'components/service/CategoryService';
 import { NextSeo } from 'next-seo';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import { IMAGE_SOURCE } from 'utils/constants';
 
 export default function Chapter({ chapterInfo, seo }) {
@@ -22,7 +21,6 @@ export default function Chapter({ chapterInfo, seo }) {
 }
 export async function getStaticProps({ params }) {
   const id = params?.slug?.[0];
-
   // Call an external API endpoint to get posts
   const res = await getChapterDetail(id);
   // By returning { props: { posts } }, the Blog component
@@ -63,11 +61,16 @@ export async function getStaticProps({ params }) {
   };
 }
 export async function getStaticPaths(b) {
-  const arr = Array(20)
-    .fill(1)
-    .map((item, idx) => ({
-      params: { slug: [`${++idx}`, 'something'] },
-    }));
+  const res = await getAllCategories();
+  const list = res?.data || [];
+  const arr = list?.map((item) => ({
+    params: {
+      slug: [
+        `${item?.categories?.id}`,
+        item?.categories?.name?.split(' ').join('-'),
+      ],
+    },
+  }));
   return {
     paths: arr,
     fallback: true, // can also be true or 'blocking'

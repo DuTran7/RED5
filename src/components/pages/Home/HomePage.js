@@ -21,7 +21,7 @@ export default function HomePage(props) {
     const slug =
       String(obj?.categories?.id) +
       '/' +
-      String(obj?.categories?.description)?.split(' ').join('-');
+      String(obj?.categories?.name)?.split(' ').join('-');
     localStorage.setItem('CHAPTER', JSON.stringify({ ...obj, index }));
     router.push(ROUTER.CHAPTER + slug);
   };

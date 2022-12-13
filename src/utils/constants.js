@@ -5,6 +5,7 @@ export const PAYPAL_CLIENT_ID =
 export const API_URL = process.env.NEXT_PUBLIC_API;
 export const API = {
   AUTH_PROFILE: '/auth/login',
+  AUTH_REFRESH_TOKEN: '/auth/refresh-token',
   AUTH_FORGET_PW: '/auth/forget-password',
   CATEGORY: {
     ALL: '/category/get-all',
@@ -72,3 +73,5 @@ export const TYPE_FORM = {
 export const CLASS_CUSTOM = {
   CURSOL_CUSTOM: 'cursor-custom',
 };
+
+export const EXPIRED_TOKEN = 1; // minute

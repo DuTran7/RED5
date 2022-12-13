@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import GithubProvider from 'next-auth/providers/github';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { API, PROVIDER_SIGNIN } from 'utils/constants';
+import { API, EXPIRED_TOKEN, PROVIDER_SIGNIN } from 'utils/constants';
 import { request } from 'utils/request';
 import moment from 'moment';
 export default NextAuth({
@@ -35,12 +35,11 @@ export default NextAuth({
             return {
               ...user[0],
               user: {
-                ...user[0]?.username,
-                expiredToken: new Date().setMinutes(
-                  new Date().getMinutes() + 13
-                ),
+                ...user[0],
               },
-              expiredToken: new Date().setMinutes(new Date().getMinutes() + 13),
+              expiredToken: new Date().setMinutes(
+                new Date().getMinutes() + EXPIRED_TOKEN
+              ),
               email: user[0]?.email,
               token: user[0]?.accessToken,
             };
@@ -63,35 +62,62 @@ export default NextAuth({
   },
   callbacks: {
     async jwt(session, user, provider) {
-      const isSignedIn = !!user;
-      if (isSignedIn && provider) {
-        session.token = user.token;
-        session.id = provider.id;
-        session.provider = provider.type;
-        session.user = user;
-      }
-      if (Date.now() > new Date(session?.user?.expiredToken)) {
-        const { data } = await request(API.REFRESH_TOKEN, 'POST', {
-          refreshToken: session?.user?.tokenDto?.refreshToken,
-        });
-        if (data) {
-          session.token = data[0]?.accessToken;
-          session.user.token = data[0]?.accessToken;
-          (session.user.expiredToken = new Date().setMinutes(
-            new Date().getMinutes() + 13
-          )),
-            (session.user.tokenDto.refreshToken = data[0]?.refreshToken);
+      try {
+        const isSignedIn = !!user;
+
+        if (isSignedIn) {
+          session.accessToken = user.accessToken;
+          session.refreshToken = user.refreshToken;
+          session.email = user.email;
+          session.expiredToken = user.expiredToken;
+          session.expiresIn = user.expiresIn;
         }
+
+        const shouldRefreshTime = Date.now() > session.expiredToken;
+
+        if (shouldRefreshTime) {
+          session = refreshAccessToken(session);
+        }
+        return Promise.resolve(session);
+      } catch (e) {
+        console.log(e);
+        throw new Error(JSON.stringify(e));
       }
-      return Promise.resolve(session);
     },
     async session(session, user) {
-      session.user = user.user;
-      session.token = user.token;
-      session.provider = user.provider;
+      const result = {
+        session: {
+          ...session,
+        },
+        user: {
+          ...user,
+        },
+      };
       // Send properties to the client, like an access_token from a provider.
-      // session.accessToken = token.accessToken;
-      return Promise.resolve(session);
+      return Promise.resolve(result);
     },
   },
 });
+
+async function refreshAccessToken(tokenObj) {
+  try {
+    const tokenRes = await request(API.AUTH_REFRESH_TOKEN, 'POST', {
+      refreshToken: tokenObj?.refreshToken,
+    });
+    const result = {
+      ...tokenObj,
+      accessToken: tokenRes?.data[0]?.accessToken,
+      refreshToken: tokenRes?.data[0]?.refreshToken,
+      expiredToken: new Date().setMinutes(
+        new Date().getMinutes() + EXPIRED_TOKEN
+      ),
+    };
+
+    return Promise.resolve(result);
+  } catch (e) {
+    return {
+      ...tokenObj,
+      error: 'Can not refresh token',
+    };
+  }
+}

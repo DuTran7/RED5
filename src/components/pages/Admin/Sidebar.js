@@ -18,9 +18,10 @@ import { ShoppingBag as ShoppingBagIcon } from './icons/shopping-bag';
 import { User as UserIcon } from './icons/user';
 import { UserAdd as UserAddIcon } from './icons/user-add';
 import { Users as UsersIcon } from './icons/users';
-import { XCircle as XCircleIcon } from './icons/x-circle';
+import { XCircle, XCircle as XCircleIcon } from './icons/x-circle';
 import { NavItem } from './nav-item';
 import { Red5 } from 'components/shared/icons';
+import { signOut } from 'next-auth/client';
 const items = [
   // {
   //   href: '/admin',
@@ -56,6 +57,14 @@ const items = [
     href: '/admin/team',
     // icon: <UserAddIcon fontSize="small" />,
     title: 'Teams',
+  },
+  {
+    href: '/admin',
+    icon: <XCircle fontSize="small" />,
+    title: 'Logout',
+    onClick: () => {
+      signOut();
+    },
   },
 ];
 export const Sidebar = (props) => {
@@ -115,6 +124,7 @@ export const Sidebar = (props) => {
         <Box sx={{ flexGrow: 1 }}>
           {items.map((item) => (
             <NavItem
+              onClick={item?.onClick}
               key={item.title}
               icon={item.icon}
               href={item.href}

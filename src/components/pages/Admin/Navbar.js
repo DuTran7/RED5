@@ -1,17 +1,9 @@
 import styled from '@emotion/styled';
 import MenuIcon from '@mui/icons-material/Menu';
-import {
-  AppBar,
-  Badge,
-  Box,
-  IconButton,
-  Toolbar,
-  Tooltip,
-} from '@mui/material';
+import { AppBar, Box, IconButton, Toolbar } from '@mui/material';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { theme } from 'theme';
-import { Bell as BellIcon } from './icons/bell';
-import { Users as UsersIcon } from './icons/users';
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -20,6 +12,8 @@ const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
 
 export const Navbar = (props) => {
   const { onSidebarOpen, ...other } = props;
+  const [user, setUser] = useState(null);
+
   return (
     <>
       <DashboardNavbarRoot
@@ -54,18 +48,13 @@ export const Navbar = (props) => {
             <MenuIcon fontSize="small" />
           </IconButton>
           <Box sx={{ flexGrow: 1 }} />
-          <Tooltip title="Contacts">
+          {/* <Tooltip title="Contacts">
             <IconButton sx={{ ml: 1 }}>
               <UsersIcon fontSize="small" />
             </IconButton>
-          </Tooltip>
-          <Tooltip title="Notifications">
-            <IconButton sx={{ ml: 1 }}>
-              <Badge badgeContent={4} color="primary" variant="dot">
-                <BellIcon fontSize="small" />
-              </Badge>
-            </IconButton>
-          </Tooltip>
+          </Tooltip> */}
+          {/* <Tooltip title="Notifications"></Tooltip> */}
+          {user?.email}
         </Toolbar>
       </DashboardNavbarRoot>
     </>

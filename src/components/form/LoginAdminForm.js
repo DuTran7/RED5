@@ -24,28 +24,36 @@ export default function LoginAdminForm({ handleForgetPw }) {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const user = await signIn('credentials', {
-      ...data,
-      redirect: false,
-    });
-    // const user = await axios.post('/api/auth/callback/credentials', {
-    //   ...d,
-    //   csrfToken,
+    try {
+      const user = await signIn('credentials', {
+        ...data,
+        redirect: false,
+      });
+      // const user = await axios.post('/api/auth/callback/credentials', {
+      //   ...d,
+      //   csrfToken,
 
-    // });
-
-    if (!!!user.error) {
-      router.push('/admin');
-      // router.push(window.location.origin + ROUTER.PROFILE);
-      enqueueSnackbar('You are login successfull', { variant: 'success' });
-    } else {
-      setLoginError(user.error);
+      // });
+      if (!!!user.error) {
+        router.push('/admin');
+        // router.push(window.location.origin + ROUTER.PROFILE);
+        enqueueSnackbar('You are login successfull', { variant: 'success' });
+      } else {
+        setLoginError(user.error);
+        enqueueSnackbar(user.error, { variant: 'error' });
+      }
+    } catch (e) {
+      console.log(e);
+      enqueueSnackbar('Server error', { variant: 'error' });
     }
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)} style={{
-      width: '100%'
-    }}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      style={{
+        width: '100%',
+      }}
+    >
       <Stack>
         <Stack width={'100%'}>
           <InputControl

@@ -63,7 +63,6 @@ const StyledBox = ({ children }) => {
           },
         },
         '& .slick-center': {
-          
           opacity: '1',
           '& .MuiTypography-root': {
             visibility: 'unset',
@@ -120,7 +119,6 @@ export default function Awards() {
     updateData();
   }, []);
   useEffect(() => {
-    console.log(curIndexx);
     const awardSelected = awards?.find((e, i) => i === curIndexx);
     if (awardSelected) {
       setAlbumsSelected(awardSelected?.albums);
@@ -192,7 +190,6 @@ export default function Awards() {
         <CenterCarousel
           onChange={(cur, next) => {
             const vl = Math.ceil(Math.abs(next));
-            console.log(vl);
             setCurIndexx(vl);
           }}
           curIndex={curIndex}

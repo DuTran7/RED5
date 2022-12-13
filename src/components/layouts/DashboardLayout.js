@@ -4,10 +4,11 @@ import { styled } from '@mui/material/styles';
 import { Navbar } from 'components/pages/Admin/Navbar';
 import { Sidebar } from 'components/pages/Admin/Sidebar';
 import { theme } from 'theme';
-import { useSession } from 'next-auth/client';
+import { getSession, useSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
 import Head from 'next/head';
+import { debounce } from 'lodash';
 
 const DashboardLayoutRoot = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -23,41 +24,46 @@ export const DashboardLayout = (props) => {
   const { enqueueSnackbar } = useSnackbar();
   const { children } = props;
   const [isSidebarOpen, setSidebarOpen] = useState(true);
-  const [session] = useSession();
   const router = useRouter();
-  useEffect(() => {
-    if (new Date().getTime() < session?.user?.expiredToken) {
-      return;
-    }
-    enqueueSnackbar('Please login and try again', { variant: 'error' });
-    router.push('/admin/login');
-    return;
-  }, []);
 
+  const checkLogged = async () => {
+    const _session = await getSession();
+    if (new Date().getTime() < _session?.user?.expiredToken) {
+      return;
+    } else {
+      // enqueueSnackbar('Session was expired. Please login and try again', {
+      //   variant: 'error',
+      // });
+      router.push('/admin/login');
+
+      if (!_session) {
+        return;
+      }
+    }
+    return;
+  };
+  useEffect(() => {
+    checkLogged();
+  });
   return (
     <>
       <Head>
         <link rel="shortcut icon" href="/favicon.svg" />
       </Head>
       <DashboardLayoutRoot>
-        {new Date().getTime() <= session?.user?.expiredToken && (
-          <Box
-            sx={{
-              display: 'flex',
-              flex: '1 1 auto',
-              flexDirection: 'column',
-              width: '100%',
-              background: '#fbfbfb',
-            }}
-          >
-            {children}
-          </Box>
-        )}
+        <Box
+          sx={{
+            display: 'flex',
+            flex: '1 1 auto',
+            flexDirection: 'column',
+            width: '100%',
+            background: '#fbfbfb',
+          }}
+        >
+          {children}
+        </Box>
       </DashboardLayoutRoot>
-      <Navbar
-        onSidebarOpen={() => setSidebarOpen(true)}
-        sessionUser={session}
-      />
+      <Navbar onSidebarOpen={() => setSidebarOpen(true)} />
       <Sidebar onClose={() => setSidebarOpen(false)} open={isSidebarOpen} />
     </>
   );
