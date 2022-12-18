@@ -40,10 +40,10 @@ export default function ShortInfoChapter({ data, hasMore = false }) {
             src={IMAGE_SOURCE + data?.image}
             alt={data?.image}
             priority
-            layout='fill'
-            objectFit='cover'
+            layout="fill"
+            objectFit="cover"
           />
-          {hasMore && (
+          {/* {hasMore && (
             <Stack
               position={'absolute'}
               right={'26.67px'}
@@ -59,10 +59,11 @@ export default function ShortInfoChapter({ data, hasMore = false }) {
                 sx={{
                   color: theme.palette.common.white,
                   fontSize: '66px',
+                  transform: 'rotate(180deg)',
                 }}
               />
             </Stack>
-          )}
+          )} */}
         </Box>
         <Stack
           p={{

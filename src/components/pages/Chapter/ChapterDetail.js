@@ -16,11 +16,12 @@ import HardCoverHorizontal from './HardCoverHorizontal';
 import { getChapterDetail } from 'components/service/CategoryDetailService';
 export default function ChapterDetail({ data }) {
   const router = useRouter();
+  const [classCustomCursor, setClassCustommCursor] = useState('');
 
   const [chapter, setChapter] = useState(data);
   const [isShowBackToTop, setIsShowBackToTop] = useState(false);
 
-  const getConditionToShowArrow = (chapter) => {
+  const shouldToShowArrow = (chapter) => {
     const hasAlbums = chapter?.albums?.length > 0;
     const hasDescription = !!chapter?.detailCategory?.description?.trim();
     return hasAlbums || hasDescription;
@@ -28,10 +29,20 @@ export default function ChapterDetail({ data }) {
 
   const handleClickContainer = (event) => {};
 
+  const handleOnMouseMove = (event) => {
+    const clientX = event.clientX;
+    const width = event.view.innerWidth / 2;
+    setClassCustommCursor((c) => {
+      return clientX > width ? 'right-mouse-custom' : 'left-mouse-custom';
+    });
+  };
+
   // fetch data
   useEffect(() => {
     setChapter(data);
   }, [data]);
+
+  useEffect(() => {}, [classCustomCursor]);
 
   useEffect(() => {
     const scrollContainer = document.getElementsByClassName(
@@ -40,10 +51,12 @@ export default function ChapterDetail({ data }) {
 
     for (let item of scrollContainer) {
       item.addEventListener('click', (evt) => {
+        const isClickOnRightScreen = evt.clientX > evt.view.innerWidth / 2;
+        const spaceRange = (isClickOnRightScreen ? 1 : -1) * 1000;
         evt.preventDefault();
         // item.scrollLeft += 5;
         item.scrollTo({
-          left: (item.scrollLeft += 1000),
+          left: (item.scrollLeft += spaceRange),
           behavior: 'smooth',
         });
       });
@@ -80,8 +93,11 @@ export default function ChapterDetail({ data }) {
       <ScrollContainer
         height={'100vh'}
         customClass={
-          getConditionToShowArrow(chapter) ? CLASS_CUSTOM.CURSOL_CUSTOM : ''
+          shouldToShowArrow(chapter)
+            ? CLASS_CUSTOM.CURSOL_CUSTOM + ' ' + classCustomCursor
+            : ''
         }
+        onMouseMove={handleOnMouseMove}
         onClick={handleClickContainer}
         onScroll={(e) => {
           setIsShowBackToTop(

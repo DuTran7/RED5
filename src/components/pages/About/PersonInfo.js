@@ -53,7 +53,7 @@ export default function PersonInfo({ src, name, position, isMobile, data }) {
               <img
                 key={i}
                 src={IMAGE_SOURCE + el.name}
-                width={mobile ? 343 : 360}
+                width={mobile ? 350 : 367}
                 height={480}
                 alt={'staff'}
               />

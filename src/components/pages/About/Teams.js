@@ -113,10 +113,10 @@ export default function Teams({ isMobile }) {
           xs: 0,
           md: '160px',
         }}
-        borderRight={{
-          xs: 'none',
-          md: '1px solid ' + theme.palette.divider,
-        }}
+        // borderRight={{
+        //   xs: 'none',
+        //   md: '1px solid ' + theme.palette.divider,
+        // }}
 
         // minWidth={'calc(100vw - 80px)'}
       >

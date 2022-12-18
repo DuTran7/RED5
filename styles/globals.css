@@ -291,6 +291,14 @@ a:hover {
   cursor: url('/icons/arrowRight.svg') 20 20, auto;
   scroll-behavior: smooth;
 }
+.right-mouse-custom {
+  cursor: url('/icons/arrowRight.svg') 20 20, auto;
+  scroll-behavior: smooth;
+}
+.left-mouse-custom {
+  cursor: url('/icons/arrowLeft.svg') 20 20, auto;
+  scroll-behavior: smooth;
+}
 
 .scroll-horizontal {
   /* scroll-behavior: smooth; */

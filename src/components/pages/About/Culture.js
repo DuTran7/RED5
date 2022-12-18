@@ -13,10 +13,10 @@ export default function Culture() {
         xs: 'auto',
         md: 'calc(100vh - 84px)',
       }}
-      borderRight={{
-        xs: 'none',
-        md: '1px solid ' + theme.palette.divider,
-      }}
+      // borderRight={{
+      //   xs: 'none',
+      //   md: '1px solid ' + theme.palette.divider,
+      // }}
     >
       <Stack
         width={'100%'}

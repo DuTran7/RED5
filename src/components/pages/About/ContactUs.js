@@ -68,7 +68,7 @@ export default function ContactUs() {
           md: 'auto',
         },
         overflowY: 'overlay',
-        borderLeft: '1px solid ' + theme.palette.divider,
+        // borderLeft: '1px solid ' + theme.palette.divider,
       }}
       minWidth={'calc(100vw)'}
     >
