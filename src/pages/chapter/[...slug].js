@@ -10,10 +10,7 @@ export default function Chapter({ chapterInfo, seo }) {
     <>
       <NextSeo {...seo} />
       <Head>
-        <link
-          rel="shortcut icon"
-          href="https://static.wixstatic.com/media/3dc6a9_effcf80643c7428396dde5d1fc3c254c~mv2.png/v1/fill/w_32%2Ch_32%2Clg_1%2Cusm_0.66_1.00_0.01/3dc6a9_effcf80643c7428396dde5d1fc3c254c~mv2.png"
-        />
+        <link rel="shortcut icon" href="/logo.jpg" />
       </Head>
       <ChapterDetail data={chapterInfo} />
     </>
