@@ -47,11 +47,11 @@ export default function HomePage(props) {
         block: 'start',
         inline: 'start',
       });
-      melement?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-        inline: 'start',
-      });
+      // melement?.scrollIntoView({
+      //   behavior: 'smooth',
+      //   block: 'start',
+      //   inline: 'start',
+      // });
       setTimeout(() => {
         localStorage.removeItem('CHAPTER');
       }, 500);
