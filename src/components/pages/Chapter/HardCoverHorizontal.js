@@ -27,32 +27,6 @@ export default function HardCoverHorizontal({ name }) {
       }}
     >
       <Stack
-        width={'80px'}
-        height={'80px'}
-        minWidth={'80px'}
-        justifyContent={'center'}
-        alignItems={'center'}
-        borderRight={'1px solid ' + theme.palette.divider}
-        onClick={(evt) => {
-          evt.preventDefault();
-          router.push({ pathname: '/' });
-        }}
-        sx={{
-          '&:hover': {
-            background: 'rgba(255, 255, 255, 0.1)',
-            cursor: 'pointer',
-          },
-        }}
-      >
-        <CloseIcon
-          sx={{
-            fontSize: '40px',
-            opacity: 0.5,
-            color: theme.palette.common.white,
-          }}
-        />
-      </Stack>
-      <Stack
         width={'100%'}
         height={'80px'}
         borderRight={'1px solid ' + theme.palette.divider}
@@ -68,18 +42,43 @@ export default function HardCoverHorizontal({ name }) {
           variant={'h4'}
           color={'text.primary'}
           fontSize={'24px'}
-          sx={
-            {
-              // position: 'absolute',
-              // left: '50%',
-              // transformOrigin: '-2% 68%',
-              // transform: 'rotate(90deg)',
-            }
-          }
-          width={'max-content'}
+          sx={{
+            textOverflow: 'ellipsis',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+          }}
+          width={'calc(100vw - 114px)'}
+          title={name}
         >
           {name}
         </Typography>
+      </Stack>
+      <Stack
+        width={'80px'}
+        height={'80px'}
+        minWidth={'80px'}
+        justifyContent={'center'}
+        alignItems={'center'}
+        borderRight={'1px solid ' + theme.palette.divider}
+        onClick={(evt) => {
+          evt.preventDefault();
+          router.push({ pathname: '/' });
+        }}
+        flexShrink={0}
+        sx={{
+          '&:hover': {
+            background: 'rgba(255, 255, 255, 0.1)',
+            cursor: 'pointer',
+          },
+        }}
+      >
+        <CloseIcon
+          sx={{
+            fontSize: '40px',
+            opacity: 0.5,
+            color: theme.palette.common.white,
+          }}
+        />
       </Stack>
     </Stack>
   );
