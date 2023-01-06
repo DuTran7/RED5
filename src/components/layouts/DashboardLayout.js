@@ -25,15 +25,17 @@ export const DashboardLayout = (props) => {
   const { children } = props;
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const router = useRouter();
+  const [session] = useSession();
 
   const checkLogged = async () => {
     const _session = await getSession();
+    console.log(_session);
     if (new Date().getTime() < _session?.user?.expiredToken) {
       return;
     } else {
-      // enqueueSnackbar('Session was expired. Please login and try again', {
-      //   variant: 'error',
-      // });
+      enqueueSnackbar('Session was expired. Please login and try again', {
+        variant: 'error',
+      });
       router.push('/admin/login');
 
       if (!_session) {
@@ -45,6 +47,10 @@ export const DashboardLayout = (props) => {
   useEffect(() => {
     checkLogged();
   });
+
+  // useEffect(() => {
+  //   console.log(session);
+  // }, [session]);
   return (
     <>
       <Head>

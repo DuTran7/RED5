@@ -15,7 +15,7 @@ export async function uploadFile(body) {
   return await axios.post(process.env.NEXT_PUBLIC_API + '/file/upload', body, {
     headers: {
       'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${session?.user?.token}` || '',
+      Authorization: `Bearer ${session?.user?.accessToken}` || '',
     },
   });
 }
@@ -25,7 +25,7 @@ export async function updateFile(body) {
   return await axios.put(process.env.NEXT_PUBLIC_API + '/file', body, {
     headers: {
       'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${session?.user?.token}` || '',
+      Authorization: `Bearer ${session?.user?.accessToken}` || '',
     },
   });
 }
@@ -35,7 +35,7 @@ export const createAward = async (body) => {
   return await axios.post(process.env.NEXT_PUBLIC_API + '/award', body, {
     headers: {
       'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${session?.user?.token}` || '',
+      Authorization: `Bearer ${session?.user?.accessToken}` || '',
     },
   });
 };

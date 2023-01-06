@@ -24,11 +24,18 @@ export default NextAuth({
       },
       async authorize(cre, req) {
         const { email, password, username } = cre;
-        const fetchUser = await request(API.AUTH_PROFILE, 'POST', {
-          email: email,
-          password: password,
-          username: username,
-        });
+        const fetchUser = await request(
+          API.AUTH_PROFILE,
+          'POST',
+          {
+            email: email,
+            password: password,
+            username: username,
+          },
+          {
+            cookie: req.headers.cookie || '',
+          }
+        );
         const user = await fetchUser.data;
         if (fetchUser?.successCode === 'OK') {
           if (user) {
@@ -73,7 +80,7 @@ export default NextAuth({
           session.expiresIn = user.expiresIn;
         }
 
-        const shouldRefreshTime = Date.now() > session.expiredToken;
+        const shouldRefreshTime = Date.now() >= session.expiredToken;
 
         if (shouldRefreshTime) {
           session = refreshAccessToken(session);

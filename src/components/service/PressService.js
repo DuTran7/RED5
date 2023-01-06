@@ -12,7 +12,7 @@ export const createPress = async (body) => {
   return axios.post(process.env.NEXT_PUBLIC_API + '/press', body, {
     headers: {
       'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${session?.user?.token}` || '',
+      Authorization: `Bearer ${session?.user?.accessToken}` || '',
     },
   });
 };

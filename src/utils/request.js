@@ -24,10 +24,10 @@ export async function request(
 
     if (method === 'POST' || method === 'PUT') {
       session = await getSession();
-      if (session && session?.user?.token) {
+      if (session && session?.user?.accessToken) {
         options.headers = {
           ...options.headers,
-          Authorization: `Bearer ${session?.user?.token}` || '',
+          Authorization: `Bearer ${session?.user?.accessToken}` || '',
         };
       }
       Object.assign(options, { body: JSON.stringify(body) });
